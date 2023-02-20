@@ -16,11 +16,11 @@ class AppRouter {
         );
       case login:
         return MaterialPageRoute(
-          builder: ((context) => const Login()),
+          builder: ((context) => Login()),
         );
       case signUp:
         return MaterialPageRoute(
-          builder: ((context) => const SignUp()),
+          builder: ((context) => SignUp()),
         );
     }
     return null;

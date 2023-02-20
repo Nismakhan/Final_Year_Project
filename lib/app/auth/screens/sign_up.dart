@@ -1,9 +1,5 @@
+import 'package:final_year_project/app/auth/widgets/textfileds_and_buttons_column.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/my_buttions.dart';
-import '../widgets/my_radio_buttons.dart';
-import '../widgets/my_text_fields.dart';
-import '../widgets/third_party_icons.dart';
 
 class SignUp extends StatelessWidget {
   const SignUp({super.key});
@@ -30,66 +26,10 @@ class SignUp extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              Expanded(
+              const Expanded(
                 flex: 3,
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const MyRadioButtons(),
-                      const MyTextFields(
-                        text: "Example@gmail.com",
-                        icons: Icons.person,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const MyTextFields(
-                        text: "******",
-                        icons: Icons.lock,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      MyButtions(
-                        text: "Login",
-                        onSelect: () {},
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      MyButtions(
-                        text: "SignUp",
-                        onSelect: () {},
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "forgot passward ? ",
-                            style: TextStyle(
-                              fontSize: 18,
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              "Click here",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.purple,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Text("Or"),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const ThirdPartyIcons()
-                    ],
-                  ),
+                  child: TextfieldsAndButtonsForSignUp(),
                 ),
               ),
             ],

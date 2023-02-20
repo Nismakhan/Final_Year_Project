@@ -1,14 +1,14 @@
+import 'package:final_year_project/app/auth/widgets/my_buttions.dart';
+import 'package:final_year_project/app/auth/widgets/my_radio_buttons.dart';
+import 'package:final_year_project/app/auth/widgets/third_party_icons.dart';
 import 'package:final_year_project/app/router/router.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/my_buttions.dart';
-import '../widgets/my_radio_buttons.dart';
-import '../widgets/my_text_fields.dart';
-import '../widgets/third_party_icons.dart';
-
 class Login extends StatelessWidget {
-  const Login({super.key});
-
+  Login({super.key});
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwardController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -34,65 +34,121 @@ class Login extends StatelessWidget {
               Expanded(
                 flex: 3,
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const MyRadioButtons(),
-                      const MyTextFields(
-                        text: "Example@gmail.com",
-                        icons: Icons.person,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const MyTextFields(
-                        text: "******",
-                        icons: Icons.lock,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      MyButtions(
-                        text: "Logi",
-                        onSelect: () {},
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      MyButtions(
-                        text: "SignUp",
-                        onSelect: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed(AppRouter.signUp);
-                        },
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "forgot passward ? ",
-                            style: TextStyle(
-                              fontSize: 18,
-                            ),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        const MyRadioButtons(),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 226, 226, 226),
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              "Click here",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.purple,
+                          width: 300,
+                          child: TextFormField(
+                            controller: _emailController,
+                            validator: ((value) {
+                              final expression = RegExp(
+                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                              if (!expression.hasMatch(value!)) {
+                                return "Email is invalid";
+                              }
+                              return null;
+                            }),
+                            decoration: const InputDecoration(
+                              suffixIcon: Icon(
+                                Icons.abc,
+                              ),
+                              labelText: "Example@gmail.com",
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.never,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                      const Text("Or"),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const ThirdPartyIcons()
-                    ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 226, 226, 226),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          width: 300,
+                          child: TextFormField(
+                            controller: _passwardController,
+                            obscuringCharacter: "*",
+                            obscureText: true,
+                            validator: ((value) {
+                              if (value!.length < 6) {
+                                return "Passward should be atleast 6 characters";
+                              }
+                              return null;
+                            }),
+                            decoration: const InputDecoration(
+                              suffixIcon: Icon(
+                                Icons.abc,
+                              ),
+                              labelText: "**********",
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.never,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        MyButtions(
+                          text: "Login",
+                          onSelect: () async {
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.of(context).pushNamed(AppRouter.signUp);
+                            }
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        MyButtions(
+                          text: "SignUp",
+                          onSelect: () {
+                            Navigator.of(context)
+                                .pushReplacementNamed(AppRouter.signUp);
+                          },
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              "forgot passward ? ",
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text(
+                                "Click here",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Text("Or"),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const ThirdPartyIcons()
+                      ],
+                    ),
                   ),
                 ),
               ),
