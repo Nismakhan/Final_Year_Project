@@ -1,6 +1,6 @@
 import 'package:final_year_project/app/auth/widgets/my_buttions.dart';
 import 'package:final_year_project/app/auth/widgets/my_radio_buttons.dart';
-import 'package:final_year_project/app/auth/widgets/my_text_fields.dart';
+
 import 'package:final_year_project/app/auth/widgets/third_party_icons.dart';
 import 'package:final_year_project/app/router/router.dart';
 import 'package:flutter/material.dart';
@@ -38,13 +38,13 @@ class TextFieldsAndButtonsColumn extends StatelessWidget {
                 }
                 return null;
               }),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 suffixIcon: Icon(
                   Icons.abc,
                 ),
                 labelText: "text",
                 floatingLabelBehavior: FloatingLabelBehavior.never,
-                border: const OutlineInputBorder(
+                border:  OutlineInputBorder(
                   borderSide: BorderSide.none,
                 ),
               ),
@@ -67,13 +67,13 @@ class TextFieldsAndButtonsColumn extends StatelessWidget {
                 }
                 return null;
               }),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 suffixIcon: Icon(
                   Icons.abc,
                 ),
                 labelText: "**********",
                 floatingLabelBehavior: FloatingLabelBehavior.never,
-                border: const OutlineInputBorder(
+                border: OutlineInputBorder(
                   borderSide: BorderSide.none,
                 ),
               ),
@@ -153,13 +153,13 @@ class TextfieldsAndButtonsForSignUp extends StatelessWidget {
               }
               return null;
             }),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               suffixIcon: Icon(
                 Icons.abc,
               ),
               labelText: "text",
               floatingLabelBehavior: FloatingLabelBehavior.never,
-              border: const OutlineInputBorder(
+              border:  OutlineInputBorder(
                 borderSide: BorderSide.none,
               ),
             ),
@@ -182,13 +182,13 @@ class TextfieldsAndButtonsForSignUp extends StatelessWidget {
               }
               return null;
             }),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               suffixIcon: Icon(
                 Icons.abc,
               ),
               labelText: "text",
               floatingLabelBehavior: FloatingLabelBehavior.never,
-              border: const OutlineInputBorder(
+              border:  OutlineInputBorder(
                 borderSide: BorderSide.none,
               ),
             ),
@@ -211,13 +211,13 @@ class TextfieldsAndButtonsForSignUp extends StatelessWidget {
               }
               return null;
             }),
-            decoration: InputDecoration(
+            decoration:const InputDecoration(
               suffixIcon: Icon(
                 Icons.abc,
               ),
               labelText: "text",
               floatingLabelBehavior: FloatingLabelBehavior.never,
-              border: const OutlineInputBorder(
+              border: OutlineInputBorder(
                 borderSide: BorderSide.none,
               ),
             ),
@@ -240,13 +240,13 @@ class TextfieldsAndButtonsForSignUp extends StatelessWidget {
               }
               return null;
             }),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               suffixIcon: Icon(
                 Icons.abc,
               ),
               labelText: "text",
               floatingLabelBehavior: FloatingLabelBehavior.never,
-              border: const OutlineInputBorder(
+              border: OutlineInputBorder(
                 borderSide: BorderSide.none,
               ),
             ),
