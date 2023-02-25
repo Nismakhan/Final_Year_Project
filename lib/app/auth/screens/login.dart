@@ -5,7 +5,7 @@ import 'package:final_year_project/app/auth/widgets/third_party_icons.dart';
 import 'package:final_year_project/app/router/router.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 
 class Login extends StatelessWidget {
@@ -141,14 +141,12 @@ class Login extends StatelessWidget {
                               final FirebaseAuth auth = FirebaseAuth.instance;
                               final FirebaseFirestore store =
                                   FirebaseFirestore.instance;
-                              await auth.signInWithEmailAndPassword(
+                              await auth.createUserWithEmailAndPassword(
                                 email: _emailController.text,
                                 password: _passwardController.text,
                               );
                               Navigator.of(context)
                                   .pushNamed(AppRouter.dashboard);
-                            } else {
-                              Navigator.of(context).pushNamed(AppRouter.login);
                             }
                           },
                         ),
