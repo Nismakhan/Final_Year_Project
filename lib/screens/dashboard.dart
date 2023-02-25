@@ -40,30 +40,32 @@ class Dashboard extends StatelessWidget {
         ],
       ),
       drawer: const MyDrawer(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Expanded(
-            flex: 1,
-            child: MyCircleAvatars(
-              borderColor: Colors.green,
-              raduis: 30,
-              img:
-                  "https://static.vecteezy.com/packs/media/vectors/term-bg-1-3d6355ab.jpg",
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Expanded(
+              flex: 1,
+              child: MyCircleAvatars(
+                borderColor: Colors.green,
+                raduis: 30,
+                img:
+                    "https://static.vecteezy.com/packs/media/vectors/term-bg-1-3d6355ab.jpg",
+              ),
             ),
-          ),
-          Expanded(
-            flex: 5,
-            child: ListView.builder(
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return const Padding(
-                    padding: EdgeInsets.only(bottom: 20.0),
-                    child: NoticeBoardForNotices(),
-                  );
-                }),
-          ),
-        ],
+            Expanded(
+              flex: 5,
+              child: ListView.builder(
+                  itemCount: 4,
+                  itemBuilder: (context, index) {
+                    return const Padding(
+                      padding: EdgeInsets.only(bottom: 20.0),
+                      child: NoticeBoardForNotices(),
+                    );
+                  }),
+            ),
+          ],
+        ),
       ),
     );
   }
