@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:final_year_project/widgets/common/my_circle_avatars.dart';
+import 'package:final_year_project/widgets/dashboard_widgets/row_for_archives_posts_contact_etc.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -7,36 +11,80 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        // Important: Remove any padding from the ListView.
-        padding: EdgeInsets.zero,
-        children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
+    return SafeArea(
+      child: Drawer(
+        backgroundColor: const Color.fromARGB(255, 29, 29, 29),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 30,
             ),
-            child: Text('Drawer Header'),
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.home,
+            Stack(
+              clipBehavior: Clip.none,
+              children: const [
+                MyCircleAvatars(
+                  borderColor: Colors.white,
+                  img:
+                      "https://images.unsplash.com/photo-1574169208507-84376144848b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aW1hZ2VzJTIwb2YlMjBhdmF0YXJzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+                  raduis: 60,
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Icon(
+                    Icons.camera_alt,
+                    color: Colors.white,
+                    size: 40,
+                  ),
+                ),
+              ],
             ),
-            title: const Text('Page 1'),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.train,
+            const SizedBox(
+              height: 10,
             ),
-            title: const Text('Page 2'),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
+            const Text(
+              "Nisma Khan",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
+            const Divider(
+              thickness: 2,
+              color: Colors.white,
+            ),
+            Column(
+              children: const [
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: RowForArchivesPostsContactEtc(
+                    icon: Icons.archive,
+                    text: "Archives",
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: RowForArchivesPostsContactEtc(
+                    icon: Icons.image,
+                    text: "Images",
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: RowForArchivesPostsContactEtc(
+                    icon: Icons.video_camera_back,
+                    text: "Vedios",
+                  ),
+                ),
+                Divider(
+                  thickness: 2,
+                  color: Colors.white,
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

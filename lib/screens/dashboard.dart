@@ -50,7 +50,7 @@ class Dashboard extends StatelessWidget {
                 borderColor: Colors.green,
                 raduis: 30,
                 img:
-                    "https://static.vecteezy.com/packs/media/vectors/term-bg-1-3d6355ab.jpg",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP1DhX9FevEWM9cGBMaVZ_l706wTbEYbTl8g&usqp=CAU",
               ),
             ),
             Expanded(

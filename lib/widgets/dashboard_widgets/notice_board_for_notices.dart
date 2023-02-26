@@ -20,7 +20,7 @@ class NoticeBoardForNotices extends StatelessWidget {
                 borderColor: Colors.black,
                 raduis: 26,
                 img:
-                    "https://static.vecteezy.com/packs/media/vectors/term-bg-1-3d6355ab.jpg"),
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP1DhX9FevEWM9cGBMaVZ_l706wTbEYbTl8g&usqp=CAU"),
             title: Row(
               children: const [
                 Text("City University"),
