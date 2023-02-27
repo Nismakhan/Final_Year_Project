@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:final_year_project/app/router/router.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:final_year_project/widgets/common/my_circle_avatars.dart';
 import 'package:final_year_project/widgets/dashboard_widgets/like_comments_and_share.dart';
@@ -44,13 +45,18 @@ class Dashboard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Expanded(
+            Expanded(
               flex: 1,
-              child: MyCircleAvatars(
-                borderColor: Colors.green,
-                raduis: 30,
-                img:
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP1DhX9FevEWM9cGBMaVZ_l706wTbEYbTl8g&usqp=CAU",
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, AppRouter.storyview);
+                },
+                child: const MyCircleAvatars(
+                  borderColor: Colors.green,
+                  raduis: 30,
+                  img:
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP1DhX9FevEWM9cGBMaVZ_l706wTbEYbTl8g&usqp=CAU",
+                ),
               ),
             ),
             Expanded(
