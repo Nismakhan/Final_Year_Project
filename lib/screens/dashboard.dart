@@ -1,14 +1,9 @@
-import 'dart:ui';
-
 import 'package:final_year_project/app/router/router.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:final_year_project/widgets/common/my_circle_avatars.dart';
-import 'package:final_year_project/widgets/dashboard_widgets/like_comments_and_share.dart';
 import 'package:final_year_project/widgets/dashboard_widgets/notice_board_for_notices.dart';
-import 'package:final_year_project/widgets/dashboard_widgets/notices_grid.dart';
-
 import 'package:flutter/material.dart';
-
+import 'package:flutter/rendering.dart';
 import '../widgets/dashboard_widgets/my_drawer.dart';
 
 class Dashboard extends StatelessWidget {
@@ -42,35 +37,43 @@ class Dashboard extends StatelessWidget {
       ),
       drawer: const MyDrawer(),
       body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 1,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, AppRouter.storyview);
-                },
-                child: const MyCircleAvatars(
-                  borderColor: Colors.green,
-                  raduis: 30,
-                  img:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP1DhX9FevEWM9cGBMaVZ_l706wTbEYbTl8g&usqp=CAU",
-                ),
+        child: LayoutBuilder(
+          builder: (context, constraint) {
+            return SizedBox(
+              width:
+                  constraint.maxWidth > 500 ? 500 : screenWidth(context) * 0.9,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, AppRouter.storyview);
+                      },
+                      child: const MyCircleAvatars(
+                        borderColor: Colors.green,
+                        raduis: 30,
+                        img:
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP1DhX9FevEWM9cGBMaVZ_l706wTbEYbTl8g&usqp=CAU",
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: ListView.builder(
+                        itemCount: 4,
+                        itemBuilder: (context, index) {
+                          return const Padding(
+                            padding: EdgeInsets.only(bottom: 20.0),
+                            child: NoticeBoardForNotices(),
+                          );
+                        }),
+                  ),
+                ],
               ),
-            ),
-            Expanded(
-              flex: 5,
-              child: ListView.builder(
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return const Padding(
-                      padding: EdgeInsets.only(bottom: 20.0),
-                      child: NoticeBoardForNotices(),
-                    );
-                  }),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
