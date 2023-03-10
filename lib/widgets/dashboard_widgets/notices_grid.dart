@@ -1,6 +1,5 @@
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class NoticesGrid extends StatelessWidget {
   const NoticesGrid({
@@ -11,15 +10,11 @@ class NoticesGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        side: const BorderSide(
-          width: 1.0,
-          color: Colors.black,
-        ),
         borderRadius: BorderRadius.circular(20),
       ),
       shadowColor: Colors.black,
       elevation: 6,
-      color: const Color.fromARGB(255, 169, 165, 241),
+      color: const Color.fromARGB(255, 174, 243, 175),
       child: LayoutBuilder(
         builder: (context, constraint) {
           return SizedBox(
