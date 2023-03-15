@@ -1,11 +1,16 @@
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:flutter/material.dart';
 
-class IndividualPostSection extends StatelessWidget {
+class IndividualPostSection extends StatefulWidget {
   const IndividualPostSection({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<IndividualPostSection> createState() => _IndividualPostSectionState();
+}
+
+class _IndividualPostSectionState extends State<IndividualPostSection> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(

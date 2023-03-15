@@ -5,9 +5,22 @@ import 'package:final_year_project/widgets/indivisual_notices_page_widgets/indiv
 import 'package:final_year_project/widgets/indivisual_notices_page_widgets/user_profile_section.dart';
 import 'package:flutter/material.dart';
 
-class IndivisualNoticesPage extends StatelessWidget {
+class IndivisualNoticesPage extends StatefulWidget {
   const IndivisualNoticesPage({super.key});
 
+  @override
+  State<IndivisualNoticesPage> createState() => _IndivisualNoticesPageState();
+}
+
+class _IndivisualNoticesPageState extends State<IndivisualNoticesPage>
+    with TickerProviderStateMixin {
+  @override
+  void initState() {
+    tabController = TabController(length: 4, vsync: this);
+    super.initState();
+  }
+
+  late TabController tabController;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -54,24 +67,23 @@ class IndivisualNoticesPage extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          InkWell(
-                            onTap: () {},
-                            child: const Text("Home"),
+                      TabBar(
+                        controller: tabController,
+                        labelColor: Colors.black,
+                        indicatorWeight: 3,
+                        indicatorSize: TabBarIndicatorSize.label,
+                        tabs: const [
+                          Tab(
+                            text: "Home",
                           ),
-                          InkWell(
-                            onTap: () {},
-                            child: const Text("About"),
+                          Tab(
+                            text: "About",
                           ),
-                          InkWell(
-                            onTap: () {},
-                            child: const Text("Social links"),
+                          Tab(
+                            text: "Vedios",
                           ),
-                          InkWell(
-                            onTap: () {},
-                            child: const Text("Vedios"),
+                          Tab(
+                            text: "Socail Likns",
                           ),
                         ],
                       ),
@@ -82,14 +94,23 @@ class IndivisualNoticesPage extends StatelessWidget {
                         thickness: 3,
                       ),
                       Expanded(
-                        child: ListView.builder(
-                            itemCount: 4,
-                            itemBuilder: ((context, index) {
-                              return const Padding(
-                                padding: EdgeInsets.only(top: 30),
-                                child: IndividualPostSection(),
-                              );
-                            })),
+                        child: TabBarView(
+                          controller: tabController,
+                          children: [
+                            ListView.builder(
+                              itemCount: 4,
+                              itemBuilder: ((context, index) {
+                                return const Padding(
+                                  padding: EdgeInsets.only(top: 30),
+                                  child: IndividualPostSection(),
+                                );
+                              }),
+                            ),
+                            const Text("vedios"),
+                            const Text("hhhh"),
+                            const Text("ddddd"),
+                          ],
+                        ),
                       )
                     ],
                   ),
