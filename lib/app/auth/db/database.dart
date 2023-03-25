@@ -35,11 +35,15 @@ class AuthBD {
   //   }
   // }
 
-  Future<User?> signUpWithEmailAndPassword(
-      {required UserModel user, required String password}) async {
+  Future<User?> signUpWithEmailAndPassword({
+    required UserModel name,
+    required UserModel email,
+    required UserModel contact,
+    required String password,
+  }) async {
     try {
       final credentials = await _firebaseAuth.createUserWithEmailAndPassword(
-          email: user.email, password: password);
+          email: email.email, password: password);
       // user.uid = credentials.user!.uid;
       // await _firebaseFirestore
       //     .collection("users")

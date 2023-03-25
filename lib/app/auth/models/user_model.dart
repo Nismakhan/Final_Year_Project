@@ -4,6 +4,7 @@ class UserModel {
   String email;
   String? organization;
   String? profileUrl;
+  String? contactNumber;
 
   UserModel({
     required this.uid,
@@ -11,6 +12,7 @@ class UserModel {
     required this.email,
     this.organization,
     this.profileUrl,
+    this.contactNumber,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class UserModel {
       email: json["email"],
       organization: json["organization"],
       profileUrl: json["profileUrl"],
+      contactNumber: json["contactNumber"],
     );
   }
 
@@ -30,6 +33,7 @@ class UserModel {
       "email": email,
       "organization": organization,
       "profileUrl": profileUrl,
+      "contactNumber": contactNumber,
     };
   }
 }

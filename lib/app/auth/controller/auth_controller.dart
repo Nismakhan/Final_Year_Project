@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 
 class AuthController extends ChangeNotifier {
   UserModel? appUser;
-  AuthBD _db = AuthBD();
+  final AuthBD _db = AuthBD();
 
   Future<void> logInWithEmailAndPassword(
     BuildContext context, {
@@ -24,13 +24,15 @@ class AuthController extends ChangeNotifier {
 
   Future<void> signUpWithEmailAndPassword(
     BuildContext context, {
-    required UserModel user,
+    required UserModel name,
+    required UserModel email,
+    required UserModel contact,
     required String password,
   }) async {
     try {
-      final credentials =
-          await _db.signUpWithEmailAndPassword(user: user, password: password);
-      appUser = user;
+      final credentials = await _db.signUpWithEmailAndPassword(
+          name: name, email: email, contact: contact, password: password);
+      appUser = email;
 
       Navigator.of(context).pushReplacementNamed(AppRouter.dashboard);
       log("new current user: ${appUser?.toJson().toString()}");

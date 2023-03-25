@@ -29,7 +29,7 @@ class AppRouter {
         );
       case signUp:
         return MaterialPageRoute(
-          builder: ((context) => const SignUp()),
+          builder: ((context) => SignUp()),
         );
       case dashboard:
         return MaterialPageRoute(
