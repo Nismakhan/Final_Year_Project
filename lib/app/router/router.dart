@@ -1,3 +1,4 @@
+import 'package:final_year_project/app/auth/screens/forgot_password.dart';
 import 'package:final_year_project/app/auth/screens/login.dart';
 import 'package:final_year_project/app/auth/screens/sign_up.dart';
 import 'package:final_year_project/app/splash.dart';
@@ -16,6 +17,7 @@ class AppRouter {
   static const String storyview = "/story_view";
   static const String indivisualNoticesPage = "/indivisual_notices_page";
   static const String comments = "/comments";
+  static const String forgotPassword = "/forgot_password";
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -46,6 +48,10 @@ class AppRouter {
       case comments:
         return MaterialPageRoute(
           builder: ((context) => const Comments()),
+        );
+      case forgotPassword:
+        return MaterialPageRoute(
+          builder: ((context) => const ForgotPassward()),
         );
     }
     return null;

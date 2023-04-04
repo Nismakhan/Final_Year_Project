@@ -20,8 +20,8 @@ class MyButtions extends StatelessWidget {
         gradient: LinearGradient(
           colors: [
             // Color.fromARGB(255, 239, 187, 248),
-            Color.fromARGB(255, 195, 190, 255),
-            Color(0xFF6C63FF),
+            Color.fromARGB(255, 207, 207, 207),
+            Color.fromARGB(255, 73, 255, 79)
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
@@ -33,7 +33,7 @@ class MyButtions extends StatelessWidget {
           text,
           style: const TextStyle(
             fontSize: 25,
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
       ),
