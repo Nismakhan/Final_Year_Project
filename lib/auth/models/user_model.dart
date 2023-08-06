@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   String uid;
   String name;
@@ -5,6 +7,8 @@ class UserModel {
   String? organization;
   String? profileUrl;
   String? contactNumber;
+  String? type;
+  String? uniqueId;
 
   UserModel({
     required this.uid,
@@ -13,6 +17,8 @@ class UserModel {
     this.organization,
     this.profileUrl,
     this.contactNumber,
+    this.type,
+    this.uniqueId,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +29,8 @@ class UserModel {
       organization: json["organization"],
       profileUrl: json["profileUrl"],
       contactNumber: json["contactNumber"],
+      type: json["type"],
+      uniqueId: json["uniqueId"],
     );
   }
 
@@ -34,6 +42,8 @@ class UserModel {
       "organization": organization,
       "profileUrl": profileUrl,
       "contactNumber": contactNumber,
+      "type": type,
+      "uniqueId": uniqueId,
     };
   }
 }

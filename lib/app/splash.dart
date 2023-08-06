@@ -1,5 +1,8 @@
 import 'package:final_year_project/app/router/router.dart';
+import 'package:final_year_project/auth/controller/auth_controller.dart';
+import 'package:final_year_project/common/controller/post_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -16,8 +19,17 @@ class _SplashState extends State<Splash> {
   }
 
   Future<void> loadData() async {
-    await Future.delayed(const Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacementNamed(AppRouter.login);
+    Future.delayed(const Duration(seconds: 2), () async {
+      final isCurrentUser =
+          await context.read<AuthController>().checkCurrentUser(context);
+      if (isCurrentUser != null) {
+        Navigator.of(context).pushReplacementNamed(AppRouter.dashboard);
+        context
+            .read<PostController>()
+            .getCurrentUsersPosts(uid: isCurrentUser.uid);
+      } else {
+        Navigator.of(context).pushReplacementNamed(AppRouter.login);
+      }
     });
   }
 

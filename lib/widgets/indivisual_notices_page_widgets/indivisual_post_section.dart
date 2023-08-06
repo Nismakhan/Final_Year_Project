@@ -1,10 +1,16 @@
+import 'package:final_year_project/app/router/router.dart';
+import 'package:final_year_project/models/user_post.dart';
+import 'package:final_year_project/screens/comments.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:flutter/material.dart';
 
 class IndividualPostSection extends StatefulWidget {
   const IndividualPostSection({
+    required this.post,
     Key? key,
   }) : super(key: key);
+
+  final UserPosts post;
 
   @override
   State<IndividualPostSection> createState() => _IndividualPostSectionState();
@@ -29,26 +35,29 @@ class _IndividualPostSectionState extends State<IndividualPostSection> {
           const SizedBox(
             height: 20,
           ),
-          Container(
-            height: 250,
-            width: screenWidth(context) < 500 ? screenWidth(context) : 450,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.green,
-              image: const DecorationImage(
-                image: NetworkImage(
-                    "https://static.vecteezy.com/packs/media/vectors/term-bg-1-3d6355ab.jpg"),
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
+          widget.post.userPostsAsset != null
+              ? Container(
+                  height: 250,
+                  width:
+                      screenWidth(context) < 500 ? screenWidth(context) : 450,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.green,
+                    image: DecorationImage(
+                      image:
+                          NetworkImage(widget.post.userPostsAsset.toString()),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                )
+              : const Text("No Image found"),
           const SizedBox(
             height: 20,
           ),
           SizedBox(
             width: screenWidth(context) < 500 ? 250 : screenWidth(context),
-            child: const Text(
-              "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available.",
+            child: Text(
+              widget.post.about.toString(),
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),
@@ -65,7 +74,7 @@ class _IndividualPostSectionState extends State<IndividualPostSection> {
                   children: const [
                     Icon(
                       Icons.thumb_up,
-                      size: 35,
+                      size: 20,
                     ),
                     SizedBox(
                       width: 10,
@@ -73,23 +82,29 @@ class _IndividualPostSectionState extends State<IndividualPostSection> {
                     Text(
                       "Like",
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 15,
                       ),
                     ),
                   ],
                 ),
                 Row(
-                  children: const [
-                    Icon(
+                  children: [
+                    const Icon(
                       Icons.archive,
-                      size: 35,
+                      size: 20,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Icon(
-                      Icons.comment_bank_outlined,
-                      size: 35,
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(AppRouter.comments,
+                            arguments: CommentArgs(post: widget.post));
+                      },
+                      child: const Icon(
+                        Icons.comment_bank_outlined,
+                        size: 20,
+                      ),
                     ),
                   ],
                 ),

@@ -5,14 +5,20 @@ class MyButtions extends StatelessWidget {
     Key? key,
     required this.text,
     required this.onSelect,
+    required this.width,
+    required this.height,
+    this.isloading = false,
   }) : super(key: key);
   final String text;
   final void Function()? onSelect;
+  final double width;
+  final double height;
+  final bool isloading;
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
-      height: 50,
+      width: width,
+      height: height,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(
           Radius.circular(8),

@@ -1,4 +1,6 @@
+import 'package:final_year_project/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyCircleAvatars extends StatelessWidget {
   const MyCircleAvatars({
@@ -13,18 +15,24 @@ class MyCircleAvatars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          width: 3,
-          color: borderColor,
-        ),
-      ),
-      child: CircleAvatar(
-        radius: raduis,
-        backgroundImage: NetworkImage(img),
-      ),
+    return Consumer<AuthController>(
+      builder: (context, value, child) {
+        return Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              width: 3,
+              color: borderColor,
+            ),
+          ),
+          child: CircleAvatar(
+            radius: raduis,
+            backgroundImage: value.appUser!.profileUrl != null
+                ? NetworkImage(img)
+                : const AssetImage("assets/images/logo.png") as ImageProvider,
+          ),
+        );
+      },
     );
   }
 }

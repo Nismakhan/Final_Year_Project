@@ -1,12 +1,15 @@
 import 'package:final_year_project/app/router/router.dart';
+import 'package:final_year_project/models/user_post.dart';
+import 'package:final_year_project/screens/comments.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:flutter/material.dart';
 
 class LikeCommentsAndShare extends StatelessWidget {
   const LikeCommentsAndShare({
+    required this.posts,
     Key? key,
   }) : super(key: key);
-
+  final UserPosts posts;
   @override
   Widget build(BuildContext context) {
     return screenWidth(context) > 50 && screenWidth(context) < 300
@@ -25,32 +28,33 @@ class LikeCommentsAndShare extends StatelessWidget {
                   Text(
                     "Like",
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 10,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(AppRouter.comments);
-                    },
-                    child: const Icon(
-                      Icons.chat_bubble_outline,
-                      size: 30,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 7,
-                  ),
-                  const Icon(
-                    Icons.share,
-                    size: 30,
-                  ),
-                ],
-              )
+              // Row(
+              //   children: [
+              //     InkWell(
+              //       onTap: () {
+              //         Navigator.pushNamed(context, AppRouter.comments,
+              //             arguments: CommentArgs(post: posts));
+              //       },
+              //       child: const Icon(
+              //         Icons.abc,
+              //         size: 30,
+              //       ),
+              //     ),
+              //     const SizedBox(
+              //       width: 7,
+              //     ),
+              //     const Icon(
+              //       Icons.share,
+              //       size: 30,
+              //     ),
+              //   ],
+              // )
             ],
           )
         : Row(
@@ -74,26 +78,27 @@ class LikeCommentsAndShare extends StatelessWidget {
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(AppRouter.comments);
-                    },
-                    child: const Icon(
-                      Icons.chat_bubble_outline,
-                      size: 30,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 7,
-                  ),
-                  const Icon(
-                    Icons.share,
-                    size: 30,
-                  ),
-                ],
-              )
+              // Row(
+              //   children: [
+              //     InkWell(
+              //       onTap: () {
+              //         Navigator.pushNamed(context, AppRouter.comments,
+              //             arguments: CommentArgs(post: posts));
+              //       },
+              //       child: const Icon(
+              //         Icons.chat_bubble_outline,
+              //         size: 30,
+              //       ),
+              //     ),
+              //     const SizedBox(
+              //       width: 7,
+              //     ),
+              //     const Icon(
+              //       Icons.share,
+              //       size: 30,
+              //     ),
+              //   ],
+              // )
             ],
           );
   }

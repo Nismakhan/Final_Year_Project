@@ -1,27 +1,28 @@
+import 'package:final_year_project/models/user_post.dart';
 import 'package:final_year_project/widgets/common/my_circle_avatars.dart';
 import 'package:flutter/material.dart';
 
 class UserProfileSection extends StatelessWidget {
   const UserProfileSection({
+    required this.posts,
     Key? key,
   }) : super(key: key);
-
+  final UserPosts posts;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: Column(
         children: [
-          const ListTile(
+          ListTile(
             leading: SizedBox(
               child: MyCircleAvatars(
                 borderColor: Colors.black,
-                img:
-                    "https://static.vecteezy.com/packs/media/vectors/term-bg-1-3d6355ab.jpg",
+                img: posts.profilePicture.toString(),
                 raduis: 30,
               ),
             ),
-            title: Text("City University"),
-            subtitle: Text("1.3M followers"),
+            title: Text(posts.name),
+            subtitle: const Text("1.3M followers"),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 35),

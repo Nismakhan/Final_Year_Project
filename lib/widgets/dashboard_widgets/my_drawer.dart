@@ -1,8 +1,15 @@
+import 'package:final_year_project/app/router/router.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class NavBar extends StatelessWidget {
+class NavBar extends StatefulWidget {
   const NavBar({super.key});
 
+  @override
+  State<NavBar> createState() => _NavBarState();
+}
+
+class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return const Drawer(
@@ -11,10 +18,22 @@ class NavBar extends StatelessWidget {
   }
 }
 
-class SideBar extends StatelessWidget {
+class SideBar extends StatefulWidget {
   const SideBar({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<SideBar> createState() => _SideBarState();
+}
+
+class _SideBarState extends State<SideBar> {
+  Future signout() async {
+    await FirebaseAuth.instance.signOut().then((value) {
+      return Navigator.of(context)
+          .pushNamedAndRemoveUntil(AppRouter.login, (route) => false);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +92,9 @@ class SideBar extends StatelessWidget {
           ListTile(
             title: const Text('Exit'),
             leading: const Icon(Icons.exit_to_app),
-            onTap: () {},
+            onTap: () {
+              signout();
+            },
           ),
         ],
       ),

@@ -1,10 +1,13 @@
+import 'package:final_year_project/models/user_post.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:flutter/material.dart';
 
 class NoticesGrid extends StatelessWidget {
   const NoticesGrid({
+    required this.posts,
     Key? key,
   }) : super(key: key);
+  final List<UserPosts>? posts;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,8 @@ class NoticesGrid extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(40.0),
               child: GridView.builder(
-                  itemCount: 4,
+                  // itemCount: posts.postId.length <= 4 ? posts.postId.length : 4,
+                  itemCount: posts!.length <= 4 ? posts!.length : 4,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 20,
@@ -35,8 +39,8 @@ class NoticesGrid extends StatelessWidget {
                       ),
                       elevation: 6.6,
                       color: Colors.white,
-                      child: const Center(
-                        child: Text("data"),
+                      child: Center(
+                        child: Text(posts![index].about.toString()),
                       ),
                     );
                   }),

@@ -1,4 +1,4 @@
-import 'package:final_year_project/app/auth/widgets/my_buttions.dart';
+import 'package:final_year_project/auth/widgets/my_buttions.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:flutter/material.dart';
 
@@ -57,7 +57,8 @@ class ForgotPassward extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  MyButtions(text: "Send", onSelect: () {})
+                  MyButtions(
+                      width: 250, height: 50, text: "Send", onSelect: () {})
                 ],
               )),
         ),

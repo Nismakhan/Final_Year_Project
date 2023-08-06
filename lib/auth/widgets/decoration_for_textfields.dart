@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 BoxDecoration decorationForTextFieldsContainers() {
   return BoxDecoration(
     color: const Color.fromARGB(255, 226, 226, 226),
-    borderRadius: BorderRadius.circular(20),
+    borderRadius: BorderRadius.circular(8),
   );
 }
 

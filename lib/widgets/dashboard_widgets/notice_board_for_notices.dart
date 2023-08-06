@@ -1,73 +1,105 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/app/router/router.dart';
+import 'package:final_year_project/models/user_post.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:final_year_project/widgets/common/my_circle_avatars.dart';
 import 'package:final_year_project/widgets/dashboard_widgets/like_comments_and_share.dart';
 import 'package:final_year_project/widgets/dashboard_widgets/notices_grid.dart';
 import 'package:flutter/material.dart';
 
-class NoticeBoardForNotices extends StatelessWidget {
+class NoticeBoardForNotices extends StatefulWidget {
   const NoticeBoardForNotices({
+    required this.posts,
     Key? key,
   }) : super(key: key);
+  final UserPosts posts;
 
   @override
+  State<NoticeBoardForNotices> createState() => _NoticeBoardForNoticesState();
+}
+
+class _NoticeBoardForNoticesState extends State<NoticeBoardForNotices> {
+  @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: screenWidth(context),
-      child: Column(
-        children: [
-          InkWell(
-            onTap: () {
-              Navigator.of(context).pushNamed(AppRouter.indivisualNoticesPage);
-            },
-            child: ListTile(
-              leading: const MyCircleAvatars(
-                  borderColor: Colors.black,
-                  raduis: 26,
-                  img:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP1DhX9FevEWM9cGBMaVZ_l706wTbEYbTl8g&usqp=CAU"),
-              title: Builder(builder: (context) {
-                if (screenWidth(context) > 50 && screenWidth(context) < 300) {
-                  return Column(
-                    children: const [
-                      Text(
-                        "City University",
-                      ),
-                      SizedBox(
-                        width: 1,
-                      ),
-                      Text("(100090)"),
-                    ],
-                  );
-                } else {
-                  return Row(
-                    children: const [
-                      Text(
-                        "City University",
-                      ),
-                      SizedBox(
-                        width: 1,
-                      ),
-                      Text("(100090)"),
-                    ],
-                  );
-                }
-              }),
-              subtitle: const Text('Recent Notices'),
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection("posts")
+            .where("uid", isEqualTo: widget.posts.uid)
+            .snapshots(),
+        builder: (context, snapshot) {
+          final data = snapshot.data!.docs
+              .map((e) => UserPosts.fromJson(e.data()))
+              .toList();
+
+          return SizedBox(
+            width: screenWidth(context),
+            child: Column(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                        AppRouter.indivisualNoticesPage,
+                        arguments: widget.posts);
+                  },
+                  child: ListTile(
+                    leading: MyCircleAvatars(
+                      borderColor: Colors.black,
+                      raduis: 26,
+                      img: widget.posts.profilePicture.toString(),
+                    ),
+                    title: Builder(builder: (context) {
+                      if (screenWidth(context) > 50 &&
+                          screenWidth(context) < 300) {
+                        return Column(
+                          children: [
+                            Text(
+                              widget.posts.name,
+                            ),
+                            const SizedBox(
+                              width: 1,
+                            ),
+                            Text("(${widget.posts.uniqueId.toString()})"),
+                          ],
+                        );
+                      } else {
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              Text(
+                                widget.posts.name,
+                              ),
+                              const SizedBox(
+                                width: 1,
+                              ),
+                              Text("(${widget.posts.uniqueId.toString()})"),
+                            ],
+                          ),
+                        );
+                      }
+                    }),
+                    subtitle: const Text('Recent Notices'),
+                  ),
+                ),
+                NoticesGrid(
+                  posts: data,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 50,
+                  ),
+                  child: LikeCommentsAndShare(
+                    posts: widget.posts,
+                  ),
+                )
+              ],
             ),
-          ),
-          const NoticesGrid(),
-          const SizedBox(
-            height: 10,
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 50,
-            ),
-            child: LikeCommentsAndShare(),
-          )
-        ],
-      ),
-    );
+          );
+        });
   }
 }

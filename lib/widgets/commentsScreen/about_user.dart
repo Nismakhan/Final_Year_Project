@@ -11,27 +11,25 @@ class AboutUser extends StatelessWidget {
     return SizedBox(
       child: Row(
         children: [
-          SizedBox(
-            width: 60,
-            height: 60,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: const [
-                Positioned(
-                  top: -35,
-                  left: 10,
-                  child: MyCircleAvatars(
-                    borderColor: Colors.black,
-                    img:
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFRmWtO1zrO6tt35ewAJOE9NpAb8yiwhbrBWyxjVQCZw&s",
-                    raduis: 40,
-                  ),
+          const Padding(
+            padding: EdgeInsets.all(18.0),
+            child: SizedBox(
+              width: 60,
+              height: 60,
+              child: Positioned(
+                top: -35,
+                left: 10,
+                child: MyCircleAvatars(
+                  borderColor: Colors.black,
+                  img:
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFRmWtO1zrO6tt35ewAJOE9NpAb8yiwhbrBWyxjVQCZw&s",
+                  raduis: 40,
                 ),
-              ],
+              ),
             ),
           ),
           const SizedBox(
-            width: 45,
+            width: 10,
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
