@@ -98,36 +98,6 @@ class _OtherUserProfileScreenState extends State<OtherUserProfileScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    // color: Colors.grey,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 228, 224, 224),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-
-                    width: screenWidth(context) * 0.7,
-                    // height: screenHeight(context),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: const [
-                          PhotosVediosAndTaggedSection(
-                            text: "Photos",
-                          ),
-                          PhotosVediosAndTaggedSection(
-                            text: "Vedios",
-                          ),
-                          PhotosVediosAndTaggedSection(
-                            text: "Tagged",
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   const Divider(
                     height: 2,
                   ),

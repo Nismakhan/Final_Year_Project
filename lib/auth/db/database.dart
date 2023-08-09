@@ -5,6 +5,8 @@ import 'package:final_year_project/auth/models/user_model.dart';
 import 'package:final_year_project/models/follow_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../models/chat_model.dart';
+
 class AuthBD {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -149,22 +151,22 @@ class AuthBD {
     }
   }
 
-  // Future<ChatModel?> doesChatExists({required String uid}) async {
-  //   try {
-  //     final docs = (await _firestore
-  //             .collection("chats")
-  //             .where("userIds", arrayContains: uid)
-  //             .get())
-  //         .docs;
-  //     if (docs.isNotEmpty) {
-  //       return ChatModel.fromJson(docs.first.data());
-  //     } else {
-  //       log("null");
-  //     }
-  //     return null;
-  //   } catch (e) {
-  //     log(e.toString());
-  //     rethrow;
-  //   }
-  // }
+  Future<ChatModel?> doesChatExists({required String uid}) async {
+    try {
+      final docs = (await _firestore
+              .collection("chats")
+              .where("userIds", arrayContains: uid)
+              .get())
+          .docs;
+      if (docs.isNotEmpty) {
+        return ChatModel.fromJson(docs.first.data());
+      } else {
+        log("null");
+      }
+      return null;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
 }

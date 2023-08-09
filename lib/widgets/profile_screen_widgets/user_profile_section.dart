@@ -7,6 +7,9 @@ import 'package:final_year_project/widgets/profile_screen_widgets/no_of_follower
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../screens/explore.dart';
+import '../../screens/message_screen.dart';
+
 class UserProfileSection extends StatefulWidget {
   const UserProfileSection({
     required this.user,
@@ -93,7 +96,7 @@ class _UserProfileSectionState extends State<UserProfileSection> {
                       : const CircleAvatar(
                           radius: 50,
                           backgroundColor: Color.fromARGB(255, 255, 163, 194),
-                          backgroundImage: AssetImage("assets/images/1.png"),
+                          backgroundImage: AssetImage("assets/images/user.png"),
                         ),
               const SizedBox(
                 width: 20,
@@ -140,46 +143,38 @@ class _UserProfileSectionState extends State<UserProfileSection> {
                                   end: Alignment.centerRight,
                                 ),
                               ),
-                              child: OutlinedButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  "Follow Me",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
+                              child: FollowUnfollowButton(user: widget.user),
                             ),
                             const SizedBox(
                               width: 10,
                             ),
-                            // GestureDetector(
-                            //   onTap: () {
-                            //     Navigator.pushNamed(
-                            //       context,
-                            //       AppRouter.messagesScreen,
-                            //       arguments: MessageScreenArgs(
-                            //           passedUser: widget.user),
-                            //     );
-                            //   },
-                            //   child: Container(
-                            //     width: 30,
-                            //     height: 30,
-                            //     decoration: const BoxDecoration(
-                            //       shape: BoxShape.circle,
-                            //       color: Colors.blue,
-                            //     ),
-                            //     // height: 30,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRouter.messagesScreen,
+                                  arguments: MessageScreenArgs(
+                                      passedUser: widget.user),
+                                );
+                              },
+                              child: Container(
+                                width: 30,
+                                height: 30,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.blue,
+                                ),
+                                // height: 30,
 
-                            //     child: const Center(
-                            //       child: Icon(
-                            //         Icons.message,
-                            //         size: 17,
-                            //         color: Colors.white,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // )
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.message,
+                                    size: 17,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            )
                           ],
                         )
                       : const SizedBox(),

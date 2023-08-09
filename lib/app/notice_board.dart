@@ -1,6 +1,8 @@
 import 'package:final_year_project/auth/controller/auth_controller.dart';
 import 'package:final_year_project/app/router/router.dart';
+import 'package:final_year_project/common/controller/chat_controller.dart';
 import 'package:final_year_project/common/controller/post_controller.dart';
+import 'package:final_year_project/common/controller/ui_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +18,12 @@ class NoticeBoard extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: ((context) => PostController()),
+        ),
+        ChangeNotifierProvider(
+          create: ((context) => UiController()),
+        ),
+        ChangeNotifierProvider(
+          create: ((context) => ChatController()),
         ),
       ],
       child: MaterialApp(

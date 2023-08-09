@@ -169,7 +169,7 @@ class _LoginState extends State<Login> {
                                             if (myUser != null) {
                                               Navigator.of(context)
                                                   .pushReplacementNamed(
-                                                      AppRouter.dashboard);
+                                                      AppRouter.homeScreen);
                                             } else {
                                               Navigator.of(context)
                                                   .pushReplacementNamed(

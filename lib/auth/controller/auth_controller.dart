@@ -9,6 +9,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../models/chat_model.dart';
+
 class AuthController extends ChangeNotifier {
   UserModel? appUser;
   final AuthBD _db = AuthBD();
@@ -159,11 +161,11 @@ class AuthController extends ChangeNotifier {
     }
   }
 
-  // Future<ChatModel?> doesChatExists({required String uid}) async {
-  //   try {
-  //     return await _db.doesChatExists(uid: uid);
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
+  Future<ChatModel?> doesChatExists({required String uid}) async {
+    try {
+      return await _db.doesChatExists(uid: uid);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

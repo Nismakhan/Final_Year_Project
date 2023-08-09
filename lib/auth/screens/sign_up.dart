@@ -178,7 +178,7 @@ class SignUp extends StatelessWidget {
                               log("uniqe id is : ${uniqueNumber.toString()}");
                               // ignore: use_build_context_synchronously
                               Navigator.of(context)
-                                  .pushReplacementNamed(AppRouter.dashboard);
+                                  .pushReplacementNamed(AppRouter.homeScreen);
                             } else {
                               Navigator.of(context).pushNamed(AppRouter.signUp);
                               // ignore: use_build_context_synchronously

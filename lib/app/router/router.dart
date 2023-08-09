@@ -3,16 +3,20 @@ import 'package:final_year_project/auth/screens/login.dart';
 import 'package:final_year_project/auth/screens/sign_up.dart';
 import 'package:final_year_project/app/splash.dart';
 import 'package:final_year_project/models/user_post.dart';
+import 'package:final_year_project/screens/chat_screen.dart';
 import 'package:final_year_project/screens/comments.dart';
 import 'package:final_year_project/screens/dashboard.dart';
 import 'package:final_year_project/screens/followers_screen.dart';
 import 'package:final_year_project/screens/following_screen.dart';
+import 'package:final_year_project/screens/home_screen.dart';
 import 'package:final_year_project/screens/indivisual_notices_page.dart';
 import 'package:final_year_project/screens/other_user_profile_screen.dart';
 import 'package:final_year_project/screens/profile_screen.dart';
 import 'package:final_year_project/screens/story_view.dart';
 
 import 'package:flutter/material.dart';
+
+import '../../screens/message_screen.dart';
 
 class AppRouter {
   static const String splash = "/";
@@ -27,6 +31,9 @@ class AppRouter {
   static const String followingScreen = "/followingScreen";
   static const String profileScreen = "/profile_screen";
   static const String otherUserprofileScreen = "/otherUserprofileScreen";
+  static const String homeScreen = "/homeScreen";
+  static const String messagesScreen = "/messages_screen";
+  static const String chatScreen = "/chatScreen";
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -57,6 +64,12 @@ class AppRouter {
                 posts: args,
               )),
         );
+      case homeScreen:
+        return MaterialPageRoute(
+          builder: ((context) => const HomeScreen()),
+          settings: settings,
+        );
+
       case followersScreen:
         final uid = settings.arguments as String;
         return MaterialPageRoute(
@@ -96,6 +109,19 @@ class AppRouter {
       case forgotPassword:
         return MaterialPageRoute(
           builder: ((context) => const ForgotPassward()),
+        );
+      case messagesScreen:
+        final args = settings.arguments as MessageScreenArgs;
+        return MaterialPageRoute(
+          builder: ((context) => MessageScreen(
+                args: args,
+              )),
+          settings: settings,
+        );
+      case chatScreen:
+        return MaterialPageRoute(
+          builder: ((context) => ChatScreen()),
+          settings: settings,
         );
     }
     return null;

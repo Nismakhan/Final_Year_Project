@@ -23,7 +23,7 @@ class _SplashState extends State<Splash> {
       final isCurrentUser =
           await context.read<AuthController>().checkCurrentUser(context);
       if (isCurrentUser != null) {
-        Navigator.of(context).pushReplacementNamed(AppRouter.dashboard);
+        Navigator.of(context).pushReplacementNamed(AppRouter.homeScreen);
         context
             .read<PostController>()
             .getCurrentUsersPosts(uid: isCurrentUser.uid);
