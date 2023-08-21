@@ -156,7 +156,7 @@ class _LoginState extends State<Login> {
                                                             .text);
                                             value.loading();
                                             // ignore: use_build_context_synchronously
-                                            context
+                                            final posts = context
                                                 .read<PostController>()
                                                 .getCurrentUsersPosts(
                                                     uid: FirebaseAuth.instance
@@ -166,7 +166,8 @@ class _LoginState extends State<Login> {
                                             final myUser = await context
                                                 .read<AuthController>()
                                                 .checkCurrentUser(context);
-                                            if (myUser != null) {
+                                            if (myUser != null &&
+                                                posts != null) {
                                               Navigator.of(context)
                                                   .pushReplacementNamed(
                                                       AppRouter.homeScreen);

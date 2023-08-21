@@ -3,6 +3,7 @@ import 'package:final_year_project/app/router/router.dart';
 import 'package:final_year_project/common/controller/chat_controller.dart';
 import 'package:final_year_project/common/controller/post_controller.dart';
 import 'package:final_year_project/common/controller/ui_controller.dart';
+import 'package:final_year_project/screens/chat.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +28,7 @@ class NoticeBoard extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        // home: const Chats(),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: (settings) {
           return AppRouter.onGenerateRoute(settings);

@@ -17,7 +17,7 @@ class NoticesGrid extends StatelessWidget {
       ),
       shadowColor: Colors.black,
       elevation: 6,
-      color: const Color.fromARGB(255, 174, 243, 175),
+      color: Color.fromARGB(255, 245, 240, 240),
       child: LayoutBuilder(
         builder: (context, constraint) {
           return SizedBox(
@@ -35,7 +35,7 @@ class NoticesGrid extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return Card(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(17),
                       ),
                       elevation: 6.6,
                       color: Colors.white,

@@ -1,8 +1,7 @@
-import 'package:final_year_project/auth/controller/auth_controller.dart';
 import 'package:final_year_project/models/user_post.dart';
 import 'package:final_year_project/widgets/common/my_circle_avatars.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../app/router/router.dart';
 
@@ -32,16 +31,18 @@ class UserProfileSection extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 35),
             child: Row(
               children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    elevation: 10,
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppRouter.chatScreen);
-                  },
-                  child: const Text("Message"),
-                ),
+                posts.uid == FirebaseAuth.instance.currentUser!.uid
+                    ? ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          elevation: 10,
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, AppRouter.chatScreen);
+                        },
+                        child: const Text("Message"),
+                      )
+                    : const SizedBox(),
                 const SizedBox(
                   width: 20,
                 ),
