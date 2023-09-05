@@ -23,22 +23,28 @@ class _IndivisualNoticesPageState extends State<IndivisualNoticesPage>
     with TickerProviderStateMixin {
   @override
   void initState() {
-    tabController = TabController(length: 4, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
   late TabController tabController;
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
+    return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection("posts")
             .where("uid", isEqualTo: widget.posts.uid)
             .snapshots(),
         builder: (context, snapshot) {
           final data = snapshot.data!.docs
-              .map((e) => UserPosts.fromJson(e.data()))
+              .map((e) => UserPosts.fromJson(e.data() as Map<String, dynamic>))
               .toList();
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return const Text('Error');
+          }
           return SafeArea(
             child: Scaffold(
               appBar: AppBar(
@@ -99,9 +105,6 @@ class _IndivisualNoticesPageState extends State<IndivisualNoticesPage>
                                   text: "About",
                                 ),
                                 Tab(
-                                  text: "Vedios",
-                                ),
-                                Tab(
                                   text: "Socail Likns",
                                 ),
                               ],
@@ -127,7 +130,6 @@ class _IndivisualNoticesPageState extends State<IndivisualNoticesPage>
                                       );
                                     }),
                                   ),
-                                  const Text("vedios"),
                                   const Text("hhhh"),
                                   const Text("ddddd"),
                                 ],

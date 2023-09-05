@@ -17,6 +17,7 @@ import 'package:final_year_project/screens/story_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../screens/message_screen.dart';
+import '../../screens/user_orginization.dart';
 
 class AppRouter {
   static const String splash = "/";
@@ -34,6 +35,7 @@ class AppRouter {
   static const String homeScreen = "/homeScreen";
   static const String messagesScreen = "/messages_screen";
   static const String chatScreen = "/chatScreen";
+  static const String userOrganization = "/userOrganization";
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -42,12 +44,17 @@ class AppRouter {
           builder: ((context) => const Splash()),
         );
       case login:
+        final args = settings.arguments as String;
         return MaterialPageRoute(
-          builder: ((context) => Login()),
-        );
+            builder: ((context) => Login(
+                  type: args,
+                )));
       case signUp:
+        final args = settings.arguments as String;
         return MaterialPageRoute(
-          builder: ((context) => SignUp()),
+          builder: ((context) => SignUp(
+                type: args,
+              )),
         );
       case dashboard:
         return MaterialPageRoute(
@@ -121,6 +128,11 @@ class AppRouter {
       case chatScreen:
         return MaterialPageRoute(
           builder: ((context) => ChatScreen()),
+          settings: settings,
+        );
+      case userOrganization:
+        return MaterialPageRoute(
+          builder: ((context) => const UserOrganization()),
           settings: settings,
         );
     }

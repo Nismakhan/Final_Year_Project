@@ -8,11 +8,14 @@ BoxDecoration decorationForTextFieldsContainers() {
 }
 
 InputDecoration decorationForTextfields(
-    {required String text, required IconData icon}) {
+    {required String text, required IconData icon, IconData? suffix, Function()? onTap}) {
   return InputDecoration(
-    suffixIcon: Icon(
+    prefixIcon: Icon(
       icon,
     ),
+    suffixIcon: GestureDetector(
+      onTap: onTap,
+      child: Icon(suffix)),
     labelText: text,
     floatingLabelBehavior: FloatingLabelBehavior.never,
     border: const OutlineInputBorder(

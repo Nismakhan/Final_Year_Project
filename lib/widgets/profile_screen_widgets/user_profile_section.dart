@@ -74,12 +74,16 @@ class _UserProfileSectionState extends State<UserProfileSection> {
                               child: CircleAvatar(
                                 child: IconButton(
                                   onPressed: () {
-                                    imageDialogue(
-                                      context,
-                                      onSelect: (file) {
-                                        provider.changeImage(image: file);
-                                      },
-                                    );
+                                    showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return imageDialogue(
+                                            context,
+                                            onSelect: (file) {
+                                              provider.changeImage(image: file);
+                                            },
+                                          );
+                                        });
                                   },
                                   icon: const Icon(Icons.camera),
                                 ),

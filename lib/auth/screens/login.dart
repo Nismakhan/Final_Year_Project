@@ -1,19 +1,27 @@
 import 'dart:developer';
+import 'package:final_year_project/auth/auth_services/facebook_sign_in.dart';
 import 'package:final_year_project/auth/controller/auth_controller.dart';
 import 'package:final_year_project/auth/widgets/decoration_for_textfields.dart';
 import 'package:final_year_project/auth/widgets/my_buttions.dart';
 import 'package:final_year_project/auth/widgets/third_party_icons.dart';
 import 'package:final_year_project/app/router/router.dart';
 import 'package:final_year_project/common/controller/post_controller.dart';
+import 'package:final_year_project/screens/user_orginization.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:final_year_project/widgets/common/stack_circles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+import '../auth_services/google_sign_up.dart';
+import '../controller/loading_controller.dart';
 
+class Login extends StatefulWidget {
+  const Login({
+    super.key,
+    required this.type,
+  });
+  final String type;
   @override
   State<Login> createState() => _LoginState();
 }
@@ -25,7 +33,14 @@ class _LoginState extends State<Login> {
 
   final TextEditingController _passwardController = TextEditingController();
 
-  String a = 'Password not corrext';
+  String a = 'Password not correct';
+  bool _isHidden = true;
+  void togglePasswordView() {
+    setState(() {
+      print('azan');
+      _isHidden = !_isHidden;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,18 +72,22 @@ class _LoginState extends State<Login> {
                     : const SizedBox(),
                 Center(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
+                    padding: const EdgeInsets.only(top: 10.0),
                     child: SizedBox(
-                      width: screenWidth(context) * 0.8,
+                      width: screenWidth(context) * 0.7,
                       child: Builder(builder: (context) {
                         return Form(
                           key: _formKey,
                           child: SingleChildScrollView(
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Image.asset(
                                   "assets/images/logo.png",
-                                  width: 150,
+                                  width: 200,
+                                ),
+                                const SizedBox(
+                                  height: 25,
                                 ),
                                 Container(
                                   decoration:
@@ -96,18 +115,24 @@ class _LoginState extends State<Login> {
                                       decorationForTextFieldsContainers(),
                                   width: 250,
                                   child: TextFormField(
-                                      controller: _passwardController,
-                                      obscuringCharacter: "*",
-                                      obscureText: true,
-                                      validator: ((value) {
-                                        if (value!.length < 6) {
-                                          return a;
-                                        }
-                                        return null;
-                                      }),
-                                      decoration: decorationForTextfields(
-                                          text: "Enter Password",
-                                          icon: Icons.remove_red_eye)),
+                                    controller: _passwardController,
+                                    obscuringCharacter: "*",
+                                    obscureText: _isHidden ? true : false,
+                                    validator: ((value) {
+                                      if (value!.length < 6) {
+                                        return a;
+                                      }
+                                      return null;
+                                    }),
+                                    decoration: decorationForTextfields(
+                                      onTap: togglePasswordView,
+                                      text: "Enter Password",
+                                      icon: Icons.key_outlined,
+                                      suffix: _isHidden
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                    ),
+                                  ),
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -115,7 +140,7 @@ class _LoginState extends State<Login> {
                                     const Text(
                                       "forgot passward ? ",
                                       style: TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 11,
                                       ),
                                     ),
                                     TextButton(
@@ -126,7 +151,7 @@ class _LoginState extends State<Login> {
                                       child: const Text(
                                         "Click here",
                                         style: TextStyle(
-                                          fontSize: 13,
+                                          fontSize: 15,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -135,71 +160,80 @@ class _LoginState extends State<Login> {
                                 ),
                                 Consumer<AuthController>(
                                   builder: (context, value, child) {
-                                    return MyButtions(
-                                      isloading: value.isloading,
-                                      width: 250,
-                                      height: 50,
-                                      text: "Login",
-                                      onSelect: () async {
-                                        try {
-                                          if (_formKey.currentState!
-                                              .validate()) {
-                                            value.loading();
-                                            // ignore: use_build_context_synchronously
-                                            await context
-                                                .read<AuthController>()
-                                                .logInWithEmailAndPassword(
-                                                    email:
-                                                        _emailController.text,
-                                                    password:
-                                                        _passwardController
-                                                            .text);
-                                            value.loading();
-                                            // ignore: use_build_context_synchronously
-                                            final posts = context
-                                                .read<PostController>()
-                                                .getCurrentUsersPosts(
-                                                    uid: FirebaseAuth.instance
-                                                        .currentUser!.uid);
-                                            log("a m clikking");
-                                            // ignore: use_build_context_synchronously
-                                            final myUser = await context
-                                                .read<AuthController>()
-                                                .checkCurrentUser(context);
-                                            if (myUser != null &&
-                                                posts != null) {
-                                              Navigator.of(context)
-                                                  .pushReplacementNamed(
-                                                      AppRouter.homeScreen);
-                                            } else {
-                                              Navigator.of(context)
-                                                  .pushReplacementNamed(
-                                                      AppRouter.login);
+                                    // return MyButtions(
+                                    //   isloading: value.isloading,
+                                    //   width: 250,
+                                    //   height: 50,
+                                    //   text: "Login",
+                                    //   onSelect: () async {
+
+                                    //   },
+                                    // );
+                                    final load =
+                                        context.read<LoadingController>();
+                                    return ElevatedButtons(
+                                        isloading: load.isloading,
+                                        onPres: () async {
+                                          try {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              load.loading();
                                               // ignore: use_build_context_synchronously
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      const AlertDialog(
-                                                        content: Text(
-                                                          'Enter Correct Credential',
-                                                        ),
-                                                      ));
+                                              await context
+                                                  .read<AuthController>()
+                                                  .logInWithEmailAndPassword(
+                                                      email:
+                                                          _emailController.text,
+                                                      password:
+                                                          _passwardController
+                                                              .text);
+                                              load.loading();
+                                              // ignore: use_build_context_synchronously
+                                              final posts = context
+                                                  .read<PostController>()
+                                                  .getCurrentUsersPosts(
+                                                      uid: FirebaseAuth.instance
+                                                          .currentUser!.uid);
+                                              log("a m clikking");
+                                              // ignore: use_build_context_synchronously
+                                              final myUser = await context
+                                                  .read<AuthController>()
+                                                  .checkCurrentUser(context);
+                                              if (myUser != null &&
+                                                  posts != null) {
+                                                Navigator.of(context)
+                                                    .pushReplacementNamed(
+                                                        AppRouter.homeScreen);
+                                              } else {
+                                                Navigator.of(context)
+                                                    .pushReplacementNamed(
+                                                        AppRouter.login);
+                                                // ignore: use_build_context_synchronously
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        const AlertDialog(
+                                                          content: Text(
+                                                            'Enter Correct Credential',
+                                                          ),
+                                                        ));
+                                              }
+                                              _emailController.clear();
+                                              _passwardController.clear();
                                             }
-                                            _emailController.clear();
-                                            _passwardController.clear();
+                                          } catch (e) {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    const AlertDialog(
+                                                      content: Text(
+                                                        'Network error',
+                                                      ),
+                                                    ));
+                                            load.loading();
                                           }
-                                        } catch (e) {
-                                          showDialog(
-                                              context: context,
-                                              builder: (context) =>
-                                                  const AlertDialog(
-                                                    content: Text(
-                                                      'Network error',
-                                                    ),
-                                                  ));
-                                        }
-                                      },
-                                    );
+                                        },
+                                        text: 'Login');
                                   },
                                 ),
                                 const SizedBox(
@@ -216,12 +250,14 @@ class _LoginState extends State<Login> {
                                       onTap: () {
                                         Navigator.of(context)
                                             .pushReplacementNamed(
-                                                AppRouter.signUp);
+                                                AppRouter.signUp,
+                                                arguments: widget.type);
                                       },
                                       child: const Text(
                                         "SignUp",
                                         style: TextStyle(
-                                          fontSize: 13,
+                                          color: Colors.blue,
+                                          fontSize: 15,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -232,7 +268,63 @@ class _LoginState extends State<Login> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const ThirdPartyIcons()
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        print('google');
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                const AlertDialog(
+                                                  content: Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  ),
+                                                ));
+                                        print(widget.type.toString());
+                                        GoogleServices().signinWithgoogle(
+                                            context, widget.type);
+                                        Navigator.pop(context);
+                                      },
+                                      child: SizedBox(
+                                        child: Image.asset(
+                                          "assets/images/google.png",
+                                          height: 50,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        print('facebook');
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                const AlertDialog(
+                                                  content: Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  ),
+                                                ));
+                                        print(widget.type.toString());
+                                        FaceBookSignup().loginWithFacebook(
+                                          context,
+                                        );
+                                        Navigator.pop(context);
+                                      },
+                                      child: SizedBox(
+                                        child: Image.asset(
+                                          "assets/images/facebook.png",
+                                          height: 50,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),

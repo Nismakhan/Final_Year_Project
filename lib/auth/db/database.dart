@@ -43,6 +43,12 @@ class AuthBD {
     }
   }
 
+  Future<void> googleSignUp(
+    final UserModel user,
+  ) async {
+    await _firestore.collection('users').doc(user.uid).set(user.toJson());
+  }
+
   User? isCurrentUser() {
     return FirebaseAuth.instance.currentUser;
   }

@@ -54,6 +54,14 @@ class AuthController extends ChangeNotifier {
       print("error in controller $e");
     }
   }
+ Future<void> signupwithGoogle({
+    required UserModel user,
+  }) async {
+    await _db.googleSignUp(user);
+    appUser = user;
+
+    notifyListeners();
+  }
 
   Future<User?> checkCurrentUser(BuildContext context) async {
     try {

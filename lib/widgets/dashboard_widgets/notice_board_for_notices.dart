@@ -45,7 +45,7 @@ class _NoticeBoardForNoticesState extends State<NoticeBoardForNotices> {
                     },
                     child: ListTile(
                       leading: MyCircleAvatars(
-                        borderColor: Colors.black,
+                        borderColor: Color.fromARGB(255, 236, 160, 160),
                         raduis: 26,
                         img: widget.posts.profilePicture.toString(),
                       ),
@@ -101,9 +101,11 @@ class _NoticeBoardForNoticesState extends State<NoticeBoardForNotices> {
               ),
             );
           } else {
-            Text("No data found");
+            const Text("No data found");
           }
-          return Text("checking");
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         });
   }
 }

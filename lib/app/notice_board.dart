@@ -7,6 +7,8 @@ import 'package:final_year_project/screens/chat.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../auth/controller/loading_controller.dart';
+
 class NoticeBoard extends StatelessWidget {
   const NoticeBoard({super.key});
 
@@ -26,6 +28,9 @@ class NoticeBoard extends StatelessWidget {
         ChangeNotifierProvider(
           create: ((context) => ChatController()),
         ),
+        ChangeNotifierProvider(
+          create: ((context) => LoadingController())),
+        
       ],
       child: MaterialApp(
         // home: const Chats(),

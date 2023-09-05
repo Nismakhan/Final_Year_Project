@@ -1,6 +1,8 @@
 import 'package:final_year_project/app/router/router.dart';
+import 'package:final_year_project/auth/controller/auth_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -30,13 +32,14 @@ class SideBar extends StatefulWidget {
 class _SideBarState extends State<SideBar> {
   Future signout() async {
     await FirebaseAuth.instance.signOut().then((value) {
-      return Navigator.of(context)
-          .pushNamedAndRemoveUntil(AppRouter.login, (route) => false);
+      return Navigator.of(context).pushNamedAndRemoveUntil(
+          AppRouter.userOrganization, (route) => false);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final data = context.read<AuthController>().appUser;
     return SizedBox(
       width: 300,
       child: ListView(
@@ -44,12 +47,12 @@ class _SideBarState extends State<SideBar> {
           UserAccountsDrawerHeader(
             decoration:
                 const BoxDecoration(color: Color.fromARGB(255, 174, 243, 175)),
-            accountName: const Text('Oflutter.com'),
-            accountEmail: const Text('example@gmail.com'),
+            accountName: Text(data!.name),
+            accountEmail: Text(data.email),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.network(
-                  'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
+                  data.profileUrl!,
                   fit: BoxFit.cover,
                   width: 90,
                   height: 90,

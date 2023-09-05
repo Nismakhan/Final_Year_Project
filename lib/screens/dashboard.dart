@@ -63,15 +63,20 @@ class DashboardBody extends StatelessWidget {
           width: constraint.maxWidth > 500 ? 500 : screenWidth(context) * 0.9,
           child: Padding(
             padding: const EdgeInsets.only(top: 18.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                UploadingPostWidget(),
-                Expanded(
-                  flex: 5,
-                  child: NoticesStream(),
+            child: SingleChildScrollView(
+              child: SizedBox(
+                height: screenHeight(context),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    UploadingPostWidget(),
+                    Expanded(
+                      flex: 5,
+                      child: NoticesStream(),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         );
