@@ -10,6 +10,7 @@ import 'package:final_year_project/screens/followers_screen.dart';
 import 'package:final_year_project/screens/following_screen.dart';
 import 'package:final_year_project/screens/home_screen.dart';
 import 'package:final_year_project/screens/indivisual_notices_page.dart';
+import 'package:final_year_project/screens/onboarding.dart';
 import 'package:final_year_project/screens/other_user_profile_screen.dart';
 import 'package:final_year_project/screens/profile_screen.dart';
 import 'package:final_year_project/screens/story_view.dart';
@@ -20,6 +21,7 @@ import '../../screens/message_screen.dart';
 
 class AppRouter {
   static const String splash = "/";
+  static const String onboarding = "/onboarding";
   static const String login = "/login";
   static const String signUp = "/sign_up";
   static const String dashboard = "/dashboard";
@@ -40,6 +42,10 @@ class AppRouter {
       case splash:
         return MaterialPageRoute(
           builder: ((context) => const Splash()),
+        );
+      case onboarding:
+        return MaterialPageRoute(
+          builder: ((context) => const Onboarding()),
         );
       case login:
         return MaterialPageRoute(
