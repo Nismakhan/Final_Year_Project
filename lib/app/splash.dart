@@ -28,7 +28,7 @@ class _SplashState extends State<Splash> {
             .read<PostController>()
             .getCurrentUsersPosts(uid: isCurrentUser.uid);
       } else {
-        Navigator.of(context).pushReplacementNamed(AppRouter.userOrganization);
+        Navigator.of(context).pushReplacementNamed(AppRouter.onboarding);
       }
     });
   }
