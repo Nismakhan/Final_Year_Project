@@ -15,33 +15,6 @@ class NoticeBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: ((context) => AuthController()),
-        ),
-        ChangeNotifierProvider(
-          create: ((context) => PostController()),
-        ),
-        ChangeNotifierProvider(
-          create: ((context) => UiController()),
-        ),
-        ChangeNotifierProvider(
-          create: ((context) => ChatController()),
-        ),
-        ChangeNotifierProvider(
-          create: ((context) => LoadingController())),
-        
-      ],
-      child: MaterialApp(
-        // home: const Chats(),
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: (settings) {
-          return AppRouter.onGenerateRoute(settings);
-        },
-      ),
-=======
     return ScreenUtilInit(
       designSize: const Size(425, 926),
       builder: (context, child) {
@@ -69,7 +42,6 @@ class NoticeBoard extends StatelessWidget {
           ),
         );
       },
->>>>>>> main
     );
   }
 }
