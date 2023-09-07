@@ -12,6 +12,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../utils/colors.dart';
+
 class UploadingPostWidget extends StatefulWidget {
   const UploadingPostWidget({
     Key? key,
@@ -49,6 +51,7 @@ class _UploadingPostWidgetState extends State<UploadingPostWidget> {
                 children: [
                   ListTile(
                     title: TextFormField(
+                      style: const TextStyle(color: AppColors.blueColor),
                       controller: _postText,
                       validator: (value) {
                         if (value == null ||
@@ -58,10 +61,12 @@ class _UploadingPostWidgetState extends State<UploadingPostWidget> {
                         return null;
                       },
                       decoration: const InputDecoration(
-                        label: Text("Write Something..."),
-                      ),
+                          label: Text("Write Something...")),
                     ),
-                    trailing: const Icon(Icons.edit),
+                    trailing: const Icon(
+                      Icons.edit,
+                      color: AppColors.blueColor,
+                    ),
                   ),
                   const Divider(
                     thickness: 1,
@@ -78,6 +83,7 @@ class _UploadingPostWidgetState extends State<UploadingPostWidget> {
                               Builder(builder: (context) {
                                 final file = File(_pickedImage!.path);
                                 return Stack(
+                                  clipBehavior: Clip.none,
                                   children: [
                                     Image.file(
                                       file,
@@ -85,14 +91,17 @@ class _UploadingPostWidgetState extends State<UploadingPostWidget> {
                                       height: 80,
                                     ),
                                     Positioned(
-                                      right: -10,
+                                      right: -25,
                                       child: IconButton(
                                           onPressed: () {
                                             setState(() {
                                               _pickedImage = null;
                                             });
                                           },
-                                          icon: const Icon(Icons.close)),
+                                          icon: const Icon(
+                                            Icons.close,
+                                            color: Colors.red,
+                                          )),
                                     ),
                                   ],
                                 );
@@ -113,8 +122,9 @@ class _UploadingPostWidgetState extends State<UploadingPostWidget> {
                             ),
                             IconButton(
                               icon: const Icon(
-                                Icons.image,
-                                color: Colors.blue,
+                                Icons.camera_alt,
+                                color: AppColors.blueColor,
+                                size: 25,
                               ),
                               onPressed: () {
                                 showModalBottomSheet(
@@ -141,27 +151,30 @@ class _UploadingPostWidgetState extends State<UploadingPostWidget> {
                                   padding: EdgeInsets.all(8.0),
                                   child: Center(
                                     child: CircularProgressIndicator(
-                                      color: Colors.amber,
+                                      color: AppColors.blueColor,
                                     ),
                                   ),
                                 )
                               : Container(
                                   width: 100,
                                   height: 30,
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10),
-                                    ),
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Color.fromARGB(255, 228, 211, 62),
-                                        Colors.deepOrange,
-                                      ],
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.centerRight,
-                                    ),
-                                  ),
-                                  child: OutlinedButton(
+
+                                  // gradient: LinearGradient(
+                                  //   colors: [
+                                  //     Color.fromARGB(255, 228, 211, 62),
+                                  //     Colors.deepOrange,
+                                  //   ],
+                                  // begin: Alignment.centerLeft,
+                                  // end: Alignment.centerRight,
+                                  // ),
+                                  // color: AppColors.blueColor,
+
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        backgroundColor: AppColors.blueColor),
                                     onPressed: () async {
                                       if (_formKey.currentState!.validate()) {
                                         try {
@@ -196,7 +209,7 @@ class _UploadingPostWidgetState extends State<UploadingPostWidget> {
                                             _pickedImage = null;
                                           });
                                           ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(
+                                              .showSnackBar(const SnackBar(
                                                   content:
                                                       Text("Post Uploaded")));
                                         } catch (e) {

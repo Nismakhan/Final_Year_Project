@@ -16,10 +16,10 @@ class AuthController extends ChangeNotifier {
   final AuthBD _db = AuthBD();
   bool isloading = false;
 
-  loading() {
-    isloading = !isloading;
-    notifyListeners();
-  }
+  // loading() {
+  //   isloading = !isloading;
+  //   notifyListeners();
+  // }
 
   Future<void> logInWithEmailAndPassword({
     required String email,

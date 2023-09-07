@@ -46,7 +46,8 @@ class _OnboardingState extends State<Onboarding> {
   }
 
   void navigateToLoginScreen() {
-    Navigator.of(context).pushReplacementNamed(AppRouter.login);
+    
+    Navigator.of(context).pushReplacementNamed(AppRouter.userOrganization);
   }
 
   @override

@@ -1,15 +1,26 @@
 import 'package:final_year_project/app/router/router.dart';
+import 'package:final_year_project/models/like_model.dart';
 import 'package:final_year_project/models/user_post.dart';
 import 'package:final_year_project/screens/comments.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:flutter/material.dart';
 
-class LikeCommentsAndShare extends StatelessWidget {
-  const LikeCommentsAndShare({
+import '../../utils/colors.dart';
+
+class LikeCommentsAndShare extends StatefulWidget {
+  LikeCommentsAndShare({
     required this.posts,
     Key? key,
   }) : super(key: key);
   final UserPosts posts;
+
+  @override
+  State<LikeCommentsAndShare> createState() => _LikeCommentsAndShareState();
+}
+
+class _LikeCommentsAndShareState extends State<LikeCommentsAndShare> {
+  bool isLike = false;
+
   @override
   Widget build(BuildContext context) {
     return screenWidth(context) > 50 && screenWidth(context) < 300
@@ -18,13 +29,6 @@ class LikeCommentsAndShare extends StatelessWidget {
             children: [
               Row(
                 children: const [
-                  Icon(
-                    Icons.thumb_up,
-                    size: 30,
-                  ),
-                  SizedBox(
-                    width: 7,
-                  ),
                   Text(
                     "Like",
                     style: TextStyle(
@@ -61,20 +65,31 @@ class LikeCommentsAndShare extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
-                children: const [
-                  Icon(
-                    Icons.thumb_up,
-                    size: 30,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isLike = !isLike;
+                      });
+                      // final like=LikeModel(likeId: posts.postId, uid: uid, userName: userName, dateAdded: dateAdded, postId: postId,)
+                    },
+                    child: isLike
+                        ? const ImageIcon(
+                            AssetImage('assets/images/like.png'),
+                          )
+                        : const ImageIcon(
+                            AssetImage('assets/images/up.png'),
+                          ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 7,
                   ),
-                  Text(
+                  const Text(
                     "Like",
                     style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.blueColor),
                   ),
                 ],
               ),

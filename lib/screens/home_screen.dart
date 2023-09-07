@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../common/controller/ui_controller.dart';
 import '../common/my_bottem_nav.dart';
+import '../utils/colors.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -13,22 +14,34 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: const MyBottomNav(),
-        body: Consumer<UiController>(builder: (context, provider, _) {
-          return PageView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: provider.pageCon,
-            // onPageChanged: (value) {
-            //   provider.changeCurrentIndex(value);
-            // },
-            children: [
-              const Dashboard(),
-              const ProfileScreen(),
-              const Notifications(),
-              Explore()
-              // IndivisualPostPage(),
-            ],
-          );
-        }));
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(color: Colors.transparent),
+        child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(30.0),
+              topRight: Radius.circular(30.0),
+            ),
+            child: Theme(
+                data: Theme.of(context).copyWith(
+                    canvasColor: const Color.fromARGB(255, 174, 176, 241)),
+                child: const MyBottomNav())),
+      ),
+      body: Consumer<UiController>(builder: (context, provider, _) {
+        return PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: provider.pageCon,
+          // onPageChanged: (value) {
+          //   provider.changeCurrentIndex(value);
+          // },
+          children: [
+            const Dashboard(),
+            const ProfileScreen(),
+            const Notifications(),
+            Explore()
+            // IndivisualPostPage(),
+          ],
+        );
+      }),
+    );
   }
 }

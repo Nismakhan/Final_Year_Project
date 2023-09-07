@@ -16,8 +16,10 @@ class AuthBD {
     required String password,
   }) async {
     try {
-      final credentials = await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
+      await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       // return await getUserById(credentials.user!.uid);
     } on FirebaseAuthException catch (error, stacktrace) {
       print("An error occur: $error");

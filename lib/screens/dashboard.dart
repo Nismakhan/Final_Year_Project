@@ -7,6 +7,7 @@ import 'package:final_year_project/widgets/dashboard_widgets/notices_stream.dart
 import 'package:final_year_project/widgets/dashboard_widgets/uploading-post_widgets.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/colors.dart';
 import '../widgets/dashboard_widgets/my_drawer.dart';
 
 class Dashboard extends StatelessWidget {
@@ -16,7 +17,7 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.black,
+        foregroundColor: AppColors.blueColor,
         backgroundColor: Colors.white,
         title: const Icon(Icons.search),
         actions: [
@@ -29,10 +30,10 @@ class Dashboard extends StatelessWidget {
                   Icons.notifications,
                   size: 35,
                 ),
-                MyCircleAvatars(
-                    borderColor: Colors.black,
-                    img:
-                        "https://static.vecteezy.com/packs/media/vectors/term-bg-1-3d6355ab.jpg"),
+                // MyCircleAvatars(
+                //     borderColor: AppColors.blueColor,
+                //     img:
+                //         "https://static.vecteezy.com/packs/media/vectors/term-bg-1-3d6355ab.jpg"),
               ],
             ),
           )
@@ -59,7 +60,7 @@ class DashboardBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraint) {
-        return SizedBox(
+        return Container(
           width: constraint.maxWidth > 500 ? 500 : screenWidth(context) * 0.9,
           child: Padding(
             padding: const EdgeInsets.only(top: 18.0),
@@ -71,7 +72,6 @@ class DashboardBody extends StatelessWidget {
                   children: const [
                     UploadingPostWidget(),
                     Expanded(
-                      flex: 5,
                       child: NoticesStream(),
                     ),
                   ],

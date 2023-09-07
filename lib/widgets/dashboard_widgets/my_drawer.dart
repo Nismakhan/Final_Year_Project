@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/colors.dart';
+
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
 
@@ -45,18 +47,25 @@ class _SideBarState extends State<SideBar> {
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            decoration:
-                const BoxDecoration(color: Color.fromARGB(255, 174, 243, 175)),
+            decoration: const BoxDecoration(color: AppColors.blueColor),
             accountName: Text(data!.name),
             accountEmail: Text(data.email),
             currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.grey,
               child: ClipOval(
-                child: Image.network(
-                  data.profileUrl!,
-                  fit: BoxFit.cover,
-                  width: 90,
-                  height: 90,
-                ),
+                child: data.profileUrl != null
+                    ? Image.network(
+                        data.profileUrl.toString(),
+                        fit: BoxFit.cover,
+                        width: 90,
+                        height: 90,
+                      )
+                    : Image.asset(
+                        'assets/images/user.png',
+                        fit: BoxFit.cover,
+                        width: 90,
+                        height: 90,
+                      ),
               ),
             ),
           ),

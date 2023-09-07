@@ -32,6 +32,9 @@ class NoticeBoard extends StatelessWidget {
             ChangeNotifierProvider(
               create: ((context) => ChatController()),
             ),
+            ChangeNotifierProvider(
+              create: ((context) => LoadingController()),
+            ),
           ],
           child: MaterialApp(
             // home: const Chats(),

@@ -169,71 +169,74 @@ class _LoginState extends State<Login> {
 
                                     //   },
                                     // );
-                                    final load =
-                                        context.read<LoadingController>();
-                                    return ElevatedButtons(
-                                        isloading: load.isloading,
-                                        onPres: () async {
-                                          try {
-                                            if (_formKey.currentState!
-                                                .validate()) {
-                                              load.loading();
-                                              // ignore: use_build_context_synchronously
-                                              await context
-                                                  .read<AuthController>()
-                                                  .logInWithEmailAndPassword(
-                                                      email:
-                                                          _emailController.text,
-                                                      password:
-                                                          _passwardController
-                                                              .text);
-                                              load.loading();
-                                              // ignore: use_build_context_synchronously
-                                              final posts = context
-                                                  .read<PostController>()
-                                                  .getCurrentUsersPosts(
-                                                      uid: FirebaseAuth.instance
-                                                          .currentUser!.uid);
-                                              log("a m clikking");
-                                              // ignore: use_build_context_synchronously
-                                              final myUser = await context
-                                                  .read<AuthController>()
-                                                  .checkCurrentUser(context);
-                                              if (myUser != null &&
-                                                  posts != null) {
-                                                Navigator.of(context)
-                                                    .pushReplacementNamed(
-                                                        AppRouter.homeScreen);
-                                              } else {
-                                                Navigator.of(context)
-                                                    .pushReplacementNamed(
-                                                        AppRouter.login);
+
+                                    return Consumer<LoadingController>(
+                                        builder: (context, value, child) {
+                                      return ElevatedButtons(
+                                          isloading: value.isloading,
+                                          onPres: () async {
+                                            try {
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                value.loading();
                                                 // ignore: use_build_context_synchronously
-                                                showDialog(
-                                                    context: context,
-                                                    builder: (context) =>
-                                                        const AlertDialog(
-                                                          content: Text(
-                                                            'Enter Correct Credential',
-                                                          ),
-                                                        ));
+                                                await context
+                                                    .read<AuthController>()
+                                                    .logInWithEmailAndPassword(
+                                                        email: _emailController
+                                                            .text,
+                                                        password:
+                                                            _passwardController
+                                                                .text);
+
+                                                // ignore: use_build_context_synchronously
+                                                final posts = await context
+                                                    .read<PostController>()
+                                                    .getCurrentUsersPosts(
+                                                        uid: FirebaseAuth
+                                                            .instance
+                                                            .currentUser!
+                                                            .uid);
+                                                log("a m clikking");
+                                                // ignore: use_build_context_synchronously
+                                                final myUser = await context
+                                                    .read<AuthController>()
+                                                    .checkCurrentUser(context);
+                                                if (myUser != null) {
+                                                  Navigator.of(context)
+                                                      .pushReplacementNamed(
+                                                          AppRouter.homeScreen);
+                                                } else {
+                                                  Navigator.of(context)
+                                                      .pushReplacementNamed(
+                                                          AppRouter.login);
+
+                                                  value.loading();
+                                                  // ignore: use_build_context_synchronously
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          const AlertDialog(
+                                                            content: Text(
+                                                              'Enter Correct Credential',
+                                                            ),
+                                                          ));
+                                                }
+                                                _emailController.clear();
+                                                _passwardController.clear();
                                               }
-                                              _emailController.clear();
-                                              _passwardController.clear();
+                                            } catch (e) {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                       AlertDialog(
+                                                        content: Text(e.toString()),
+                                                      ));
+                                              value.loading();
                                             }
-                                          } catch (e) {
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) =>
-                                                    const AlertDialog(
-                                                      content: Text(
-                                                        'Network error',
-                                                      ),
-                                                    ));
-                                            load.loading();
-                                          }
-                                        },
-                                        text: 'Login');
+                                          },
+                                          text: 'Login');
+                                    });
                                   },
                                 ),
                                 const SizedBox(

@@ -36,12 +36,12 @@ class _IndivisualNoticesPageState extends State<IndivisualNoticesPage>
             .where("uid", isEqualTo: widget.posts.uid)
             .snapshots(),
         builder: (context, snapshot) {
-          final data = snapshot.data!.docs
-              .map((e) => UserPosts.fromJson(e.data() as Map<String, dynamic>))
-              .toList();
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
+          final data = snapshot.data!.docs
+              .map((e) => UserPosts.fromJson(e.data() as Map<String, dynamic>))
+              .toList();
           if (snapshot.hasError) {
             return const Text('Error');
           }

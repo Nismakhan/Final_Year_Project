@@ -29,6 +29,11 @@ class _NoticeBoardForNoticesState extends State<NoticeBoardForNotices> {
             .where("uid", isEqualTo: widget.posts.uid)
             .snapshots(),
         builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           if (snapshot.hasData) {
             final data = snapshot.data!.docs
                 .map((e) => UserPosts.fromJson(e.data()))
@@ -85,6 +90,7 @@ class _NoticeBoardForNoticesState extends State<NoticeBoardForNotices> {
                   ),
                   NoticesGrid(
                     posts: data,
+                    up: widget.posts,
                   ),
                   const SizedBox(
                     height: 10,
@@ -93,8 +99,11 @@ class _NoticeBoardForNoticesState extends State<NoticeBoardForNotices> {
                     padding: const EdgeInsets.symmetric(
                       horizontal: 50,
                     ),
-                    child: LikeCommentsAndShare(
-                      posts: widget.posts,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: LikeCommentsAndShare(
+                        posts: widget.posts,
+                      ),
                     ),
                   )
                 ],
@@ -103,9 +112,7 @@ class _NoticeBoardForNoticesState extends State<NoticeBoardForNotices> {
           } else {
             const Text("No data found");
           }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: Text(''));
         });
   }
 }
