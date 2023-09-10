@@ -46,7 +46,6 @@ class _OnboardingState extends State<Onboarding> {
   }
 
   void navigateToLoginScreen() {
-    
     Navigator.of(context).pushReplacementNamed(AppRouter.userOrganization);
   }
 
@@ -62,7 +61,8 @@ class _OnboardingState extends State<Onboarding> {
               padding: const EdgeInsets.all(19.0),
               child: InkWell(
                 onTap: () {
-                  _pageController.jumpToPage(onboardingData.length - 1);
+                  // _pageController.jumpToPage(onboardingData.length - 1);
+                  navigateToLoginScreen();
                 },
                 child: currentIndex.value == onboardingData.length - 1
                     ? const SizedBox()

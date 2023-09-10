@@ -1,3 +1,4 @@
+import 'package:final_year_project/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class StackCirlcles extends StatelessWidget {
@@ -11,8 +12,8 @@ class StackCirlcles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration:
-          const BoxDecoration(color: Colors.green, shape: BoxShape.circle),
+      decoration: const BoxDecoration(
+          color: AppColors.blueColor, shape: BoxShape.circle),
       width: width,
       height: height,
       child: const SizedBox(

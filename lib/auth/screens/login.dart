@@ -1,18 +1,19 @@
 import 'dart:developer';
 import 'package:final_year_project/auth/auth_services/facebook_sign_in.dart';
 import 'package:final_year_project/auth/controller/auth_controller.dart';
-import 'package:final_year_project/auth/widgets/decoration_for_textfields.dart';
-import 'package:final_year_project/auth/widgets/my_buttions.dart';
-import 'package:final_year_project/auth/widgets/third_party_icons.dart';
 import 'package:final_year_project/app/router/router.dart';
+import 'package:final_year_project/common/Extensions/custom_sizedbox.dart';
 import 'package:final_year_project/common/controller/post_controller.dart';
+import 'package:final_year_project/common/textfield_decoration.dart';
 import 'package:final_year_project/screens/user_orginization.dart';
+import 'package:final_year_project/utils/colors.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:final_year_project/widgets/common/stack_circles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter/foundation.dart';
 import '../auth_services/google_sign_up.dart';
 import '../controller/loading_controller.dart';
 
@@ -74,7 +75,7 @@ class _LoginState extends State<Login> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 10.0),
                     child: SizedBox(
-                      width: screenWidth(context) * 0.7,
+                      width: kIsWeb ? 350 : screenWidth(context) * 0.7,
                       child: Builder(builder: (context) {
                         return Form(
                           key: _formKey,
@@ -84,56 +85,76 @@ class _LoginState extends State<Login> {
                               children: [
                                 Image.asset(
                                   "assets/images/logo.png",
-                                  width: 200,
-                                ),
-                                const SizedBox(
-                                  height: 25,
+                                  width: 300.w,
+                                  height: 360.h,
                                 ),
                                 Container(
+                                  width: 380.w,
+                                  height: 80.h,
                                   decoration:
-                                      decorationForTextFieldsContainers(),
-                                  width: 250,
-                                  child: TextFormField(
-                                    controller: _emailController,
-                                    validator: ((value) {
-                                      final expression = RegExp(
-                                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-                                      if (!expression.hasMatch(value!)) {
-                                        return 'Invalid Email';
-                                      }
-                                      return null;
-                                    }),
-                                    decoration: decorationForTextfields(
-                                        text: "Enter Email", icon: Icons.email),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Container(
-                                  decoration:
-                                      decorationForTextFieldsContainers(),
-                                  width: 250,
-                                  child: TextFormField(
-                                    controller: _passwardController,
-                                    obscuringCharacter: "*",
-                                    obscureText: _isHidden ? true : false,
-                                    validator: ((value) {
-                                      if (value!.length < 6) {
-                                        return a;
-                                      }
-                                      return null;
-                                    }),
-                                    decoration: decorationForTextfields(
-                                      onTap: togglePasswordView,
-                                      text: "Enter Password",
-                                      icon: Icons.key_outlined,
-                                      suffix: _isHidden
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
+                                      containerShapeDecorationForTextField(),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: TextFormField(
+                                        controller: _emailController,
+                                        validator: ((value) {
+                                          final expression = RegExp(
+                                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                                          if (!expression.hasMatch(value!)) {
+                                            return 'Invalid Email';
+                                          }
+                                          return null;
+                                        }),
+                                        decoration: inputDecorationForTextField(
+                                          prefixIcon: Icons.email,
+                                          hintText: "Enter Email",
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
+                                20.cusSH,
+                                Container(
+                                  width: 380.w,
+                                  height: 80.h,
+                                  decoration:
+                                      containerShapeDecorationForTextField(),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: TextFormField(
+                                        controller: _passwardController,
+                                        obscuringCharacter: "*",
+                                        obscureText: _isHidden ? true : false,
+                                        validator: ((value) {
+                                          if (value!.length < 6) {
+                                            return a;
+                                          }
+                                          return null;
+                                        }),
+                                        decoration: inputDecorationForTextField(
+                                          prefixIcon: Icons.email,
+                                          suffixIcon: GestureDetector(
+                                            onTap: () => togglePasswordView(),
+                                            child: Icon(
+                                              _isHidden
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off,
+                                              size: kIsWeb ? 17 : 17.sp,
+                                            ),
+                                          ),
+                                          hintText: "Enter Password",
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                15.cusSH,
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
@@ -153,11 +174,13 @@ class _LoginState extends State<Login> {
                                         style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold,
+                                          color: AppColors.blueColor,
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
+                                20.cusSH,
                                 Consumer<AuthController>(
                                   builder: (context, value, child) {
                                     // return MyButtions(
@@ -229,8 +252,9 @@ class _LoginState extends State<Login> {
                                               showDialog(
                                                   context: context,
                                                   builder: (context) =>
-                                                       AlertDialog(
-                                                        content: Text(e.toString()),
+                                                      AlertDialog(
+                                                        content:
+                                                            Text(e.toString()),
                                                       ));
                                               value.loading();
                                             }
@@ -239,9 +263,7 @@ class _LoginState extends State<Login> {
                                     });
                                   },
                                 ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
+                                20.cusSH,
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -259,7 +281,7 @@ class _LoginState extends State<Login> {
                                       child: const Text(
                                         "SignUp",
                                         style: TextStyle(
-                                          color: Colors.blue,
+                                          color: AppColors.blueColor,
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -267,10 +289,9 @@ class _LoginState extends State<Login> {
                                     ),
                                   ],
                                 ),
+                                15.cusSH,
                                 const Text("Or"),
-                                const SizedBox(
-                                  height: 10,
-                                ),
+                                10.cusSH,
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -294,7 +315,8 @@ class _LoginState extends State<Login> {
                                       child: SizedBox(
                                         child: Image.asset(
                                           "assets/images/google.png",
-                                          height: 50,
+                                          height: 30,
+                                          width: 30,
                                         ),
                                       ),
                                     ),
@@ -322,7 +344,8 @@ class _LoginState extends State<Login> {
                                       child: SizedBox(
                                         child: Image.asset(
                                           "assets/images/facebook.png",
-                                          height: 50,
+                                          height: 30,
+                                          width: 30,
                                         ),
                                       ),
                                     ),

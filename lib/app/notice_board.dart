@@ -1,5 +1,6 @@
 import 'package:final_year_project/auth/controller/auth_controller.dart';
 import 'package:final_year_project/app/router/router.dart';
+import 'package:final_year_project/auth/screens/sign_up.dart';
 import 'package:final_year_project/common/controller/chat_controller.dart';
 import 'package:final_year_project/common/controller/post_controller.dart';
 import 'package:final_year_project/common/controller/ui_controller.dart';
@@ -37,7 +38,9 @@ class NoticeBoard extends StatelessWidget {
             ),
           ],
           child: MaterialApp(
-            // home: const Chats(),
+            home: SignUp(
+              type: '',
+            ),
             debugShowCheckedModeBanner: false,
             onGenerateRoute: (settings) {
               return AppRouter.onGenerateRoute(settings);
