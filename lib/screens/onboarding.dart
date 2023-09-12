@@ -1,6 +1,8 @@
 import 'package:final_year_project/app/router/router.dart';
 import 'package:final_year_project/common/elevated_button_style.dart';
 import 'package:final_year_project/utils/colors.dart';
+import 'package:final_year_project/utils/media_query.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -81,6 +83,7 @@ class _OnboardingState extends State<Onboarding> {
         ),
         body: Center(
           child: SizedBox(
+            width: kIsWeb ? 600 : screenWidth(context),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 29.w, vertical: 20.h),
               child: Stack(

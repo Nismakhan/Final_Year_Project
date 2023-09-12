@@ -9,6 +9,8 @@ import 'package:final_year_project/widgets/dashboard_widgets/like_comments_and_s
 import 'package:final_year_project/widgets/dashboard_widgets/notices_grid.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/colors.dart';
+
 class NoticeBoardForNotices extends StatefulWidget {
   const NoticeBoardForNotices({
     required this.posts,
@@ -50,7 +52,7 @@ class _NoticeBoardForNoticesState extends State<NoticeBoardForNotices> {
                     },
                     child: ListTile(
                       leading: MyCircleAvatars(
-                        borderColor: Color.fromARGB(255, 236, 160, 160),
+                        borderColor: AppColors.lightGreyColor,
                         raduis: 26,
                         img: widget.posts.profilePicture.toString(),
                       ),
@@ -69,19 +71,16 @@ class _NoticeBoardForNoticesState extends State<NoticeBoardForNotices> {
                             ],
                           );
                         } else {
-                          return SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                Text(
-                                  widget.posts.name,
-                                ),
-                                const SizedBox(
-                                  width: 1,
-                                ),
-                                Text("(${widget.posts.uniqueId.toString()})"),
-                              ],
-                            ),
+                          return Row(
+                            children: [
+                              Text(
+                                widget.posts.name,
+                              ),
+                              const SizedBox(
+                                width: 1,
+                              ),
+                              Text("(${widget.posts.uniqueId.toString()})"),
+                            ],
                           );
                         }
                       }),

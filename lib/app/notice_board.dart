@@ -1,15 +1,14 @@
 import 'package:final_year_project/auth/controller/auth_controller.dart';
 import 'package:final_year_project/app/router/router.dart';
-import 'package:final_year_project/auth/screens/sign_up.dart';
 import 'package:final_year_project/common/controller/chat_controller.dart';
 import 'package:final_year_project/common/controller/post_controller.dart';
 import 'package:final_year_project/common/controller/ui_controller.dart';
-
+import 'package:final_year_project/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
 import '../auth/controller/loading_controller.dart';
+import '../auth/screens/forgot_password.dart';
 
 class NoticeBoard extends StatelessWidget {
   const NoticeBoard({super.key});
@@ -38,9 +37,6 @@ class NoticeBoard extends StatelessWidget {
             ),
           ],
           child: MaterialApp(
-            home: SignUp(
-              type: '',
-            ),
             debugShowCheckedModeBanner: false,
             onGenerateRoute: (settings) {
               return AppRouter.onGenerateRoute(settings);
