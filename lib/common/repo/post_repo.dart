@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/models/comment_model.dart';
 import 'package:final_year_project/models/like_model.dart';
@@ -191,13 +193,15 @@ class PostRepo {
 
   Future<int> getTotalFollowingCount({required String uid}) async {
     try {
-      return (await _firestore
+      final c = (await _firestore
               .collection("users")
               .doc(uid)
               .collection("followed")
               .count()
               .get())
           .count;
+      log(c.toString());
+      return c;
     } catch (e) {
       rethrow;
     }

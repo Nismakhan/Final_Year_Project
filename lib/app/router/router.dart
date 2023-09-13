@@ -1,3 +1,4 @@
+import 'package:final_year_project/auth/models/user_model.dart';
 import 'package:final_year_project/auth/screens/forgot_password.dart';
 import 'package:final_year_project/auth/screens/login.dart';
 import 'package:final_year_project/auth/screens/sign_up.dart';
@@ -72,6 +73,8 @@ class AppRouter {
         );
       case indivisualNoticesPage:
         final args = settings.arguments as UserPosts;
+    
+
         return MaterialPageRoute(
           builder: ((context) => IndivisualNoticesPage(
                 posts: args,

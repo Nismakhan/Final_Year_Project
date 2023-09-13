@@ -13,7 +13,7 @@ class PostController with ChangeNotifier {
   final _repo = PostRepo();
   bool isloading = false;
   LoadingState state = LoadingState.idle;
-  List<UserPosts> currentUserPosts = List.empty(growable: true);
+  List<UserPosts>? currentUserPosts = List.empty(growable: true);
 
   Future<void> uploadPost(BuildContext context,
       {required UserPosts post, XFile? pickedImage}) async {
@@ -30,7 +30,7 @@ class PostController with ChangeNotifier {
       }
       await _repo.uploadPost(post: post);
       isloading = false;
-      currentUserPosts.add(post);
+      currentUserPosts!.add(post);
       notifyListeners();
     } catch (e) {
       isloading = false;
@@ -39,7 +39,7 @@ class PostController with ChangeNotifier {
     }
   }
 
-  Future<List<UserPosts>> getCurrentUsersPosts({required String uid}) async {
+  Future<List<UserPosts>?> getCurrentUsersPosts({required String uid}) async {
     try {
       if (uid == FirebaseAuth.instance.currentUser!.uid) {
         state = LoadingState.processing;
@@ -138,8 +138,11 @@ class PostController with ChangeNotifier {
   Future<int> getTotalFollowingCount({required String uid}) async {
     try {
       return await _repo.getTotalFollowingCount(uid: uid);
+      notifyListeners();
     } catch (e) {
       rethrow;
     }
   }
+
+  
 }

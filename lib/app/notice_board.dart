@@ -38,9 +38,6 @@ class NoticeBoard extends StatelessWidget {
             ),
           ],
           child: MaterialApp(
-            home: SignUp(
-              type: '',
-            ),
             debugShowCheckedModeBanner: false,
             onGenerateRoute: (settings) {
               return AppRouter.onGenerateRoute(settings);

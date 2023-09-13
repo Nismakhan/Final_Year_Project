@@ -10,6 +10,8 @@ class NoticesStream extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    print('like');
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: FirebaseFirestore.instance
           .collection("posts")

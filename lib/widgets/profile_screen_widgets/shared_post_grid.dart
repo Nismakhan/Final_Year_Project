@@ -60,7 +60,7 @@ class _SharedPostGridState extends State<SharedPostGrid> {
             child: CircularProgressIndicator(),
           )
         : posts.isEmpty
-            ? Center(
+            ? const Center(
                 child: Text("No Shared Posts"),
               )
             : GridView.builder(

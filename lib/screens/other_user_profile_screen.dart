@@ -22,7 +22,7 @@ class OtherUserProfileScreen extends StatefulWidget {
 
 class _OtherUserProfileScreenState extends State<OtherUserProfileScreen> {
   late UserModel user;
-  late List<UserPosts> userPosts;
+  late List<UserPosts>? userPosts;
 
   LoadingState _state = LoadingState.idle;
 

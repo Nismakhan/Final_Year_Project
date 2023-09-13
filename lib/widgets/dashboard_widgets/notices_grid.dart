@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/app/router/router.dart';
+import 'package:final_year_project/auth/models/user_model.dart';
 import 'package:final_year_project/models/user_post.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:flutter/material.dart';
@@ -7,13 +8,15 @@ import 'package:flutter/material.dart';
 import '../../utils/colors.dart';
 
 class NoticesGrid extends StatefulWidget {
-  const NoticesGrid({
+   NoticesGrid({
     required this.posts,
     this.up,
+
     Key? key,
   }) : super(key: key);
   final List<UserPosts>? posts;
   final UserPosts? up;
+  
 
   @override
   State<NoticesGrid> createState() => _NoticesGridState();
@@ -31,6 +34,7 @@ class _NoticesGridState extends State<NoticesGrid> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
+        
           if (snapshot.hasData) {
             final data = snapshot.data!.docs
                 .map((e) => UserPosts.fromJson(e.data()))

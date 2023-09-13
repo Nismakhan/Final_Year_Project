@@ -53,12 +53,12 @@ class GoogleServices {
             await context.read<AuthController>().checkCurrentUser(context);
         log(myuser.toString());
         if (myuser != null) {
-          Navigator.of(context).pushReplacementNamed(AppRouter.dashboard);
+          Navigator.of(context).pushReplacementNamed(AppRouter.homeScreen);
           print('replacement');
         } else {
           Navigator.of(context).pushReplacementNamed(AppRouter.login);
           // ignore: use_build_context_synchronously
-           showDialog(
+          showDialog(
               context: context,
               builder: (context) => const AlertDialog(
                     content: Text(

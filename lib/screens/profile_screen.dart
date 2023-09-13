@@ -96,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               labelColor: Colors.black,
               controller: tabContoller,
               indicatorSize: TabBarIndicatorSize.label,
-              tabs: [
+              tabs: const [
                 Tab(
                   text: "My Post",
                 ),
@@ -109,30 +109,16 @@ class _ProfileScreenState extends State<ProfileScreen>
               child: TabBarView(
                 controller: tabContoller,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Expanded(
-                      child: Consumer<PostController>(
-                          builder: (context, provider, _) {
-                        switch (provider.state) {
-                          case LoadingState.idle:
-                            return const SizedBox();
-                          case LoadingState.processing:
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          case LoadingState.error:
-                            return const Center(
-                              child: Text("Error"),
-                            );
-                          case LoadingState.loaded:
-                            return NoticesGrid(
-                              posts: provider.currentUserPosts,
-                            );
-                        }
-                      }),
-                    ),
-                  ),
+                  Consumer<PostController>(builder: (context, provider, _) {
+                    if (provider.currentUserPosts!.isEmpty) {
+                      return const Center(child: Text('No Posts'));
+                    } else {
+                      return NoticesGrid(
+                        posts: provider.currentUserPosts,
+                        up: provider.currentUserPosts!.first,
+                      );
+                    }
+                  }),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: Expanded(

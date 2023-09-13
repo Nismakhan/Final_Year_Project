@@ -23,6 +23,7 @@ class _LikeCommentsAndShareState extends State<LikeCommentsAndShare> {
 
   @override
   Widget build(BuildContext context) {
+    print('i am rebuilding');
     return screenWidth(context) > 50 && screenWidth(context) < 300
         ? Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
