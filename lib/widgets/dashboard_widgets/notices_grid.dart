@@ -75,11 +75,17 @@ class _NoticesGridState extends State<NoticesGrid> {
                                   borderRadius: BorderRadius.circular(17),
                                 ),
                                 elevation: 6.6,
-                                color: const Color.fromARGB(255, 174, 176, 241),
+                                color: Colors.white,
                                 child: Center(
-                                  child: Text(
-                                    widget.posts![index].about.toString(),
-                                    style: const TextStyle(color: Colors.white),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      widget.posts![index].about.toString(),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                          color: AppColors.lightGreyColor),
+                                    ),
                                   ),
                                 ),
                               ),

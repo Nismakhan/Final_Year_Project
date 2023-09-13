@@ -65,7 +65,7 @@ class AppRouter {
         );
       case dashboard:
         return MaterialPageRoute(
-          builder: ((context) => const Dashboard()),
+          builder: ((context) => Dashboard()),
         );
       case storyview:
         return MaterialPageRoute(

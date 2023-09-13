@@ -15,7 +15,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(color: Colors.transparent),
         child: ClipRRect(
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(30.0),
@@ -23,7 +22,7 @@ class HomeScreen extends StatelessWidget {
             ),
             child: Theme(
                 data: Theme.of(context).copyWith(
-                    canvasColor: const Color.fromARGB(255, 174, 176, 241)),
+                    canvasColor: const Color.fromARGB(255, 235, 235, 235)),
                 child: const MyBottomNav())),
       ),
       body: Consumer<UiController>(builder: (context, provider, _) {
@@ -34,7 +33,7 @@ class HomeScreen extends StatelessWidget {
           //   provider.changeCurrentIndex(value);
           // },
           children: [
-            const Dashboard(),
+            Dashboard(),
             const ProfileScreen(),
             const Notifications(),
             Explore()

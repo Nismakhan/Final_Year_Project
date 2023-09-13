@@ -18,10 +18,8 @@ class _MyBottomNavState extends State<MyBottomNav> {
   Widget build(BuildContext context) {
     return Consumer<UiController>(builder: (context, provider, _) {
       return Container(
-        decoration: BoxDecoration(color: Colors.transparent),
         child: BottomNavigationBar(
-          backgroundColor: Colors.transparent,
-          unselectedItemColor: Colors.white,
+          unselectedItemColor: AppColors.lightGreyColor,
           selectedItemColor: AppColors.blueColor,
           iconSize: 35,
           currentIndex: provider.currentIndex,
@@ -31,19 +29,19 @@ class _MyBottomNavState extends State<MyBottomNav> {
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: "",
+              label: "Home",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              label: "",
+              label: "About",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.notifications),
-              label: "",
+              label: "Notifications",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.people),
-              label: "",
+              label: "Explore",
             ),
           ],
         ),

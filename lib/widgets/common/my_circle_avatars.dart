@@ -26,10 +26,11 @@ class MyCircleAvatars extends StatelessWidget {
             ),
           ),
           child: CircleAvatar(
+            backgroundColor: Colors.white,
             radius: raduis,
             backgroundImage: value.appUser!.profileUrl != null
                 ? NetworkImage(img)
-                : const AssetImage("assets/images/logo.png") as ImageProvider,
+                : const AssetImage("assets/images/user.png") as ImageProvider,
           ),
         );
       },
