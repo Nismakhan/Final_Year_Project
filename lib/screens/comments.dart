@@ -89,6 +89,7 @@
 //   }
 // }
 import 'package:final_year_project/models/user_post.dart';
+import 'package:final_year_project/utils/colors.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:final_year_project/widgets/commentsScreen/about_user.dart';
 import 'package:final_year_project/widgets/commentsScreen/comments_list_view.dart';
@@ -104,7 +105,7 @@ class Comments extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.orange,
+          backgroundColor: AppColors.blueColor,
         ),
         body: SingleChildScrollView(
           child: Column(

@@ -50,6 +50,7 @@ class _IndivisualNoticesPageState extends State<IndivisualNoticesPage>
               appBar: AppBar(
                 foregroundColor: Colors.black,
                 backgroundColor: Colors.white,
+                elevation: 0,
                 title: const Icon(Icons.search),
                 actions: [
                   Padding(
@@ -57,10 +58,6 @@ class _IndivisualNoticesPageState extends State<IndivisualNoticesPage>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Icon(
-                          Icons.notifications,
-                          size: 35,
-                        ),
                         MyCircleAvatars(
                             borderColor: Colors.black,
                             img: widget.posts.profilePicture.toString()),

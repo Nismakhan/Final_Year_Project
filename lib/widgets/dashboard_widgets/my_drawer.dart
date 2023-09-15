@@ -69,35 +69,20 @@ class _SideBarState extends State<SideBar> {
               ),
             ),
           ),
-          ListTile(
-            leading: const Icon(Icons.favorite),
-            title: const Text('Favorites'),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text('Friends'),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(Icons.share),
-            title: const Text('Share'),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(Icons.notifications),
-            title: const Text('Request'),
-            onTap: () {},
-          ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
+            title: const Text('Peoples'),
             onTap: () {},
           ),
           ListTile(
             leading: const Icon(Icons.description),
-            title: const Text('Policies'),
+            title: const Text('Followers'),
+            onTap: () {},
+          ),
+          ListTile(
+            leading: const Icon(Icons.share),
+            title: const Text('shared'),
             onTap: () {},
           ),
           const Divider(),

@@ -2,14 +2,17 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/auth/controller/auth_controller.dart';
+import 'package:final_year_project/utils/media_query.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../app/router/router.dart';
 import '../auth/models/user_model.dart';
 import '../models/follow_model.dart';
+import '../utils/colors.dart';
 import 'other_user_profile_screen.dart';
 
 class Explore extends StatelessWidget {
@@ -28,6 +31,7 @@ class Explore extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.blueColor,
         centerTitle: true,
         title: const Text("Exlpore people"),
       ),
@@ -44,28 +48,33 @@ class Explore extends StatelessWidget {
               Navigator.pushNamed(context, AppRouter.otherUserprofileScreen,
                   arguments: OtherUserProfileArgs(uid: user.uid));
             },
-            child: ListTile(
-                leading: user.profileUrl != null
-                    ? CircleAvatar(
-                        backgroundImage: NetworkImage(user.profileUrl!),
-                        radius: 30,
-                      )
-                    : const CircleAvatar(
-                        radius: 30,
-                      ),
-                title: Text(user.name),
-                subtitle: Text(user.uniqueId.toString()),
-                trailing: FollowUnfollowButton(user: user)
+            child: Padding(
+              padding: screenWidth(context) > 500
+                  ? const EdgeInsets.symmetric(horizontal: 300, vertical: 10)
+                  : const EdgeInsets.only(left: 10, right: 10),
+              child: ListTile(
+                  leading: user.profileUrl != null
+                      ? CircleAvatar(
+                          backgroundImage: NetworkImage(user.profileUrl!),
+                          radius: 30,
+                        )
+                      : const CircleAvatar(
+                          radius: 30,
+                        ),
+                  title: Text(user.name),
+                  subtitle: Text(user.uniqueId.toString()),
+                  trailing: FollowUnfollowButton(user: user)
 
-                // ElevatedButton(
-                //     style: ElevatedButton.styleFrom(
-                //         backgroundColor: Colors.grey),
-                //     onPressed: () {},
-                //     child: const Text(
-                //       "Unfollow",
-                //     ),
-                //   ),
-                ),
+                  // ElevatedButton(
+                  //     style: ElevatedButton.styleFrom(
+                  //         backgroundColor: Colors.grey),
+                  //     onPressed: () {},
+                  //     child: const Text(
+                  //       "Unfollow",
+                  //     ),
+                  //   ),
+                  ),
+            ),
           );
         },
       ),
@@ -104,7 +113,19 @@ class _FollowUnfollowButtonState extends State<FollowUnfollowButton> {
   Widget build(BuildContext context) {
     return isFollowed
         ? ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
+            style: ButtonStyle(
+              minimumSize: MaterialStateProperty.all(
+                Size(100.w, 65.h),
+              ),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.r),
+                ),
+              ),
+              backgroundColor: MaterialStateProperty.all(
+                AppColors.lightGreyColor,
+              ),
+            ),
             onPressed: () async {
               try {
                 await context
@@ -120,6 +141,19 @@ class _FollowUnfollowButtonState extends State<FollowUnfollowButton> {
             child: const Text("Unfollow"),
           )
         : ElevatedButton(
+            style: ButtonStyle(
+              minimumSize: MaterialStateProperty.all(
+                Size(100.w, 65.h),
+              ),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.r),
+                ),
+              ),
+              backgroundColor: MaterialStateProperty.all(
+                AppColors.blueColor,
+              ),
+            ),
             onPressed: () async {
               try {
                 final followModel = FollowModel(
