@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">"NoticeBoard"</string>
-    <string name="facebook_app_id">1107067046926581</string>
-    <string name="fb_login_protocol_scheme">fb1107067046926581</string>
+<string name="app_name">"NoticeBoard"</string>
+    <string name="facebook_app_id">328594069629750</string>
+    <string name="fb_login_protocol_scheme">fb328594069629750</string>
+    <string name="facebook_client_token">c16a3d01a789b1d0d9191a8d63c58207</string>
 </resources>

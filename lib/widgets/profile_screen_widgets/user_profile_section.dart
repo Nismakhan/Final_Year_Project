@@ -56,10 +56,18 @@ class _UserProfileSectionState extends State<UserProfileSection> {
                       : Stack(
                           children: [
                             provider.appUser!.profileUrl != null
-                                ? CircleAvatar(
-                                    radius: 50,
-                                    backgroundImage: NetworkImage(
-                                        provider.appUser!.profileUrl!),
+                                ? GestureDetector(
+                                    onTap: () {
+                                      showProfileImageDialog(
+                                          context,
+                                          provider.appUser!.profileUrl
+                                              .toString());
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 50,
+                                      backgroundImage: NetworkImage(
+                                          provider.appUser!.profileUrl!),
+                                    ),
                                   )
                                 : const CircleAvatar(
                                     radius: 50,
@@ -216,6 +224,49 @@ class _UserProfileSectionState extends State<UserProfileSection> {
           ],
         )
       ],
+    );
+  }
+
+  void showProfileImageDialog(BuildContext context, String view) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop(); // Close the dialog when tapped outside
+          },
+          child: Container(
+            width: 600,
+            height: 600,
+            color: Colors.transparent, // Transparent background
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    view, // Replace with your image path
+                    width: 500,
+                    height: 500,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress != null) {
+                        return CircularProgressIndicator();
+                      } else {
+                        return child;
+                      }
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Text('Failed to load an image');
+                    },
+                    //   fit: BoxFit.cover,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

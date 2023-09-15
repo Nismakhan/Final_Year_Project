@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:final_year_project/auth/auth_services/facebook_sign_in.dart';
+import 'package:final_year_project/auth/auth_services/github_sign_in.dart';
 import 'package:final_year_project/auth/controller/auth_controller.dart';
 import 'package:final_year_project/app/router/router.dart';
 import 'package:final_year_project/common/Extensions/custom_sizedbox.dart';
@@ -349,6 +350,21 @@ class _LoginState extends State<Login> {
                                         ),
                                       ),
                                     ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        print('github');
+                                        GitHubSignIn().loginWithGitHub(context);
+                                      },
+                                      child: SizedBox(
+                                        child: Image.asset(
+                                            'assets/images/github.png',
+                                            height: 30,
+                                            width: 30),
+                                      ),
+                                    )
                                   ],
                                 ),
                               ],

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:final_year_project/auth/auth_services/facebook_sign_in.dart';
 import 'package:final_year_project/auth/models/user_model.dart';
 import 'package:final_year_project/models/follow_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,6 +47,11 @@ class AuthBD {
   }
 
   Future<void> googleSignUp(
+    final UserModel user,
+  ) async {
+    await _firestore.collection('users').doc(user.uid).set(user.toJson());
+  }
+  Future<void> facebookSignUp(
     final UserModel user,
   ) async {
     await _firestore.collection('users').doc(user.uid).set(user.toJson());

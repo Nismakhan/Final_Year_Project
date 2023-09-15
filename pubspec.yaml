@@ -59,6 +59,7 @@ dependencies:
   story_view: ^0.14.0
   intl: ^0.17.0
   timeago: ^3.3.0
+  dotenv:
 
 dev_dependencies:
   flutter_test:
@@ -84,7 +85,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-  #   - images/a_dot_ham.jpeg
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
