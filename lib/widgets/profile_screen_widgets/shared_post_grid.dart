@@ -61,7 +61,7 @@ class _SharedPostGridState extends State<SharedPostGrid> {
           )
         : posts.isEmpty
             ? const Center(
-                child: Text("No Shared Posts"),
+                child: Text("No Posts"),
               )
             : GridView.builder(
                 itemCount: posts.length,

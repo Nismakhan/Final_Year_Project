@@ -1,3 +1,4 @@
+// import 'package:final_year_project/auth/controller/auth_controller.dart';
 import 'package:final_year_project/auth/controller/auth_controller.dart';
 import 'package:final_year_project/common/controller/post_controller.dart';
 import 'package:final_year_project/screens/other_user_profile_screen.dart';
@@ -42,85 +43,115 @@ class _ProfileScreenState extends State<ProfileScreen>
         padding: const EdgeInsets.only(top: 20.0),
         child: Stack(
           children: [
-            SizedBox(
-              width: screenWidth(context),
-              child: UserProfileSection(
-                user: context.read<AuthController>().appUser!,
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            // Container(
-            //   // color: Colors.grey,
-            //   decoration: BoxDecoration(
-            //     color: const Color.fromARGB(255, 228, 224, 224),
-            //     borderRadius: BorderRadius.circular(10),
-            //   ),
+            kIsWeb
+                ? const Positioned(
+                    right: -35,
+                    top: -35,
+                    child: CircleAvatar(
+                      backgroundColor: AppColors.blueColor,
+                      radius: 100,
+                    ),
+                  )
+                : const SizedBox(),
+            kIsWeb
+                ? const Positioned(
+                    bottom: -35,
+                    left: -35,
+                    child: CircleAvatar(
+                      backgroundColor: AppColors.blueColor,
+                      radius: 100,
+                    ),
+                  )
+                : const SizedBox(),
+            Center(
+              child: SizedBox(
+                width: screenWidth(context) > 500 ? 500 : screenWidth(context),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: screenWidth(context),
+                      child: UserProfileSection(
+                        user: context.read<AuthController>().appUser!,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    // Container(
+                    //   // color: Colors.grey,
+                    //   decoration: BoxDecoration(
+                    //     color: const Color.fromARGB(255, 228, 224, 224),
+                    //     borderRadius: BorderRadius.circular(10),
+                    //   ),
 
-            //   width: screenWidth(context) * 0.7,
-            //   // height: screenHeight(context),
-            //   child: Padding(
-            //     padding: const EdgeInsets.all(20.0),
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //       children: const [
-            //         PhotosVediosAndTaggedSection(
-            //           text: "Photos",
-            //         ),
-            //         PhotosVediosAndTaggedSection(
-            //           text: "Vedios",
-            //         ),
-            //         PhotosVediosAndTaggedSection(
-            //           text: "Tagged",
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Divider(
-              height: 2,
-            ),
-            TabBar(
-              labelColor: Colors.black,
-              controller: tabContoller,
-              indicatorSize: TabBarIndicatorSize.label,
-              tabs: const [
-                Tab(
-                  text: "My Post",
+                    //   width: screenWidth(context) * 0.7,
+                    //   // height: screenHeight(context),
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.all(20.0),
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //       children: const [
+                    //         PhotosVediosAndTaggedSection(
+                    //           text: "Photos",
+                    //         ),
+                    //         PhotosVediosAndTaggedSection(
+                    //           text: "Vedios",
+                    //         ),
+                    //         PhotosVediosAndTaggedSection(
+                    //           text: "Tagged",
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Divider(
+                      height: 2,
+                    ),
+                    TabBar(
+                      labelColor: Colors.black,
+                      controller: tabContoller,
+                      indicatorSize: TabBarIndicatorSize.label,
+                      tabs: const [
+                        Tab(
+                          text: "My Post",
+                        ),
+                        Tab(
+                          text: "Shared Posts",
+                        )
+                      ],
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                        controller: tabContoller,
+                        children: [
+                          Consumer<PostController>(
+                              builder: (context, provider, _) {
+                            if (provider.currentUserPosts!.isEmpty) {
+                              return const Center(child: Text('No Posts'));
+                            } else {
+                              return NoticesGrid(
+                                posts: provider.currentUserPosts,
+                                up: provider.currentUserPosts!.first,
+                              );
+                            }
+                          }),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Expanded(
+                                child: SharedPostGrid(
+                              uid: FirebaseAuth.instance.currentUser!.uid,
+                            )),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                Tab(
-                  text: "Shared Posts",
-                )
-              ],
-            ),
-            Expanded(
-              child: TabBarView(
-                controller: tabContoller,
-                children: [
-                  Consumer<PostController>(builder: (context, provider, _) {
-                    if (provider.currentUserPosts!.isEmpty) {
-                      return const Center(child: Text('No Posts'));
-                    } else {
-                      return NoticesGrid(
-                        posts: provider.currentUserPosts,
-                        up: provider.currentUserPosts!.first,
-                      );
-                    }
-                  }),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Expanded(
-                        child: SharedPostGrid(
-                      uid: FirebaseAuth.instance.currentUser!.uid,
-                    )),
-                  ),
-                ],
               ),
-            ),
+            )
           ],
         ),
       ),

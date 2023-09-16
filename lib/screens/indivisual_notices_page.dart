@@ -8,15 +8,19 @@ import 'package:final_year_project/widgets/indivisual_notices_page_widgets/user_
 
 import 'package:flutter/material.dart';
 
+import '../auth/models/user_model.dart';
+
 class IndivisualNoticesPage extends StatefulWidget {
-  const IndivisualNoticesPage({
+  const  IndivisualNoticesPage({
     super.key,
     required this.posts,
+    this.user,
   });
 
   @override
   State<IndivisualNoticesPage> createState() => _IndivisualNoticesPageState();
   final UserPosts posts;
+  final UserModel? user;
 }
 
 class _IndivisualNoticesPageState extends State<IndivisualNoticesPage>
@@ -81,6 +85,7 @@ class _IndivisualNoticesPageState extends State<IndivisualNoticesPage>
                           children: [
                             UserProfileSection(
                               posts: widget.posts,
+                              user: widget.user,
                             ),
                             const Divider(
                               thickness: 3,

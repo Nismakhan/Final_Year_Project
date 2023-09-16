@@ -8,15 +8,13 @@ import 'package:flutter/material.dart';
 import '../../utils/colors.dart';
 
 class NoticesGrid extends StatefulWidget {
-   NoticesGrid({
+  NoticesGrid({
     required this.posts,
     this.up,
-
     Key? key,
   }) : super(key: key);
   final List<UserPosts>? posts;
   final UserPosts? up;
-  
 
   @override
   State<NoticesGrid> createState() => _NoticesGridState();
@@ -34,7 +32,7 @@ class _NoticesGridState extends State<NoticesGrid> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-        
+
           if (snapshot.hasData) {
             final data = snapshot.data!.docs
                 .map((e) => UserPosts.fromJson(e.data()))
