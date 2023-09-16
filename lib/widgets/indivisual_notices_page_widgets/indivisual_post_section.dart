@@ -50,14 +50,15 @@ class _IndividualPostSectionState extends State<IndividualPostSection> {
                     ),
                   ),
                 )
-              : const Text("No Image found"),
+              : Image.asset("assets/images/image not found.png"),
           const SizedBox(
             height: 20,
           ),
           SizedBox(
             width: screenWidth(context) < 500 ? 250 : screenWidth(context),
-            child: Text(
-              widget.post.about.toString(),
+            child: const Text(
+              "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.",
+              // widget.post.about.toString(),
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),

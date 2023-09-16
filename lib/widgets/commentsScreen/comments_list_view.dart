@@ -37,12 +37,13 @@ class _CommentsListViewState extends State<CommentsListView> {
     return Form(
       key: _formKey,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        // mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
             height: widget.isBottomSheet != null && widget.isBottomSheet == true
                 ? screenHeight(context) / 2
-                : screenHeight(context) * 0.45,
+                : screenHeight(context) * 0.6,
             child: StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection("posts")

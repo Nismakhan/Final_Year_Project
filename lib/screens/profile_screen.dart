@@ -1,11 +1,13 @@
 import 'package:final_year_project/auth/controller/auth_controller.dart';
 import 'package:final_year_project/common/controller/post_controller.dart';
 import 'package:final_year_project/screens/other_user_profile_screen.dart';
+import 'package:final_year_project/utils/colors.dart';
 import 'package:final_year_project/utils/const.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:final_year_project/widgets/dashboard_widgets/notices_grid.dart';
 import 'package:final_year_project/widgets/profile_screen_widgets/shared_post_grid.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -35,20 +37,10 @@ class _ProfileScreenState extends State<ProfileScreen>
         elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        // leading: const Icon(
-        //   Icons.arrow_back,
-        //   size: 30,
-        // ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 15.0),
-            child: MoreVertOutlined(),
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 20.0),
-        child: Column(
+        child: Stack(
           children: [
             SizedBox(
               width: screenWidth(context),

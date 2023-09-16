@@ -36,8 +36,8 @@ class _MyBottomNavState extends State<MyBottomNav> {
               label: "About",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.notifications),
-              label: "Notifications",
+              icon: Icon(Icons.search),
+              label: "search",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.people),
