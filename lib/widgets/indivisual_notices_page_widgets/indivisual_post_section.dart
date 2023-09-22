@@ -56,9 +56,9 @@ class _IndividualPostSectionState extends State<IndividualPostSection> {
           ),
           SizedBox(
             width: screenWidth(context) < 500 ? 250 : screenWidth(context),
-            child: const Text(
-              "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.",
-              // widget.post.about.toString(),
+            child: Text(
+              // "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.",
+              widget.post.about.toString(),
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),

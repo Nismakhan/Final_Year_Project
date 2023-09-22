@@ -14,6 +14,6 @@ void main() async {
               appId: "1:518430979356:web:8442e3e930327cca3e76d9",
               messagingSenderId: "518430979356",
               projectId: "final-year-project-91ce0"))
-      : Firebase.initializeApp();
+      : await Firebase.initializeApp();
   runApp(const NoticeBoard());
 }

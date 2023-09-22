@@ -1,6 +1,6 @@
 import 'package:final_year_project/screens/dashboard.dart';
 import 'package:final_year_project/screens/explore.dart';
-import 'package:final_year_project/screens/notifications_screen.dart';
+import 'package:final_year_project/screens/search_user.dart';
 import 'package:final_year_project/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             Dashboard(),
             const ProfileScreen(),
-            const Notifications(),
+            const SearchingUser(),
             Explore()
             // IndivisualPostPage(),
           ],

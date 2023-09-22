@@ -17,6 +17,7 @@ class Dashboard extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    final user = context.read<AuthController>().appUser;
     return SafeArea(
       child: Scaffold(
         key: _scaffoldKey,
@@ -70,28 +71,31 @@ class Dashboard extends StatelessWidget {
                                       ],
                                     ),
                                     40.cusSH,
-                                    context.read<AuthController>().appUser !=
-                                            null
+                                    user != null
                                         ? Row(
                                             children: [
                                               GestureDetector(
                                                 onTap: () {
-                                                  
+                                                  showProfileImageDialog(
+                                                      context,
+                                                      context
+                                                          .read<
+                                                              AuthController>()
+                                                          .appUser!
+                                                          .profileUrl
+                                                          .toString());
                                                 },
                                                 child: MyCircleAvatars(
                                                   borderColor:
                                                       AppColors.lightGreyColor,
                                                   raduis: kIsWeb ? 20 : 20.r,
-                                                  img: context
-                                                      .read<AuthController>()
-                                                      .appUser!
-                                                      .profileUrl
+                                                  img: user.profileUrl
                                                       .toString(),
                                                 ),
                                               ),
                                               15.cusSW,
                                               Text(
-                                                "Welcome!  ${context.read<AuthController>().appUser!.name}",
+                                                "Welcome!  ${user.name}",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: kIsWeb ? 17 : 17.sp,
@@ -147,19 +151,30 @@ class Dashboard extends StatelessWidget {
                                     )
                                   ],
                                 ),
-                                40.cusSH,
+                                30.cusSH,
                                 context.read<AuthController>().appUser != null
                                     ? Row(
                                         children: [
-                                          MyCircleAvatars(
-                                            borderColor:
-                                                AppColors.lightGreyColor,
-                                            raduis: kIsWeb ? 20 : 20.r,
-                                            img: context
-                                                .read<AuthController>()
-                                                .appUser!
-                                                .profileUrl
-                                                .toString(),
+                                          GestureDetector(
+                                            onTap: () {
+                                              showProfileImageDialog(
+                                                  context,
+                                                  context
+                                                      .read<AuthController>()
+                                                      .appUser!
+                                                      .profileUrl
+                                                      .toString());
+                                            },
+                                            child: MyCircleAvatars(
+                                              borderColor:
+                                                  AppColors.lightGreyColor,
+                                              raduis: kIsWeb ? 30 : 35.r,
+                                              img: context
+                                                  .read<AuthController>()
+                                                  .appUser!
+                                                  .profileUrl
+                                                  .toString(),
+                                            ),
                                           ),
                                           15.cusSW,
                                           Text(
@@ -210,15 +225,15 @@ void showProfileImageDialog(BuildContext context, String view) {
                   view, // Replace with your image path
                   width: 500,
                   height: 500,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Text('Check internet connection!');
+                  },
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress != null) {
                       return CircularProgressIndicator();
                     } else {
                       return child;
                     }
-                  },
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Text('Failed to load an image');
                   },
                   //   fit: BoxFit.cover,
                 ),

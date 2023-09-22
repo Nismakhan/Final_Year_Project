@@ -1,4 +1,4 @@
-import 'package:final_year_project/auth/models/user_model.dart';
+
 import 'package:final_year_project/auth/screens/forgot_password.dart';
 import 'package:final_year_project/auth/screens/login.dart';
 import 'package:final_year_project/auth/screens/sign_up.dart';
@@ -14,6 +14,7 @@ import 'package:final_year_project/screens/indivisual_notices_page.dart';
 import 'package:final_year_project/screens/onboarding.dart';
 import 'package:final_year_project/screens/other_user_profile_screen.dart';
 import 'package:final_year_project/screens/profile_screen.dart';
+
 import 'package:final_year_project/screens/story_view.dart';
 
 import 'package:flutter/material.dart';
@@ -73,7 +74,6 @@ class AppRouter {
         );
       case indivisualNoticesPage:
         final args = settings.arguments as UserPosts;
-    
 
         return MaterialPageRoute(
           builder: ((context) => IndivisualNoticesPage(

@@ -54,11 +54,16 @@ class _SideBarState extends State<SideBar> {
               backgroundColor: Colors.grey,
               child: ClipOval(
                 child: data.profileUrl != null
-                    ? Image.network(
-                        data.profileUrl.toString(),
-                        fit: BoxFit.cover,
-                        width: 90,
-                        height: 90,
+                    ? GestureDetector(
+                        onTap: () {
+                          showProfileImageDialog(context, data.profileUrl!);
+                        },
+                        child: Image.network(
+                          data.profileUrl.toString(),
+                          fit: BoxFit.cover,
+                          width: 90,
+                          height: 90,
+                        ),
                       )
                     : Image.asset(
                         'assets/images/user.png',
@@ -95,6 +100,49 @@ class _SideBarState extends State<SideBar> {
           ),
         ],
       ),
+    );
+  }
+
+  void showProfileImageDialog(BuildContext context, String view) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop(); // Close the dialog when tapped outside
+          },
+          child: Container(
+            width: 600,
+            height: 600,
+            color: Colors.transparent, // Transparent background
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    view, // Replace with your image path
+                    width: 500,
+                    height: 500,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Text('Check internet connection!');
+                    },
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress != null) {
+                        return CircularProgressIndicator();
+                      } else {
+                        return child;
+                      }
+                    },
+                    //   fit: BoxFit.cover,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

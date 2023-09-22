@@ -21,7 +21,7 @@ class MyCircleAvatars extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
-              width: 2,
+              width: 1,
               color: borderColor,
             ),
           ),

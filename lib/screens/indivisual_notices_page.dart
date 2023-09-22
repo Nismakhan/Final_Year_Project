@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import '../auth/models/user_model.dart';
 
 class IndivisualNoticesPage extends StatefulWidget {
-  const  IndivisualNoticesPage({
+  const IndivisualNoticesPage({
     super.key,
     required this.posts,
     this.user,
@@ -37,7 +37,11 @@ class _IndivisualNoticesPageState extends State<IndivisualNoticesPage>
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection("posts")
-            .where("uid", isEqualTo: widget.posts.uid)
+            .where(
+              "uid",
+              isEqualTo: widget.posts.uid,
+            )
+            .orderBy("dateAdded", descending: true)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

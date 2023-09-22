@@ -121,6 +121,7 @@ class PostController with ChangeNotifier {
 
   Future<int> getTotalPostCount({required String uid}) async {
     try {
+      
       return await _repo.getTotalPostCount(uid: uid);
     } catch (e) {
       rethrow;
@@ -137,8 +138,9 @@ class PostController with ChangeNotifier {
 
   Future<int> getTotalFollowingCount({required String uid}) async {
     try {
-      return await _repo.getTotalFollowingCount(uid: uid);
+      isloading=true;
       notifyListeners();
+      return await _repo.getTotalFollowingCount(uid: uid);
     } catch (e) {
       rethrow;
     }

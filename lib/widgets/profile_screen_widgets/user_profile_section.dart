@@ -1,5 +1,6 @@
 import 'package:final_year_project/app/router/router.dart';
 import 'package:final_year_project/auth/controller/auth_controller.dart';
+import 'package:final_year_project/auth/controller/loading_controller.dart';
 import 'package:final_year_project/auth/models/user_model.dart';
 import 'package:final_year_project/common/controller/post_controller.dart';
 import 'package:final_year_project/utils/image_dailogue.dart';
@@ -25,16 +26,20 @@ class _UserProfileSectionState extends State<UserProfileSection> {
   int postsCount = 0;
   int followersCount = 0;
   int followingCount = 0;
+  bool isloading = false;
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       final controller = context.read<PostController>();
       postsCount = await controller.getTotalPostCount(uid: widget.user.uid);
+
       followersCount =
           await controller.getTotalFollowerCount(uid: widget.user.uid);
       followingCount =
           await controller.getTotalFollowingCount(uid: widget.user.uid);
-      setState(() {});
+      setState(() {
+        // isloading = false;
+      });
     });
 
     super.initState();
@@ -71,8 +76,8 @@ class _UserProfileSectionState extends State<UserProfileSection> {
                                   )
                                 : const CircleAvatar(
                                     radius: 50,
-                                    backgroundColor:
-                                        Color.fromARGB(255, 255, 163, 194),
+                                    // backgroundColor:
+                                    //   Color.fromARGB(255, 255, 163, 194),
                                     backgroundImage:
                                         AssetImage("assets/images/user.png"),
                                   ),
@@ -107,7 +112,7 @@ class _UserProfileSectionState extends State<UserProfileSection> {
                         )
                       : const CircleAvatar(
                           radius: 50,
-                          backgroundColor: Color.fromARGB(255, 255, 163, 194),
+                          backgroundColor: Colors.transparent,
                           backgroundImage: AssetImage("assets/images/user.png"),
                         ),
               const SizedBox(
@@ -141,20 +146,20 @@ class _UserProfileSectionState extends State<UserProfileSection> {
                           children: [
                             Container(
                               width: 120,
-                              height: 35,
-                              decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Color.fromARGB(255, 228, 211, 62),
-                                    Colors.deepOrange,
-                                  ],
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight,
-                                ),
-                              ),
+                              // height: 35,
+                              // decoration: const BoxDecoration(
+                              //   borderRadius: BorderRadius.all(
+                              //     Radius.circular(10),
+                              //   ),
+                              //   gradient: LinearGradient(
+                              //     colors: [
+                              //       Color.fromARGB(255, 228, 211, 62),
+                              //       Colors.deepOrange,
+                              //     ],
+                              //     begin: Alignment.centerLeft,
+                              //     end: Alignment.centerRight,
+                              //   ),
+                              // ),
                               child: FollowUnfollowButton(user: widget.user),
                             ),
                             const SizedBox(
@@ -201,12 +206,24 @@ class _UserProfileSectionState extends State<UserProfileSection> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            NoOfFollowersPostAndFollowings(
-              counting: followingCount.toString(),
-              text: "Following",
-              onpressed: () {
-                Navigator.pushNamed(context, AppRouter.followingScreen,
-                    arguments: widget.user.uid);
+            Consumer<LoadingController>(
+              builder: (context, value, child) {
+                value.loading();
+                if (value.isloading == true) {
+                  return const Text(
+                    'Counting....',
+                    style: TextStyle(color: Colors.grey),
+                  );
+                }
+                return NoOfFollowersPostAndFollowings(
+                  counting: followingCount.toString(),
+                  text: "Following",
+                  onpressed: () {
+                    Navigator.pushNamed(context, AppRouter.followingScreen,
+                        arguments: widget.user.uid);
+                  },
+                );
+                value.isloading;
               },
             ),
             NoOfFollowersPostAndFollowings(

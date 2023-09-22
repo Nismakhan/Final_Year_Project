@@ -27,6 +27,7 @@ class _NoticesGridState extends State<NoticesGrid> {
         stream: FirebaseFirestore.instance
             .collection("posts")
             .where("uid", isEqualTo: widget.up!.uid)
+            .orderBy("dateAdded", descending: true)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -62,6 +63,9 @@ class _NoticesGridState extends State<NoticesGrid> {
                             mainAxisSpacing: 10,
                           ),
                           itemBuilder: (context, index) {
+                            final reversedIndex =
+                                widget.posts!.length - 1 - index;
+                            final item = widget.posts![reversedIndex];
                             return GestureDetector(
                               onTap: () {
                                 Navigator.of(context).pushNamed(
@@ -78,7 +82,8 @@ class _NoticesGridState extends State<NoticesGrid> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      widget.posts![index].about.toString(),
+                                      widget.posts![reversedIndex].about
+                                          .toString(),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(

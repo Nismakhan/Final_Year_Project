@@ -102,9 +102,17 @@ class _OtherUserProfileScreenState extends State<OtherUserProfileScreen> {
                     height: 2,
                   ),
                   Expanded(
-                    child: NoticesGrid(
-                      posts: userPosts,
-                    ),
+                    child: Consumer<PostController>(
+                        builder: (context, provider, _) {
+                      if (userPosts!.isEmpty) {
+                        return const Center(child: Text('No Posts'));
+                      } else {
+                        return NoticesGrid(
+                          posts: userPosts,
+                          up: userPosts!.first,
+                        );
+                      }
+                    }),
                   ),
                 ],
               ),
