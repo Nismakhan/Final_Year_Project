@@ -73,6 +73,15 @@ class AuthController extends ChangeNotifier {
 
     notifyListeners();
   }
+  Future<void> signupwithGithub({
+    required UserModel user,
+  }) async {
+    await _db.githubSignUp(user);
+    appUser = user;
+    log(appUser.toString());
+
+    notifyListeners();
+  }
 
   Future<User?> checkCurrentUser(BuildContext context) async {
     try {

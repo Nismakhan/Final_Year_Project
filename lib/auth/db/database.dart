@@ -56,6 +56,11 @@ class AuthBD {
   ) async {
     await _firestore.collection('users').doc(user.uid).set(user.toJson());
   }
+  Future<void> githubSignUp(
+    final UserModel user,
+  ) async {
+    await _firestore.collection('users').doc(user.uid).set(user.toJson());
+  }
 
   User? isCurrentUser() {
     return FirebaseAuth.instance.currentUser;

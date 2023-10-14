@@ -356,7 +356,7 @@ class _LoginState extends State<Login> {
                                     GestureDetector(
                                       onTap: () {
                                         print('github');
-                                        GitHubSignIn().loginWithGitHub(context);
+                                        GitHubLogIn().loginWithGitHub(context);
                                       },
                                       child: SizedBox(
                                         child: Image.asset(
