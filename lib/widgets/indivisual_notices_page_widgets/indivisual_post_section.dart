@@ -1,8 +1,10 @@
 import 'package:final_year_project/app/router/router.dart';
 import 'package:final_year_project/models/user_post.dart';
 import 'package:final_year_project/screens/comments.dart';
+import 'package:final_year_project/utils/colors.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 class IndividualPostSection extends StatefulWidget {
   const IndividualPostSection({
@@ -17,18 +19,41 @@ class IndividualPostSection extends StatefulWidget {
 }
 
 class _IndividualPostSectionState extends State<IndividualPostSection> {
+  Future<void> shareText(String text) async {
+    await Share.share(text, subject: 'Share Text');
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: Column(
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("2 hours ago"),
-                Icon(Icons.share),
+                const Text("2 hours ago"),
+                GestureDetector(
+                    onTap: () async {
+                      widget.post.userPostsAsset != null
+                          ? await shareText(
+                              widget.post.userPostsAsset.toString(),
+                            )
+                          : showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                  content: Text('Image Not Found'),
+                                );
+                              },
+                            );
+                    },
+                    child: Icon(
+                      Icons.share,
+                      color: AppColors.blueColor,
+                      size: 25,
+                    )),
               ],
             ),
           ),

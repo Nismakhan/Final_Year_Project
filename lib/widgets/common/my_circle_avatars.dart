@@ -26,10 +26,22 @@ class MyCircleAvatars extends StatelessWidget {
             ),
           ),
           child: CircleAvatar(
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.transparent,
             radius: raduis,
             backgroundImage: value.appUser!.profileUrl != null
-                ? NetworkImage(img)
+                ? Image.network(
+                    img,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.black,
+                        ),
+                      );
+                    },
+                  ).image
                 : const AssetImage("assets/images/user.png") as ImageProvider,
           ),
         );

@@ -47,7 +47,7 @@ class _UserProfileSectionState extends State<UserProfileSection> {
           ListTile(
             leading: SizedBox(
               child: MyCircleAvatars(
-                borderColor: Colors.black,
+                borderColor: Colors.transparent,
                 img: widget.posts.profilePicture.toString(),
                 raduis: 30,
               ),

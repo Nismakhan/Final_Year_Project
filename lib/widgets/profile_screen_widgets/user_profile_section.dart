@@ -206,24 +206,12 @@ class _UserProfileSectionState extends State<UserProfileSection> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Consumer<LoadingController>(
-              builder: (context, value, child) {
-                value.loading();
-                if (value.isloading == true) {
-                  return const Text(
-                    'Counting....',
-                    style: TextStyle(color: Colors.grey),
-                  );
-                }
-                return NoOfFollowersPostAndFollowings(
-                  counting: followingCount.toString(),
-                  text: "Following",
-                  onpressed: () {
-                    Navigator.pushNamed(context, AppRouter.followingScreen,
-                        arguments: widget.user.uid);
-                  },
-                );
-                value.isloading;
+            NoOfFollowersPostAndFollowings(
+              counting: followingCount.toString(),
+              text: "Following",
+              onpressed: () {
+                Navigator.pushNamed(context, AppRouter.followingScreen,
+                    arguments: widget.user.uid);
               },
             ),
             NoOfFollowersPostAndFollowings(
