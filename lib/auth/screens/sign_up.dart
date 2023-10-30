@@ -8,6 +8,7 @@ import 'package:final_year_project/common/controller/post_controller.dart';
 import 'package:final_year_project/screens/user_orginization.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -40,8 +41,10 @@ class _SignUpState extends State<SignUp> {
   final _typecontroller = TextEditingController();
 
   final _passwordController = TextEditingController();
+  final messaging = FirebaseMessaging.instance;
 
   final uniqueId = 1000;
+  bool isloading = false;
   bool _isHidden = true;
   void togglePasswordView() {
     setState(() {
@@ -241,32 +244,44 @@ class _SignUpState extends State<SignUp> {
                                   children: [
                                     ElevatedButtons(
                                       text: 'SignUp',
+                                      isloading: isloading,
                                       onPres: () async {
                                         try {
                                           if (_formKey.currentState!
                                               .validate()) {
+                                            setState(() {
+                                              isloading = true;
+                                            });
                                             Timestamp signUpTimestamp = Timestamp
                                                 .now(); // Example sign-up timestamp
 
-                                            String uniqueNumber =
-                                                signUpTimestamp.seconds
-                                                    .toString();
-                                            final user = UserModel(
-                                              uid: '',
-                                              name: _nameController.text,
-                                              email: _emailController.text,
-                                              organization:
-                                                  _typecontroller.text,
-                                              uniqueId: uniqueNumber,
-                                            );
+                                            final mobileToken = messaging
+                                                .getToken()
+                                                .then((value) async {
+                                              print('fcm is ');
+                                              print(value);
+                                              String uniqueNumber =
+                                                  signUpTimestamp.seconds
+                                                      .toString();
+                                              final user = UserModel(
+                                                uid: '',
+                                                name: _nameController.text,
+                                                email: _emailController.text,
+                                                organization:
+                                                    _typecontroller.text,
+                                                uniqueId: uniqueNumber,
+                                                fcm: value.toString(),
+                                              );
+                                              log("uniqe id is : ${uniqueNumber.toString()}");
+                                              await context
+                                                  .read<AuthController>()
+                                                  .signUpWithEmailAndPassword(
+                                                      user: user,
+                                                      password:
+                                                          _passwordController
+                                                              .text);
+                                            });
                                             // ignore: use_build_context_synchronously
-                                            await context
-                                                .read<AuthController>()
-                                                .signUpWithEmailAndPassword(
-                                                    user: user,
-                                                    password:
-                                                        _passwordController
-                                                            .text);
                                             // ignore: use_build_context_synchronously
 
                                             // ignore: use_build_context_synchronously
@@ -280,7 +295,6 @@ class _SignUpState extends State<SignUp> {
                                                 .read<AuthController>()
                                                 .checkCurrentUser(context);
                                             if (myuser != null) {
-                                              log("uniqe id is : ${uniqueNumber.toString()}");
                                               // ignore: use_build_context_synchronously
                                               Navigator.of(context)
                                                   .pushReplacementNamed(
@@ -303,6 +317,7 @@ class _SignUpState extends State<SignUp> {
                                             _typecontroller.clear();
                                             _emailController.clear();
                                           }
+                                          isloading = false;
                                         } catch (e) {
                                           print('sign up error');
                                           showDialog(
@@ -313,6 +328,7 @@ class _SignUpState extends State<SignUp> {
                                                       'Network error',
                                                     ),
                                                   ));
+                                          isloading = false;
                                         }
                                       },
                                     ),

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -146,6 +147,7 @@ class _UploadingPostWidgetState extends State<UploadingPostWidget> {
                         ),
                         Consumer<PostController>(
                             builder: (context, provider, _) {
+                          log(provider.isloading.toString());
                           return provider.isloading
                               ? const Padding(
                                   padding: EdgeInsets.all(8.0),

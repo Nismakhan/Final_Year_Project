@@ -139,7 +139,7 @@ class _CommentsListViewState extends State<CommentsListView> {
   }
 }
 
-Widget buildCommentList(
+Widget  buildCommentList(
     List<CommentModel> comments, List<DocumentSnapshot> userDocs) {
   return ListView.builder(
     shrinkWrap: true,

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/models/comment_model.dart';
 import 'package:final_year_project/models/like_model.dart';
+import 'package:final_year_project/models/notifications_model.dart';
 import 'package:final_year_project/models/user_post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -27,6 +28,31 @@ class PostRepo {
       List<UserPosts> posts =
           querySnapshot.docs.map((e) => UserPosts.fromJson(e.data())).toList();
       return posts;
+    } on FirebaseException {
+      rethrow;
+    }
+  }
+  Future<void> uploadNotification(
+      {required NotificationModel notification}) async {
+    try {
+      await _firestore
+          .collection("notifications")
+          .doc(notification.notificationId)
+          .set(notification.json());
+    } on FirebaseException {
+      rethrow;
+    }
+  }
+  Future<List<NotificationModel>> getUserNotifications({required String uid}) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firestore
+          .collection("notifications")
+          .where("uid", isEqualTo: uid)
+          .get();
+
+      List<NotificationModel> notification =
+          querySnapshot.docs.map((e) => NotificationModel.fromJson(e.data())).toList();
+      return notification;
     } on FirebaseException {
       rethrow;
     }

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/auth/controller/auth_controller.dart';
+import 'package:final_year_project/utils/const.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
@@ -131,6 +132,14 @@ class _FollowUnfollowButtonState extends State<FollowUnfollowButton> {
                 await context
                     .read<AuthController>()
                     .unFollow(uid: widget.user.uid);
+                NotificationMethod notificationMethod = NotificationMethod();
+                notificationMethod.sendNotification(
+                  khan: context.read<AuthController>().appUser!,
+                  user: widget.user,
+                  title: context.read<AuthController>().appUser!.name,
+                  body: "Removed ",
+                  // image: context.read<AuthController>().appUser!.profileUrl!,
+                );
                 setState(() {
                   isFollowed = false;
                 });
@@ -164,7 +173,16 @@ class _FollowUnfollowButtonState extends State<FollowUnfollowButton> {
                 await context
                     .read<AuthController>()
                     .followUser(followModel: followModel);
+                NotificationMethod notificationMethod = NotificationMethod();
+                await notificationMethod.sendNotification(
+                  khan: context.read<AuthController>().appUser!,
+                  user: widget.user,
+                  title: context.read<AuthController>().appUser!.name,
+                  body: "Send A Follow Request To you! ",
+                  //  image: context.read<AuthController>().appUser!.profileUrl!,
+                );
                 setState(() {
+                  print('khan');
                   isFollowed = true;
                 });
               } catch (e) {

@@ -83,7 +83,11 @@ class _SideBarState extends State<SideBar> {
           ListTile(
             leading: const Icon(Icons.description),
             title: const Text('Followers'),
-            onTap: () {},
+            onTap: () {
+              final uid = FirebaseAuth.instance.currentUser!.uid;
+              Navigator.of(context)
+                  .pushNamed(AppRouter.followersScreen, arguments: uid);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.share),

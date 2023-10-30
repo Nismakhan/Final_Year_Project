@@ -27,6 +27,7 @@ class _UserProfileSectionState extends State<UserProfileSection> {
   int followersCount = 0;
   int followingCount = 0;
   bool isloading = false;
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
@@ -38,7 +39,7 @@ class _UserProfileSectionState extends State<UserProfileSection> {
       followingCount =
           await controller.getTotalFollowingCount(uid: widget.user.uid);
       setState(() {
-        // isloading = false;
+        
       });
     });
 

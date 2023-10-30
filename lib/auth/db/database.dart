@@ -51,11 +51,13 @@ class AuthBD {
   ) async {
     await _firestore.collection('users').doc(user.uid).set(user.toJson());
   }
+
   Future<void> facebookSignUp(
     final UserModel user,
   ) async {
     await _firestore.collection('users').doc(user.uid).set(user.toJson());
   }
+
   Future<void> githubSignUp(
     final UserModel user,
   ) async {
@@ -162,6 +164,20 @@ class AuthBD {
               .collection("users")
               .doc(_firebaseAuth.currentUser!.uid)
               .collection("followed")
+              .doc(uid)
+              .get())
+          .exists;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<bool> isUserFollowing({required String uid}) async {
+    try {
+      return (await _firestore
+              .collection('users')
+              .doc(_firebaseAuth.currentUser!.uid)
+              .collection('following')
               .doc(uid)
               .get())
           .exists;

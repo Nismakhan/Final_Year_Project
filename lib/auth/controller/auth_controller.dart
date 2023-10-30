@@ -73,6 +73,7 @@ class AuthController extends ChangeNotifier {
 
     notifyListeners();
   }
+
   Future<void> signupwithGithub({
     required UserModel user,
   }) async {
@@ -147,6 +148,7 @@ class AuthController extends ChangeNotifier {
 
   Future<void> followUser({required FollowModel followModel}) async {
     try {
+      print('in follow');
       final myFollowModel = FollowModel(
           uid: appUser!.uid,
           userName: appUser!.name,
@@ -171,20 +173,28 @@ class AuthController extends ChangeNotifier {
     }
   }
 
+  Future<bool> isUserFollowed({required String uid}) async {
+    try {
+      return await _db.isUserFollowed(uid: uid);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<bool> isUserFollowing({required String uid}) async {
+    try {
+      return await _db.isUserFollowing(uid: uid);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> removeFollower({required String uid}) async {
     try {
       await _db.removeFollower(uid: uid);
       log("Follower Removed");
     } catch (e) {
       log(e.toString());
-      rethrow;
-    }
-  }
-
-  Future<bool> isUserFollowed({required String uid}) async {
-    try {
-      return await _db.isUserFollowed(uid: uid);
-    } catch (e) {
       rethrow;
     }
   }
