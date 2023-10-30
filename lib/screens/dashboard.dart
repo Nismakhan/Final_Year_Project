@@ -130,65 +130,68 @@ class Dashboard extends StatelessWidget {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(15.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        _scaffoldKey.currentState!.openDrawer();
-                                      },
-                                      icon: const Icon(
-                                        Icons.menu,
-                                        color: Colors.white,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          _scaffoldKey.currentState!
+                                              .openDrawer();
+                                        },
+                                        icon: const Icon(
+                                          Icons.menu,
+                                          color: Colors.white,
+                                        ),
                                       ),
-                                    ),
-                                    const Icon(
-                                      Icons.notification_add_sharp,
-                                      color: Colors.white,
-                                    )
-                                  ],
-                                ),
-                                30.cusSH,
-                                context.read<AuthController>().appUser != null
-                                    ? Row(
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              showProfileImageDialog(
-                                                  context,
-                                                  context
-                                                      .read<AuthController>()
-                                                      .appUser!
-                                                      .profileUrl
-                                                      .toString());
-                                            },
-                                            child: MyCircleAvatars(
-                                              borderColor:
-                                                  AppColors.lightGreyColor,
-                                              raduis: kIsWeb ? 30 : 35.r,
-                                              img: context
-                                                  .read<AuthController>()
-                                                  .appUser!
-                                                  .profileUrl
-                                                  .toString(),
-                                            ),
-                                          ),
-                                          15.cusSW,
-                                          Text(
-                                            "Welcome!  ${context.read<AuthController>().appUser!.name}",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: kIsWeb ? 17 : 17.sp,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
+                                      const Icon(
+                                        Icons.notification_add_sharp,
+                                        color: Colors.white,
                                       )
-                                    : const CircularProgressIndicator(),
-                              ],
+                                    ],
+                                  ),
+                                  30.cusSH,
+                                  context.read<AuthController>().appUser != null
+                                      ? Row(
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                showProfileImageDialog(
+                                                    context,
+                                                    context
+                                                        .read<AuthController>()
+                                                        .appUser!
+                                                        .profileUrl
+                                                        .toString());
+                                              },
+                                              child: MyCircleAvatars(
+                                                borderColor:
+                                                    AppColors.lightGreyColor,
+                                                raduis: kIsWeb ? 30 : 35.r,
+                                                img: context
+                                                    .read<AuthController>()
+                                                    .appUser!
+                                                    .profileUrl
+                                                    .toString(),
+                                              ),
+                                            ),
+                                            15.cusSW,
+                                            Text(
+                                              "Welcome!  ${context.read<AuthController>().appUser!.name}",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: kIsWeb ? 17 : 17.sp,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : const CircularProgressIndicator(),
+                                ],
+                              ),
                             ),
                           ),
                         ),

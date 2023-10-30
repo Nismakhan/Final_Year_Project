@@ -53,7 +53,7 @@ class _UserProfileSectionState extends State<UserProfileSection> {
               ),
             ),
             title: Text(widget.posts.name),
-            subtitle: Text(followingCount.toString()),
+            subtitle: Text(widget.posts.uniqueId!),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 35),

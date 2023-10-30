@@ -4,6 +4,7 @@ import 'package:final_year_project/screens/comments.dart';
 import 'package:final_year_project/utils/colors.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:share_plus/share_plus.dart';
 
 class IndividualPostSection extends StatefulWidget {
@@ -19,6 +20,36 @@ class IndividualPostSection extends StatefulWidget {
 }
 
 class _IndividualPostSectionState extends State<IndividualPostSection> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  bool isArchived = false;
+  Future<void> _archivePost() async {
+    try {
+      await _firestore.collection('posts').doc(widget.post.postId).update({
+        'archived': true, // Add 'archived' field in your Firestore document
+      });
+      setState(() {
+        isArchived = true; // Set the local state to archived
+      });
+      Navigator.of(context).pop(); // Close the dialog
+    } catch (e) {
+      print('Error archiving post: $e');
+    }
+  }
+
+  Future<void> _unarchivePost() async {
+    try {
+      await _firestore.collection('posts').doc(widget.post.postId).update({
+        'archived': false,
+      });
+      setState(() {
+        isArchived = false; // Set the local state to unarchived
+      });
+      Navigator.of(context).pop(); // Close the dialog
+    } catch (e) {
+      print('Error unarchiving post: $e');
+    }
+  }
+
   Future<void> shareText(String text) async {
     await Share.share(text, subject: 'Share Text');
   }
@@ -29,7 +60,7 @@ class _IndividualPostSectionState extends State<IndividualPostSection> {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -49,7 +80,7 @@ class _IndividualPostSectionState extends State<IndividualPostSection> {
                               },
                             );
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.share,
                       color: AppColors.blueColor,
                       size: 25,
@@ -82,7 +113,6 @@ class _IndividualPostSectionState extends State<IndividualPostSection> {
           SizedBox(
             width: screenWidth(context) < 500 ? 250 : screenWidth(context),
             child: Text(
-              // "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator.",
               widget.post.about.toString(),
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
@@ -96,8 +126,8 @@ class _IndividualPostSectionState extends State<IndividualPostSection> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: const [
+                const Row(
+                  children: [
                     Icon(
                       Icons.thumb_up,
                       size: 20,
@@ -115,9 +145,12 @@ class _IndividualPostSectionState extends State<IndividualPostSection> {
                 ),
                 Row(
                   children: [
-                    const Icon(
-                      Icons.archive,
-                      size: 20,
+                    InkWell(
+                      onTap: isArchived ? _unarchivePost : _archivePost,
+                      child: const Icon(
+                        Icons.archive,
+                        size: 20,
+                      ),
                     ),
                     const SizedBox(
                       width: 10,
