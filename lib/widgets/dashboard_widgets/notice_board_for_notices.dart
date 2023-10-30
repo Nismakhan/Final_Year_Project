@@ -74,16 +74,19 @@ class _NoticeBoardForNoticesState extends State<NoticeBoardForNotices> {
                             ],
                           );
                         } else {
-                          return Row(
-                            children: [
-                              Text(
-                                widget.posts.name,
-                              ),
-                              const SizedBox(
-                                width: 1,
-                              ),
-                              Text("(${widget.posts.uniqueId.toString()})"),
-                            ],
+                          return SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                Text(
+                                  widget.posts.name,
+                                ),
+                                const SizedBox(
+                                  width: 1,
+                                ),
+                                Text("(${widget.posts.uniqueId.toString()})"),
+                              ],
+                            ),
                           );
                         }
                       }),

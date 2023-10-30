@@ -335,14 +335,14 @@ class _SignUpState extends State<SignUp> {
                                     15.cusSH,
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 30),
+                                          horizontal: 10),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
                                           const Text(
                                             "Already have account?  ",
-                                            style: TextStyle(fontSize: 14),
+                                            style: TextStyle(fontSize: 13),
                                           ),
                                           InkWell(
                                             onTap: () {
@@ -355,7 +355,7 @@ class _SignUpState extends State<SignUp> {
                                             child: const Text(
                                               "Login",
                                               style: TextStyle(
-                                                fontSize: 15,
+                                                fontSize: 14,
                                                 color: AppColors.blueColor,
                                                 fontWeight: FontWeight.bold,
                                               ),

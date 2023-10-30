@@ -1,5 +1,6 @@
 import 'package:final_year_project/app/router/router.dart';
 import 'package:final_year_project/auth/controller/auth_controller.dart';
+import 'package:final_year_project/screens/archives.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -76,9 +77,17 @@ class _SideBarState extends State<SideBar> {
           ),
           const Divider(),
           ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Peoples'),
-            onTap: () {},
+            leading: const Icon(
+              Icons.archive,
+            ),
+            title: const Text('Archives'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ArchivedPostsScreen()),
+              );
+            },
           ),
           ListTile(
             leading: const Icon(Icons.description),
