@@ -264,9 +264,9 @@ class DashboardBody extends StatelessWidget {
             padding: const EdgeInsets.only(top: 18.0),
             child: SizedBox(
               height: screenHeight(context),
-              child: Column(
+              child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   UploadingPostWidget(),
                   Expanded(
                     child: NoticesStream(),

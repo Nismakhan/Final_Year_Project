@@ -1,8 +1,8 @@
-
 import 'package:final_year_project/auth/screens/forgot_password.dart';
 import 'package:final_year_project/auth/screens/login.dart';
 import 'package:final_year_project/auth/screens/sign_up.dart';
 import 'package:final_year_project/app/splash.dart';
+import 'package:final_year_project/models/notifications_model.dart';
 import 'package:final_year_project/models/user_post.dart';
 import 'package:final_year_project/screens/chat_screen.dart';
 import 'package:final_year_project/screens/comments.dart';
@@ -14,6 +14,7 @@ import 'package:final_year_project/screens/indivisual_notices_page.dart';
 import 'package:final_year_project/screens/onboarding.dart';
 import 'package:final_year_project/screens/other_user_profile_screen.dart';
 import 'package:final_year_project/screens/profile_screen.dart';
+import 'package:final_year_project/screens/notifications.dart';
 
 import 'package:final_year_project/screens/story_view.dart';
 
@@ -40,7 +41,7 @@ class AppRouter {
   static const String messagesScreen = "/messages_screen";
   static const String chatScreen = "/chatScreen";
   static const String userOrganization = "/userOrganization";
-
+  static const String notifications = "/notifications";
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splash:
@@ -68,6 +69,12 @@ class AppRouter {
         return MaterialPageRoute(
           builder: ((context) => Dashboard()),
         );
+      case notifications:
+        final args = settings.arguments as NotificationModel?;
+        return MaterialPageRoute(
+            builder: (context) => UserNotifications(
+                  notify: args,
+                ));
       case storyview:
         return MaterialPageRoute(
           builder: ((context) => StoriesView()),

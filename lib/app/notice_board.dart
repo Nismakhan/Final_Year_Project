@@ -3,6 +3,7 @@ import 'package:final_year_project/app/router/router.dart';
 import 'package:final_year_project/common/controller/chat_controller.dart';
 import 'package:final_year_project/common/controller/post_controller.dart';
 import 'package:final_year_project/common/controller/ui_controller.dart';
+import 'package:final_year_project/main.dart';
 import 'package:final_year_project/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,6 +38,7 @@ class NoticeBoard extends StatelessWidget {
             ),
           ],
           child: MaterialApp(
+            navigatorKey: navigator,
             debugShowCheckedModeBanner: false,
             onGenerateRoute: (settings) {
               return AppRouter.onGenerateRoute(settings);

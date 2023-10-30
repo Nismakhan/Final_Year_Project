@@ -9,6 +9,7 @@ class UserModel {
   String? contactNumber;
   String? type;
   String? uniqueId;
+  String? fcm;
 
   UserModel({
     required this.uid,
@@ -19,10 +20,12 @@ class UserModel {
     this.contactNumber,
     this.type,
     this.uniqueId,
+    this.fcm,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
+      fcm: json["fcm"],
       uid: json["uid"],
       name: json["name"],
       email: json["email"],
@@ -36,6 +39,7 @@ class UserModel {
 
   Map<String, dynamic> toJson() {
     return {
+      "fcm":fcm,
       "uid": uid,
       "name": name,
       "email": email,
