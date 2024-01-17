@@ -32,6 +32,7 @@ class PostRepo {
       rethrow;
     }
   }
+
   Future<void> uploadNotification(
       {required NotificationModel notification}) async {
     try {
@@ -43,15 +44,18 @@ class PostRepo {
       rethrow;
     }
   }
-  Future<List<NotificationModel>> getUserNotifications({required String uid}) async {
+
+  Future<List<NotificationModel>> getUserNotifications(
+      {required String uid}) async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firestore
           .collection("notifications")
           .where("uid", isEqualTo: uid)
           .get();
 
-      List<NotificationModel> notification =
-          querySnapshot.docs.map((e) => NotificationModel.fromJson(e.data())).toList();
+      List<NotificationModel> notification = querySnapshot.docs
+          .map((e) => NotificationModel.fromJson(e.data()))
+          .toList();
       return notification;
     } on FirebaseException {
       rethrow;
@@ -151,7 +155,7 @@ class PostRepo {
               .collection("likes")
               .count()
               .get())
-          .count;
+          .count!;
     } catch (e) {
       rethrow;
     }
@@ -165,7 +169,7 @@ class PostRepo {
               .collection("comments")
               .count()
               .get())
-          .count;
+          .count!;
     } catch (e) {
       rethrow;
     }
@@ -197,7 +201,7 @@ class PostRepo {
               .where("uid", isEqualTo: uid)
               .count()
               .get())
-          .count;
+          .count!;
     } catch (e) {
       rethrow;
     }
@@ -211,7 +215,7 @@ class PostRepo {
               .collection("followers")
               .count()
               .get())
-          .count;
+          .count!;
     } catch (e) {
       rethrow;
     }
@@ -227,7 +231,7 @@ class PostRepo {
               .get())
           .count;
       log(c.toString());
-      return c;
+      return c!;
     } catch (e) {
       rethrow;
     }

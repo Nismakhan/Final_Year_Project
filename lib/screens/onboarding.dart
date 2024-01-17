@@ -53,104 +53,103 @@ class _OnboardingState extends State<Onboarding> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(19.0),
-              child: InkWell(
-                onTap: () {
-                  // _pageController.jumpToPage(onboardingData.length - 1);
-                  navigateToLoginScreen();
-                },
-                child: currentIndex.value == onboardingData.length - 1
-                    ? const SizedBox()
-                    : Text(
-                        'Skip',
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          color: AppColors.lightGreyColor,
-                          fontSize: 16.spMin,
-                          fontWeight: FontWeight.w400,
-                        ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(19.0),
+            child: InkWell(
+              onTap: () {
+                // _pageController.jumpToPage(onboardingData.length - 1);
+                navigateToLoginScreen();
+              },
+              child: currentIndex.value == onboardingData.length - 1
+                  ? const SizedBox()
+                  : Text(
+                      'Skip',
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        color: AppColors.lightGreyColor,
+                        fontSize: 16.spMin,
+                        fontWeight: FontWeight.w400,
                       ),
-              ),
+                    ),
             ),
-          ],
-        ),
-        body: Center(
-          child: SizedBox(
-            width: kIsWeb ? 600 : screenWidth(context),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 29.w, vertical: 20.h),
-              child: Stack(
-                children: [
-                  PageView.builder(
-                    controller: _pageController,
-                    itemCount: onboardingData.length,
-                    onPageChanged: (value) {
-                      setState(() {
-                        currentIndex.value = value;
-                      });
-                    },
-                    itemBuilder: (context, index) {
-                      return buildPageContent(
-                        onboardingData[index]['title']!,
-                        onboardingData[index]['description']!,
-                        onboardingData[index]['image']!,
-                        index == onboardingData.length - 1,
+          ),
+        ],
+      ),
+      body: Center(
+        child: SizedBox(
+          width: kIsWeb ? 600 : screenWidth(context),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 29.w, vertical: 18.h),
+            child: Stack(
+              children: [
+                PageView.builder(
+                  controller: _pageController,
+                  itemCount: onboardingData.length,
+                  onPageChanged: (value) {
+                    setState(() {
+                      currentIndex.value = value;
+                    });
+                  },
+                  itemBuilder: (context, index) {
+                    return buildPageContent(
+                      onboardingData[index]['title']!,
+                      onboardingData[index]['description']!,
+                      onboardingData[index]['image']!,
+                      index == onboardingData.length - 1,
+                    );
+                  },
+                ),
+                Positioned(
+                  bottom: 180.h,
+                  width: 350.w,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      for (int i = 0; i < onboardingData.length; i++)
+                        Container(
+                          margin: const EdgeInsets.only(right: 8),
+                          child: Container(
+                            width: 25.w,
+                            height: 6.50.h,
+                            decoration: ShapeDecoration(
+                              color: currentIndex.value == i
+                                  ? AppColors.blueColor
+                                  : AppColors.lightGreyColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                            ),
+                          ),
+                        )
+                    ],
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: ValueListenableBuilder<int>(
+                    valueListenable: currentIndex,
+                    builder: (context, value, child) {
+                      return ElevatedButton(
+                        onPressed: value == onboardingData.length - 1
+                            ? navigateToLoginScreen
+                            : nextPage,
+                        style: elevatedButtonStyles(),
+                        child: Text(
+                          value == onboardingData.length - 1
+                              ? 'Get Started'
+                              : 'Next',
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       );
                     },
                   ),
-                  Positioned(
-                    bottom: 200.h,
-                    width: 350.w,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        for (int i = 0; i < onboardingData.length; i++)
-                          Container(
-                            margin: const EdgeInsets.only(right: 8),
-                            child: Container(
-                              width: 25.w,
-                              height: 6.50.h,
-                              decoration: ShapeDecoration(
-                                color: currentIndex.value == i
-                                    ? AppColors.blueColor
-                                    : AppColors.lightGreyColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.r),
-                                ),
-                              ),
-                            ),
-                          )
-                      ],
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ValueListenableBuilder<int>(
-                      valueListenable: currentIndex,
-                      builder: (context, value, child) {
-                        return ElevatedButton(
-                          onPressed: value == onboardingData.length - 1
-                              ? navigateToLoginScreen
-                              : nextPage,
-                          style: elevatedButtonStyles(),
-                          child: Text(
-                            value == onboardingData.length - 1
-                                ? 'Get Started'
-                                : 'Next',
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -170,7 +169,7 @@ class _OnboardingState extends State<Onboarding> {
         SizedBox(height: 54.h),
         SizedBox(
           width: 380.w,
-          height: 160.h,
+          height: 180.h,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -184,7 +183,7 @@ class _OnboardingState extends State<Onboarding> {
               SizedBox(height: 13.h),
               SizedBox(
                 width: 390.w,
-                height: 110.h,
+                height: 130.h,
                 child: Text(
                   description,
                   textAlign: TextAlign.center,

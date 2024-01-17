@@ -1,13 +1,14 @@
 import 'package:final_year_project/auth/widgets/decoration_for_textfields.dart';
+import 'package:final_year_project/common/textfield_decoration.dart';
 import 'package:final_year_project/screens/user_orginization.dart';
+import 'package:final_year_project/utils/colors.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import '../../app/router/router.dart';
-import 'package:final_year_project/common/textfield_decoration.dart';
-import 'package:final_year_project/utils/colors.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../app/router/router.dart';
 
 class ForgotPassward extends StatefulWidget {
   const ForgotPassward({super.key});
@@ -25,7 +26,7 @@ class _ForgotPasswardState extends State<ForgotPassward> {
       showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
+          return const AlertDialog(
             content: Text('Check your Email'),
           );
         },
@@ -46,6 +47,11 @@ class _ForgotPasswardState extends State<ForgotPassward> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        foregroundColor: Colors.white,
+        backgroundColor: AppColors.blueColor,
+        title: const Text('Forgot'),
+      ),
       body: Stack(
         children: [
           kIsWeb
@@ -68,14 +74,9 @@ class _ForgotPasswardState extends State<ForgotPassward> {
                   ),
                 )
               : const SizedBox(),
-          const Positioned(
-            top: 40,
-            left: 50,
-            child: Icon(Icons.arrow_back),
-          ),
           Center(
             child: SizedBox(
-                width: kIsWeb ? 330 : screenWidth(context) * 0.6,
+                width: kIsWeb ? 330 : screenWidth(context) * 0.8,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [

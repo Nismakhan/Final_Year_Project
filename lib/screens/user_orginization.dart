@@ -22,90 +22,95 @@ class _UserOrganizationState extends State<UserOrganization> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          children: [
-            kIsWeb
-                ? const Positioned(
-                    right: -35,
-                    top: -35,
-                    child: CircleAvatar(
-                      backgroundColor: AppColors.blueColor,
-                      radius: 100,
-                    ),
-                  )
-                : const SizedBox(),
-            kIsWeb
-                ? const Positioned(
-                    bottom: -35,
-                    left: -35,
-                    child: CircleAvatar(
-                      backgroundColor: AppColors.blueColor,
-                      radius: 100,
-                    ),
-                  )
-                : const SizedBox(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              child: SingleChildScrollView(
-                child: Center(
-                  child: SizedBox(
-                    height: screenHeight(context),
-                    width: kIsWeb ? 300 : screenWidth(context),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          "assets/images/logo.png",
-                          width: 300.w,
-                          height: 360.h,
+    return Scaffold(
+      body: Stack(
+        children: [
+          kIsWeb
+              ? const Positioned(
+                  right: -35,
+                  top: -35,
+                  child: CircleAvatar(
+                    backgroundColor: AppColors.blueColor,
+                    radius: 100,
+                  ),
+                )
+              : const SizedBox(),
+          kIsWeb
+              ? const Positioned(
+                  bottom: -35,
+                  left: -35,
+                  child: CircleAvatar(
+                    backgroundColor: AppColors.blueColor,
+                    radius: 100,
+                  ),
+                )
+              : const SizedBox(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            child: SingleChildScrollView(
+              child: Center(
+                child: SizedBox(
+                  height: screenHeight(context),
+                  width: kIsWeb ? 300 : screenWidth(context),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/images/logo.png",
+                        width: 300.w,
+                        height: 360.h,
+                      ),
+                      20.cusSH,
+                      const Text(
+                        "ARE YOU A",
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
                         ),
-                        20.cusSH,
-                        const Text(
-                          "ARE YOU A",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      ),
+                      25.cusSH,
+                      ElevatedButton(
+                        style: elevatedButtonStyles(),
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(AppRouter.login,
+                              arguments: isUser ? "User" : "Organization");
+                        },
+                        child: const Text(
+                          "Organization",
+                          style: TextStyle(color: Colors.white),
                         ),
-                        25.cusSH,
-                        ElevatedButton(
-                          style: elevatedButtonStyles(),
-                          onPressed: () {
-                            Navigator.of(context).pushNamed(AppRouter.login,
-                                arguments: isUser ? "User" : "Organization");
-                          },
-                          child: const Text("Organization"),
+                      ),
+                      25.cusSH,
+                      const Text(
+                        "OR",
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
                         ),
-                        25.cusSH,
-                        const Text(
-                          "OR",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      ),
+                      25.cusSH,
+                      ElevatedButton(
+                        style: elevatedButtonStyles(),
+                        onPressed: () {
+                          setState(() {
+                            isUser = true;
+                          });
+                          Navigator.of(context).pushNamed(AppRouter.login,
+                              arguments: isUser ? "User" : "Organization");
+                        },
+                        child: const Text(
+                          "User",
+                          style: TextStyle(color: Colors.white),
                         ),
-                        25.cusSH,
-                        ElevatedButton(
-                          style: elevatedButtonStyles(),
-                          onPressed: () {
-                            setState(() {
-                              isUser = true;
-                            });
-                            Navigator.of(context).pushNamed(AppRouter.login,
-                                arguments: isUser ? "User" : "Organization");
-                          },
-                          child: const Text("User"),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -142,7 +147,7 @@ class BackElevatedButton extends StatelessWidget {
 }
 
 class ElevatedButtons extends StatelessWidget {
-  ElevatedButtons({
+  const ElevatedButtons({
     required this.onPres,
     required this.text,
     this.isloading = false,
@@ -170,9 +175,7 @@ class ElevatedButtons extends StatelessWidget {
                     )
                   : Text(
                       text,
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
+                      style: const TextStyle(fontSize: 18, color: Colors.white),
                     ),
             ),
           ),

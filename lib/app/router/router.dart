@@ -1,7 +1,7 @@
+import 'package:final_year_project/app/splash.dart';
 import 'package:final_year_project/auth/screens/forgot_password.dart';
 import 'package:final_year_project/auth/screens/login.dart';
 import 'package:final_year_project/auth/screens/sign_up.dart';
-import 'package:final_year_project/app/splash.dart';
 import 'package:final_year_project/models/notifications_model.dart';
 import 'package:final_year_project/models/user_post.dart';
 import 'package:final_year_project/screens/chat_screen.dart';
@@ -11,13 +11,10 @@ import 'package:final_year_project/screens/followers_screen.dart';
 import 'package:final_year_project/screens/following_screen.dart';
 import 'package:final_year_project/screens/home_screen.dart';
 import 'package:final_year_project/screens/indivisual_notices_page.dart';
+import 'package:final_year_project/screens/notifications.dart';
 import 'package:final_year_project/screens/onboarding.dart';
 import 'package:final_year_project/screens/other_user_profile_screen.dart';
 import 'package:final_year_project/screens/profile_screen.dart';
-import 'package:final_year_project/screens/notifications.dart';
-
-import 'package:final_year_project/screens/story_view.dart';
-
 import 'package:flutter/material.dart';
 
 import '../../screens/message_screen.dart';
@@ -75,10 +72,10 @@ class AppRouter {
             builder: (context) => UserNotifications(
                   notify: args,
                 ));
-      case storyview:
-        return MaterialPageRoute(
-          builder: ((context) => StoriesView()),
-        );
+      // case storyview:
+      //   return MaterialPageRoute(
+      //     builder: ((context) => StoriesView()),
+      //   );
       case indivisualNoticesPage:
         final args = settings.arguments as UserPosts;
 
@@ -143,7 +140,7 @@ class AppRouter {
         );
       case chatScreen:
         return MaterialPageRoute(
-          builder: ((context) => ChatScreen()),
+          builder: ((context) => const ChatScreen()),
           settings: settings,
         );
       case userOrganization:
