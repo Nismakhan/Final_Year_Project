@@ -53,7 +53,7 @@ class _NoticesGridState extends State<NoticesGrid> {
                       child: GridView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           // itemCount: posts.postId.length <= 4 ? posts.postId.length : 4,
-                          // SANA changes
+                          // kamal changes
                           itemCount: widget.posts!.length <= 4
                               ? widget.posts!.length
                               : 4,
