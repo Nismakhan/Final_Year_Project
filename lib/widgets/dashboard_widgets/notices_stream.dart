@@ -10,7 +10,6 @@ class NoticesStream extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     print('like');
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: FirebaseFirestore.instance
@@ -33,14 +32,12 @@ class NoticesStream extends StatelessWidget {
 
         for (var doc in data) {
           final postData = doc.data();
-          if (postData != null) {
-            final post = UserPosts.fromJson(postData);
-            final uid = post.uid;
+          final post = UserPosts.fromJson(postData);
+          final uid = post.uid;
 
-            if (!recentPosts.containsKey(uid) ||
-                post.dateAdded.compareTo(recentPosts[uid]!.dateAdded) > 0) {
-              recentPosts[uid] = post;
-            }
+          if (!recentPosts.containsKey(uid) ||
+              post.dateAdded.compareTo(recentPosts[uid]!.dateAdded) > 0) {
+            recentPosts[uid] = post;
           }
         }
 

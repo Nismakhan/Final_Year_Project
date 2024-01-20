@@ -1,28 +1,27 @@
 import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:final_year_project/app/router/router.dart';
 import 'package:final_year_project/auth/controller/auth_controller.dart';
 import 'package:final_year_project/auth/models/user_model.dart';
-import 'package:final_year_project/app/router/router.dart';
-import 'package:final_year_project/auth/widgets/decoration_for_textfields.dart';
 import 'package:final_year_project/common/Extensions/custom_sizedbox.dart';
 import 'package:final_year_project/common/controller/post_controller.dart';
+import 'package:final_year_project/common/textfield_decoration.dart';
 import 'package:final_year_project/screens/user_orginization.dart';
+import 'package:final_year_project/utils/colors.dart';
 import 'package:final_year_project/utils/media_query.dart';
+import 'package:final_year_project/widgets/common/stack_circles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import '../auth_services/google_sign_up.dart';
-import 'package:final_year_project/auth/auth_services/facebook_sign_in.dart';
-import 'package:final_year_project/common/textfield_decoration.dart';
-import 'package:final_year_project/utils/colors.dart';
-import 'package:final_year_project/widgets/common/stack_circles.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/foundation.dart';
-import '../controller/loading_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+
+import '../auth_services/google_sign_up.dart';
 
 class SignUp extends StatefulWidget {
-  SignUp({
+  const SignUp({
     super.key,
     required this.type,
   });
@@ -249,14 +248,16 @@ class _SignUpState extends State<SignUp> {
                                         try {
                                           if (_formKey.currentState!
                                               .validate()) {
+                                            log("ali");
                                             setState(() {
                                               isloading = true;
                                             });
+                                            log("ali");
                                             Timestamp signUpTimestamp = Timestamp
                                                 .now(); // Example sign-up timestamp
 
-                                            final mobileToken = messaging
-                                                .getToken()
+                                            final mobileToken = await messaging
+                                                .getAPNSToken()
                                                 .then((value) async {
                                               print('fcm is ');
                                               print(value);

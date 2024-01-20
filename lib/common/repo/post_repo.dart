@@ -236,4 +236,25 @@ class PostRepo {
       rethrow;
     }
   }
+
+  Future<List<UserPosts>> getUserPosts({required String uid}) async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection("posts")
+          .where("uid", isEqualTo: uid)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        List<UserPosts> userPostsList = querySnapshot.docs
+            .map((e) => UserPosts.fromJson(e.data() as Map<String, dynamic>))
+            .toList();
+
+        return userPostsList;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

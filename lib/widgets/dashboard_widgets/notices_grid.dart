@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/app/router/router.dart';
-import 'package:final_year_project/auth/models/user_model.dart';
 import 'package:final_year_project/models/user_post.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../../utils/colors.dart';
 
 class NoticesGrid extends StatefulWidget {
-  NoticesGrid({
+  const NoticesGrid({
     required this.posts,
     this.up,
     Key? key,
@@ -44,7 +43,7 @@ class _NoticesGridState extends State<NoticesGrid> {
               ),
               shadowColor: Colors.black,
               elevation: 6,
-              color: Color.fromARGB(255, 245, 240, 240),
+              color: const Color.fromARGB(255, 245, 240, 240),
               child: LayoutBuilder(
                 builder: (context, constraint) {
                   return SizedBox(
@@ -52,6 +51,7 @@ class _NoticesGridState extends State<NoticesGrid> {
                     child: Padding(
                       padding: const EdgeInsets.all(40.0),
                       child: GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
                           // itemCount: posts.postId.length <= 4 ? posts.postId.length : 4,
                           itemCount: widget.posts!.length <= 4
                               ? widget.posts!.length

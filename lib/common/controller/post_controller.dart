@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:final_year_project/common/helper.dart';
 import 'package:final_year_project/common/repo/post_repo.dart';
 import 'package:final_year_project/models/comment_model.dart';
@@ -9,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
 import '../../utils/const.dart';
 
 class PostController with ChangeNotifier {
@@ -17,6 +19,7 @@ class PostController with ChangeNotifier {
   LoadingState state = LoadingState.idle;
   List<UserPosts>? currentUserPosts = List.empty(growable: true);
   List<NotificationModel> currentUserNotification = List.empty(growable: true);
+  List<UserPosts>? userPosts = [];
 
   Future<List<NotificationModel>> getUserNotifications({
     required String uid,
@@ -192,6 +195,17 @@ class PostController with ChangeNotifier {
       return await _repo.getTotalFollowingCount(uid: uid);
     } catch (e) {
       rethrow;
+    }
+  }
+
+  Future getUserPosts({required String uid}) async {
+    try {
+      userPosts = await _repo.getUserPosts(uid: uid);
+      notifyListeners();
+    } catch (e) {
+      print(e);
+      userPosts = [];
+      notifyListeners();
     }
   }
 }

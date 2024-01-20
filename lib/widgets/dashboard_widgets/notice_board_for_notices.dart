@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/app/router/router.dart';
 import 'package:final_year_project/models/user_post.dart';
@@ -8,9 +6,6 @@ import 'package:final_year_project/widgets/common/my_circle_avatars.dart';
 import 'package:final_year_project/widgets/dashboard_widgets/like_comments_and_share.dart';
 import 'package:final_year_project/widgets/dashboard_widgets/notices_grid.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../auth/controller/auth_controller.dart';
 
 import '../../utils/colors.dart';
 

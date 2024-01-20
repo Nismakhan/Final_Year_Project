@@ -44,11 +44,12 @@ dependencies:
   # state managemnet
   shared_preferences: ^2.0.17
   provider: ^6.0.5
+  cached_network_image: ^3.3.1
 
   # firebase
   firebase_auth: ^4.2.8
   cloud_firestore: ^4.4.2
-  firebase_core: ^2.6.1
+  firebase_core: ^2.24.2
   firebase_storage: ^11.0.10
   firebase_ui_firestore: ^1.2.7
   flutter_facebook_auth: ^3.5.7

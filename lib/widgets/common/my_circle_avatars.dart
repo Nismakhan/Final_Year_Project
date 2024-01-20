@@ -26,9 +26,9 @@ class MyCircleAvatars extends StatelessWidget {
             ),
           ),
           child: CircleAvatar(
-            backgroundColor: Colors.transparent,
+            // backgroundColor: Colors.transparent,
             radius: raduis,
-            backgroundImage: value.appUser!.profileUrl != null
+            backgroundImage: img != null
                 ? Image.network(
                     img,
                     loadingBuilder: (context, child, loadingProgress) {
@@ -42,7 +42,7 @@ class MyCircleAvatars extends StatelessWidget {
                       );
                     },
                   ).image
-                : const AssetImage("assets/images/user.png") as ImageProvider,
+                : const AssetImage("assets/images/user.png"),
           ),
         );
       },
