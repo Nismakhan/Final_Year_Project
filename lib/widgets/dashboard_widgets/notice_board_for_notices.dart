@@ -7,8 +7,6 @@ import 'package:final_year_project/widgets/dashboard_widgets/like_comments_and_s
 import 'package:final_year_project/widgets/dashboard_widgets/notices_grid.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/colors.dart';
-
 class NoticeBoardForNotices extends StatefulWidget {
   const NoticeBoardForNotices({
     required this.posts,
@@ -50,8 +48,8 @@ class _NoticeBoardForNoticesState extends State<NoticeBoardForNotices> {
                     },
                     child: ListTile(
                       leading: MyCircleAvatars(
-                        borderColor: AppColors.lightGreyColor,
-                        raduis: 26,
+                        borderColor: Colors.blue.shade100,
+                        raduis: 30,
                         img: widget.posts.profilePicture.toString(),
                       ),
                       title: Builder(builder: (context) {

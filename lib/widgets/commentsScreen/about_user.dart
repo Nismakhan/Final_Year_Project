@@ -1,30 +1,25 @@
+import 'package:final_year_project/models/user_post.dart';
 import 'package:final_year_project/widgets/common/my_circle_avatars.dart';
 import 'package:flutter/material.dart';
 
 class AboutUser extends StatelessWidget {
   const AboutUser({
+    required this.posts,
     Key? key,
   }) : super(key: key);
-
+  final UserPosts posts;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: Row(
         children: [
-          const Padding(
-            padding: EdgeInsets.all(18.0),
+          Padding(
+            padding: const EdgeInsets.all(18.0),
             child: SizedBox(
-              width: 60,
-              height: 60,
-              child: Positioned(
-                top: -35,
-                left: 10,
-                child: MyCircleAvatars(
-                  borderColor: Colors.black,
-                  img:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFRmWtO1zrO6tt35ewAJOE9NpAb8yiwhbrBWyxjVQCZw&s",
-                  raduis: 40,
-                ),
+              child: MyCircleAvatars(
+                borderColor: Colors.blue.shade50,
+                img: posts.profilePicture,
+                raduis: 40,
               ),
             ),
           ),
@@ -33,17 +28,17 @@ class AboutUser extends StatelessWidget {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                "City University",
-                style: TextStyle(
+                posts.name,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
-              Text("11001"),
+              Text(posts.uniqueId!),
             ],
           ),
         ],

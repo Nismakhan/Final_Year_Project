@@ -1,8 +1,8 @@
 import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/auth/db/database.dart';
 import 'package:final_year_project/auth/models/user_model.dart';
-import 'package:final_year_project/app/router/router.dart';
 import 'package:final_year_project/common/helper.dart';
 import 'package:final_year_project/models/follow_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -87,13 +87,32 @@ class AuthController extends ChangeNotifier {
   Future<User?> checkCurrentUser(BuildContext context) async {
     try {
       final currentUser = _db.isCurrentUser();
+
       if (currentUser != null) {
         appUser = await _db.getUserById(currentUser.uid);
         log(appUser!.toJson().toString());
         //notifyListeners();
         return currentUser;
       } else {
-        Navigator.pushReplacementNamed(context, AppRouter.login);
+        // Navigator.pushReplacementNamed(context, AppRouter.login);
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
+  Future<bool?> checkCurrentUserEmailVerified(BuildContext context) async {
+    try {
+      final currentUser = _db.isCurrentUser();
+      bool isVerified = false;
+      if (_db.isCurrentUserVerified()!) {
+        isVerified = true;
+
+        //notifyListeners();
+        return isVerified;
+      } else {
+        // Navigator.pushReplacementNamed(context, AppRouter.login);
       }
     } catch (e) {
       log(e.toString());
@@ -201,6 +220,7 @@ class AuthController extends ChangeNotifier {
 
   Future<ChatModel?> doesChatExists({required String uid}) async {
     try {
+      notifyListeners();
       return await _db.doesChatExists(uid: uid);
     } catch (e) {
       rethrow;

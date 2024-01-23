@@ -11,6 +11,7 @@ class ChatController extends ChangeNotifier {
   Future<void> sendMessage({required MessageModel message}) async {
     try {
       await _repo.sendMessage(message: message);
+      notifyListeners();
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -21,6 +22,7 @@ class ChatController extends ChangeNotifier {
       {required ChatModel chatModel, required MessageModel message}) async {
     try {
       await _repo.createChat(chatModel: chatModel, message: message);
+      notifyListeners();
     } catch (e) {
       log(e.toString());
       rethrow;

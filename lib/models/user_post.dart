@@ -33,7 +33,7 @@ class UserPosts {
         postId: json["postId"] ?? "",
         uid: json["uid"] ?? "",
         name: json["name"],
-        profilePicture: json["profilePicture"]??"",
+        profilePicture: json["profilePicture"] ?? '',
         userPostsAsset: json["userPostsAsset"],
         about: json["about"],
         dateAdded: json["dateAdded"],

@@ -1,11 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/app/router/router.dart';
 import 'package:final_year_project/models/user_post.dart';
 import 'package:final_year_project/screens/comments.dart';
 import 'package:final_year_project/utils/colors.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class IndividualPostSection extends StatefulWidget {
   const IndividualPostSection({
@@ -64,7 +65,7 @@ class _IndividualPostSectionState extends State<IndividualPostSection> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("2 hours ago"),
+                Text(timeago.format(widget.post.dateAdded.toDate())),
                 GestureDetector(
                     onTap: () async {
                       widget.post.userPostsAsset != null
@@ -74,7 +75,7 @@ class _IndividualPostSectionState extends State<IndividualPostSection> {
                           : showDialog(
                               context: context,
                               builder: (context) {
-                                return const AlertDialog(
+                                return const AlertDialog.adaptive(
                                   content: Text('Image Not Found'),
                                 );
                               },

@@ -40,7 +40,7 @@ class _SplashState extends State<Splash> {
     Future.delayed(const Duration(seconds: 3), () async {
       final isCurrentUser =
           await context.read<AuthController>().checkCurrentUser(context);
-      if (isCurrentUser != null) {
+      if (isCurrentUser != null && isCurrentUser.emailVerified) {
         Navigator.of(context).pushReplacementNamed(AppRouter.homeScreen);
         context
             .read<PostController>()

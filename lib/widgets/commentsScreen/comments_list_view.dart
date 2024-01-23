@@ -8,9 +8,9 @@ import 'package:final_year_project/screens/other_user_profile_screen.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:final_year_project/widgets/common/my_circle_avatars.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:uuid/uuid.dart';
 
 import '../../auth/models/user_model.dart';
@@ -46,7 +46,7 @@ class _CommentsListViewState extends State<CommentsListView> {
               height:
                   widget.isBottomSheet != null && widget.isBottomSheet == true
                       ? screenHeight(context) / 2
-                      : screenHeight(context) * 0.6,
+                      : screenHeight(context) * 0.5,
               child: StreamBuilder<QuerySnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection("posts")
@@ -57,9 +57,11 @@ class _CommentsListViewState extends State<CommentsListView> {
                 builder: (context, commentsSnapshot) {
                   if (commentsSnapshot.connectionState ==
                       ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else if (commentsSnapshot.hasError) {
                     return Text('Error: ${commentsSnapshot.error}');
+                  } else if (!commentsSnapshot.hasData) {
+                    return const Center(child: Text('Error:'));
                   } else {
                     final commentsDocs = commentsSnapshot.data!.docs;
                     final comments = commentsDocs
@@ -74,8 +76,11 @@ class _CommentsListViewState extends State<CommentsListView> {
                       builder: (context, usersSnapshot) {
                         if (usersSnapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return CircularProgressIndicator();
+                          return const Center(
+                              child: CircularProgressIndicator());
                         } else if (usersSnapshot.hasError) {
+                          return Text('Error: ${usersSnapshot.error}');
+                        } else if (!usersSnapshot.hasData) {
                           return Text('Error: ${usersSnapshot.error}');
                         } else {
                           final userDocs = usersSnapshot.data!.docs;
@@ -139,7 +144,7 @@ class _CommentsListViewState extends State<CommentsListView> {
   }
 }
 
-Widget  buildCommentList(
+Widget buildCommentList(
     List<CommentModel> comments, List<DocumentSnapshot> userDocs) {
   return ListView.builder(
     shrinkWrap: true,
@@ -180,6 +185,7 @@ class _CommentWidgetState extends State<CommentWidget> {
       children: [
         widget.comment.uid == FirebaseAuth.instance.currentUser!.uid
             ? IconButton(
+                color: Colors.red.shade300,
                 onPressed: () {
                   context
                       .read<PostController>()
@@ -203,7 +209,8 @@ class _CommentWidgetState extends State<CommentWidget> {
               }
             },
             child: MyCircleAvatars(
-              borderColor: Colors.black,
+              raduis: 30,
+              borderColor: Colors.blue.shade50,
               img: widget.comment.profileUrl.toString(),
             ),
           ),

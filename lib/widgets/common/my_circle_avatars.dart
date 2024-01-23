@@ -9,7 +9,7 @@ class MyCircleAvatars extends StatelessWidget {
     this.raduis,
     Key? key,
   }) : super(key: key);
-  final String img;
+  final String? img;
   final Color borderColor;
   final double? raduis;
 
@@ -28,9 +28,24 @@ class MyCircleAvatars extends StatelessWidget {
           child: CircleAvatar(
             // backgroundColor: Colors.transparent,
             radius: raduis,
-            backgroundImage: img != null
+            // backgroundImage: img != null
+            //     ? Image.network(
+            //         img!,
+            //         loadingBuilder: (context, child, loadingProgress) {
+            //           if (loadingProgress == null) {
+            //             return child;
+            //           }
+            //           return const Center(
+            //             child: CircularProgressIndicator(
+            //               color: Colors.black,
+            //             ),
+            //           );
+            //         },
+            //       ).image
+            //     : const AssetImage("assets/images/user.png"),
+            child: img != null && img!.isNotEmpty
                 ? Image.network(
-                    img,
+                    img!,
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) {
                         return child;
@@ -41,8 +56,8 @@ class MyCircleAvatars extends StatelessWidget {
                         ),
                       );
                     },
-                  ).image
-                : const AssetImage("assets/images/user.png"),
+                  )
+                : Image.asset("assets/images/user.png"),
           ),
         );
       },

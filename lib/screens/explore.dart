@@ -5,7 +5,6 @@ import 'package:final_year_project/auth/controller/auth_controller.dart';
 import 'package:final_year_project/utils/const.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -32,51 +31,64 @@ class Explore extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.white,
         backgroundColor: AppColors.blueColor,
         centerTitle: true,
         title: const Text("Exlpore people"),
       ),
-      body: FirestoreListView<UserModel>(
-        query: query,
-        loadingBuilder: (context) => const Center(
-          child: CircularProgressIndicator(),
-        ),
-        itemBuilder: (context, snapshot) {
-          final user = snapshot.data();
-          // bool isFollow = false;
-          return InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, AppRouter.otherUserprofileScreen,
-                  arguments: OtherUserProfileArgs(uid: user.uid));
-            },
-            child: Padding(
-              padding: screenWidth(context) > 500
-                  ? const EdgeInsets.symmetric(horizontal: 300, vertical: 10)
-                  : const EdgeInsets.only(left: 10, right: 10),
-              child: ListTile(
-                  leading: user.profileUrl != null
-                      ? CircleAvatar(
-                          backgroundImage: NetworkImage(user.profileUrl!),
-                          radius: 30,
-                        )
-                      : const CircleAvatar(
-                          radius: 30,
-                        ),
-                  title: Text(user.name),
-                  subtitle: Text(user.uniqueId.toString()),
-                  trailing: FollowUnfollowButton(user: user)
+      body: StreamBuilder<QuerySnapshot<UserModel>>(
+        stream: query.snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return const Text("No users found");
+          }
+          final user = snapshot.data!.docs.map((e) => e.data()).toList();
+          return ListView.builder(
+            itemCount: user.length,
+            itemBuilder: (context, index) {
+              final users = user[index];
+              return InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, AppRouter.otherUserprofileScreen,
+                      arguments: OtherUserProfileArgs(uid: users.uid));
+                },
+                child: Padding(
+                  padding: screenWidth(context) > 500
+                      ? const EdgeInsets.symmetric(
+                          horizontal: 300, vertical: 10)
+                      : const EdgeInsets.only(left: 10, right: 10),
+                  child: ListTile(
+                      leading: users.profileUrl != null
+                          ? CircleAvatar(
+                              backgroundImage: NetworkImage(users.profileUrl!),
+                              radius: 30,
+                            )
+                          : const CircleAvatar(
+                              radius: 30,
+                              backgroundImage:
+                                  AssetImage('assets/images/user.png'),
+                            ),
+                      title: Text(users.name),
+                      subtitle: Text(users.uniqueId.toString()),
+                      trailing: FollowUnfollowButton(user: users)
 
-                  // ElevatedButton(
-                  //     style: ElevatedButton.styleFrom(
-                  //         backgroundColor: Colors.grey),
-                  //     onPressed: () {},
-                  //     child: const Text(
-                  //       "Unfollow",
-                  //     ),
-                  //   ),
-                  ),
-            ),
+                      // ElevatedButton(
+                      //     style: ElevatedButton.styleFrom(
+                      //         backgroundColor: Colors.grey),
+                      //     onPressed: () {},
+                      //     child: const Text(
+                      //       "Unfollow",
+                      //     ),
+                      //   ),
+                      ),
+                ),
+              );
+            },
           );
+          // bool isFollow = false;
         },
       ),
     );
@@ -147,7 +159,10 @@ class _FollowUnfollowButtonState extends State<FollowUnfollowButton> {
                 log(e.toString());
               }
             },
-            child: const Text("Unfollow"),
+            child: const Text(
+              "Unfollow",
+              style: TextStyle(color: Colors.white),
+            ),
           )
         : ElevatedButton(
             style: ButtonStyle(
@@ -189,7 +204,10 @@ class _FollowUnfollowButtonState extends State<FollowUnfollowButton> {
                 log(e.toString());
               }
             },
-            child: const Text("Follow"),
+            child: const Text(
+              "Follow",
+              style: TextStyle(color: Colors.white),
+            ),
           );
   }
 }

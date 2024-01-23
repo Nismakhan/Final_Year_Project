@@ -2,13 +2,12 @@ import 'dart:developer';
 
 import 'package:final_year_project/auth/models/user_model.dart';
 import 'package:final_year_project/common/controller/post_controller.dart';
-import 'package:final_year_project/common/elevated_button_style.dart';
 import 'package:final_year_project/models/user_post.dart';
 import 'package:final_year_project/widgets/common/my_circle_avatars.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import '../../app/router/router.dart';
 import '../../utils/colors.dart';
@@ -40,6 +39,7 @@ class _UserProfileSectionState extends State<UserProfileSection> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: Column(
@@ -52,8 +52,14 @@ class _UserProfileSectionState extends State<UserProfileSection> {
                 raduis: 30,
               ),
             ),
-            title: Text(widget.posts.name),
-            subtitle: Text(widget.posts.uniqueId!),
+            title: Text(
+              widget.posts.name,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+            subtitle: Text(
+              widget.posts.uniqueId!,
+              style: const TextStyle(color: AppColors.blueColor),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 35),
@@ -77,7 +83,10 @@ class _UserProfileSectionState extends State<UserProfileSection> {
                         onPressed: () {
                           Navigator.pushNamed(context, AppRouter.chatScreen);
                         },
-                        child: const Text("Message"),
+                        child: const Text(
+                          "Chats",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       )
                     : const SizedBox(),
                 const SizedBox(
@@ -87,7 +96,7 @@ class _UserProfileSectionState extends State<UserProfileSection> {
             ),
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
         ],
       ),

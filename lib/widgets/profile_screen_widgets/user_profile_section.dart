@@ -1,6 +1,5 @@
 import 'package:final_year_project/app/router/router.dart';
 import 'package:final_year_project/auth/controller/auth_controller.dart';
-import 'package:final_year_project/auth/controller/loading_controller.dart';
 import 'package:final_year_project/auth/models/user_model.dart';
 import 'package:final_year_project/common/controller/post_controller.dart';
 import 'package:final_year_project/utils/image_dailogue.dart';
@@ -38,9 +37,7 @@ class _UserProfileSectionState extends State<UserProfileSection> {
           await controller.getTotalFollowerCount(uid: widget.user.uid);
       followingCount =
           await controller.getTotalFollowingCount(uid: widget.user.uid);
-      setState(() {
-        
-      });
+      setState(() {});
     });
 
     super.initState();
@@ -145,7 +142,7 @@ class _UserProfileSectionState extends State<UserProfileSection> {
                   widget.user.uid != provider.appUser!.uid
                       ? Row(
                           children: [
-                            Container(
+                            SizedBox(
                               width: 120,
                               // height: 35,
                               // decoration: const BoxDecoration(
@@ -257,7 +254,7 @@ class _UserProfileSectionState extends State<UserProfileSection> {
                     height: 500,
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress != null) {
-                        return CircularProgressIndicator();
+                        return const CircularProgressIndicator();
                       } else {
                         return child;
                       }

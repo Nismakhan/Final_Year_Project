@@ -1,16 +1,13 @@
 // import 'package:final_year_project/auth/controller/auth_controller.dart';
 import 'package:final_year_project/auth/controller/auth_controller.dart';
 import 'package:final_year_project/common/controller/post_controller.dart';
-import 'package:final_year_project/screens/other_user_profile_screen.dart';
 import 'package:final_year_project/utils/colors.dart';
-import 'package:final_year_project/utils/const.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:final_year_project/widgets/dashboard_widgets/notices_grid.dart';
 import 'package:final_year_project/widgets/profile_screen_widgets/shared_post_grid.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 
 import '../widgets/profile_screen_widgets/user_profile_section.dart';
@@ -34,13 +31,13 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-      ),
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   backgroundColor: Colors.white,
+      //   foregroundColor: Colors.black,
+      // ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 20.0),
+        padding: const EdgeInsets.only(top: 60.0),
         child: Stack(
           children: [
             kIsWeb

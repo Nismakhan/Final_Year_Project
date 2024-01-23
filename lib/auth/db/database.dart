@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:final_year_project/auth/auth_services/facebook_sign_in.dart';
 import 'package:final_year_project/auth/models/user_model.dart';
 import 'package:final_year_project/models/follow_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -44,6 +43,7 @@ class AuthBD {
     } on FirebaseAuthException catch (error, stacktrace) {
       rethrow;
     }
+    return null;
   }
 
   Future<void> googleSignUp(
@@ -66,6 +66,10 @@ class AuthBD {
 
   User? isCurrentUser() {
     return FirebaseAuth.instance.currentUser;
+  }
+
+  bool? isCurrentUserVerified() {
+    return FirebaseAuth.instance.currentUser!.emailVerified;
   }
 
   Future<void> updateUser({required UserModel user}) async {

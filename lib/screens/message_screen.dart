@@ -1,10 +1,13 @@
 import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:final_year_project/app/router/router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
+
 import '../auth/controller/auth_controller.dart';
 import '../auth/models/user_model.dart';
 import '../common/controller/chat_controller.dart';
@@ -67,7 +70,7 @@ class _MessageScreenState extends State<MessageScreen> {
   void scrollToEnd() {
     _scrollController.animateTo(
       _scrollController.position.maxScrollExtent,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.fastOutSlowIn,
     );
   }
@@ -83,157 +86,165 @@ class _MessageScreenState extends State<MessageScreen> {
             fromFirestore: (snap, option) =>
                 MessageModel.fromJson(snap.data()!),
             toFirestore: (snap, options) => snap.toJson());
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: state == LoadingState.processing
-          ? const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            )
-          : Scaffold(
-              body: Padding(
-                padding: const EdgeInsets.only(top: 15.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      // const UserChatHeader(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      query != null
-                          ? Expanded(
-                              child: FirestoreListView<MessageModel>(
-                              controller: _scrollController,
-                              query: query!,
-                              itemBuilder: (context, doc) {
-                                final message = doc.data();
-                                // message.dateAdded
-                                return MessageBubble(message: message);
+    return state == LoadingState.processing
+        ? const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          )
+        : Scaffold(
+            appBar: AppBar(
+              title: Text(widget.args.chatModel?.usersData.last.name ?? ''),
+            ),
+            body: Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    // const UserChatHeader(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    query != null
+                        ? Expanded(
+                            child: FirestoreListView<MessageModel>(
+                            controller: _scrollController,
+                            query: query!,
+                            itemBuilder: (context, doc) {
+                              final message = doc.data();
+                              log('kamal');
+                              // message.dateAdded
+                              return MessageBubble(message: message);
+                            },
+                          ))
+                        : const SizedBox(),
+                    Padding(
+                      padding: const EdgeInsets.all(25),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 226, 226, 226),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            width: 200,
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Text is required";
+                                }
+                                return null;
                               },
-                            ))
-                          : SizedBox(),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 226, 226, 226),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              width: 200,
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Text is required";
-                                  }
-                                  return null;
-                                },
-                                controller: _textCon,
-                                decoration: const InputDecoration(
-                                  labelText: "Enter Your Message Here",
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                  ),
+                              controller: _textCon,
+                              decoration: const InputDecoration(
+                                labelText: "Enter Your Message Here",
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.never,
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
                             ),
-                            Container(
-                              width: 30,
-                              height: 70,
-                              decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 226, 226, 226),
-                                shape: BoxShape.circle,
-                              ),
-                              child: IconButton(
-                                onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    log(_textCon.text);
-                                    final _firebaseAuth = FirebaseAuth.instance;
-                                    if (widget.args.chatModel != null) {
-                                      final message = MessageModel(
-                                        messageId: const Uuid().v1(),
-                                        chatId: widget.args.chatModel!.chatId,
-                                        uid: _firebaseAuth.currentUser!.uid,
-                                        text: _textCon.text,
-                                        dateAdded: Timestamp.now(),
-                                      );
-                                      context
-                                          .read<ChatController>()
-                                          .sendMessage(message: message);
-                                    } else {
-                                      final chatId = const Uuid().v1();
-                                      final currentUser = context
-                                          .read<AuthController>()
-                                          .appUser!;
-                                      final messageModel = MessageModel(
-                                        messageId: const Uuid().v1(),
-                                        chatId: chatId,
-                                        uid: _firebaseAuth.currentUser!.uid,
-                                        text: _textCon.text,
-                                        dateAdded: Timestamp.now(),
-                                      );
-
-                                      final chatModel = ChatModel(
-                                        chatId: chatId,
-                                        lastMessage: messageModel,
-                                        usersData: [
-                                          // mine
-                                          UsersData(
-                                              name: currentUser.name,
-                                              profilePic:
-                                                  currentUser.profileUrl,
-                                              uid: currentUser.uid),
-                                          // otherUser
-                                          UsersData(
-                                              name:
-                                                  widget.args.passedUser!.name,
-                                              profilePic: widget
-                                                  .args.passedUser!.profileUrl,
-                                              uid: widget.args.passedUser!.uid),
-                                        ],
-                                        userIds: [
-                                          currentUser.uid,
-                                          widget.args.passedUser!.uid
-                                        ],
-                                        dateAdded: Timestamp.now(),
-                                        dateModified: Timestamp.now(),
-                                      );
-                                      // Create a chat model and send message
-                                      await context
-                                          .read<ChatController>()
-                                          .createChat(
-                                              message: messageModel,
-                                              chatModel: chatModel);
-                                      setQuery();
-                                      setState(() {});
-                                      widget.args.chatModel = chatModel;
-                                    }
-                                    _textCon.clear();
-                                    scrollToEnd();
-                                  }
-                                },
-                                icon: const Icon(Icons.send),
-                              ),
+                          ),
+                          Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.blue.shade100,
+                              shape: BoxShape.circle,
                             ),
-                          ],
-                        ),
+                            child: IconButton(
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  log(_textCon.text);
+                                  final firebaseAuth = FirebaseAuth.instance;
+                                  if (widget.args.chatModel != null) {
+                                    final message = MessageModel(
+                                      messageId: const Uuid().v1(),
+                                      chatId: widget.args.chatModel!.chatId,
+                                      uid: firebaseAuth.currentUser!.uid,
+                                      text: _textCon.text,
+                                      dateAdded: Timestamp.now(),
+                                    );
+                                    context
+                                        .read<ChatController>()
+                                        .sendMessage(message: message);
+                                  } else {
+                                    final chatId = const Uuid().v1();
+                                    final currentUser =
+                                        context.read<AuthController>().appUser!;
+                                    final messageModel = MessageModel(
+                                      messageId: const Uuid().v1(),
+                                      chatId: chatId,
+                                      uid: firebaseAuth.currentUser!.uid,
+                                      text: _textCon.text,
+                                      dateAdded: Timestamp.now(),
+                                    );
+
+                                    final chatModel = ChatModel(
+                                      chatId: chatId,
+                                      lastMessage: messageModel,
+                                      usersData: [
+                                        // mine
+                                        UsersData(
+                                            name: currentUser.name,
+                                            profilePic: currentUser.profileUrl,
+                                            uid: currentUser.uid),
+                                        // otherUser
+                                        UsersData(
+                                            name: widget.args.passedUser!.name,
+                                            profilePic: widget
+                                                .args.passedUser!.profileUrl,
+                                            uid: widget.args.passedUser!.uid),
+                                      ],
+                                      userIds: [
+                                        currentUser.uid,
+                                        widget.args.passedUser!.uid
+                                      ],
+                                      dateAdded: Timestamp.now(),
+                                      dateModified: Timestamp.now(),
+                                    );
+                                    // Create a chat model and send message
+                                    await context
+                                        .read<ChatController>()
+                                        .createChat(
+                                            message: messageModel,
+                                            chatModel: chatModel);
+
+                                    setState(() {
+                                      setQuery();
+                                    });
+                                    widget.args.chatModel = chatModel;
+                                    setState(() {});
+                                    Navigator.of(context).pushNamed(
+                                        AppRouter.messagesScreen,
+                                        arguments: MessageScreenArgs(
+                                            chatModel: chatModel,
+                                            passedUser: currentUser));
+                                  }
+                                  _textCon.clear();
+                                  scrollToEnd();
+                                }
+                              },
+                              icon: const Icon(Icons.send),
+                            ),
+                          ),
+                        ],
                       ),
-                      // FilesViewMessages(),
-                    ],
-                  ),
+                    ),
+                    // FilesViewMessages(),
+                  ],
                 ),
               ),
             ),
-    );
+          );
   }
 }
 
@@ -257,7 +268,7 @@ class MessageBubble extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: Card(
-                color: isFromMe ? Colors.white : Colors.blue,
+                color: isFromMe ? Colors.blue.shade300 : Colors.blue,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -266,9 +277,9 @@ class MessageBubble extends StatelessWidget {
                       Text(
                         message.text,
                         style: TextStyle(
-                            color: isFromMe ? Colors.black : Colors.white),
+                            color: isFromMe ? Colors.white : Colors.black),
                       ),
-                      Divider(
+                      const Divider(
                         thickness: 1,
                       ),
                       Row(
@@ -279,7 +290,7 @@ class MessageBubble extends StatelessWidget {
                               message.dateAdded.toDate(),
                             ),
                             style: TextStyle(
-                                color: isFromMe ? Colors.black : Colors.white),
+                                color: isFromMe ? Colors.white : Colors.black),
                             textAlign: TextAlign.right,
                           ),
                         ],
@@ -301,13 +312,13 @@ class FilesViewMessages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
+    return const Align(
       alignment: Alignment.bottomCenter,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: EdgeInsets.symmetric(horizontal: 12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
+          children: [
             ChatScreenBottemWidgets(
               icondata: Icons.image,
               clr: Colors.blue,
@@ -370,8 +381,8 @@ class UserChatHeader extends StatelessWidget {
       ),
       trailing: SizedBox(
         width: screenWidth(context) * 0.31,
-        child: Row(
-          children: const [
+        child: const Row(
+          children: [
             Icon(
               Icons.voice_chat,
               color: Colors.red,

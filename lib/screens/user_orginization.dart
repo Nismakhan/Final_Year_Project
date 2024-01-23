@@ -73,7 +73,8 @@ class _UserOrganizationState extends State<UserOrganization> {
                       ElevatedButton(
                         style: elevatedButtonStyles(),
                         onPressed: () {
-                          Navigator.of(context).pushNamed(AppRouter.login,
+                          Navigator.of(context).pushReplacementNamed(
+                              AppRouter.login,
                               arguments: isUser ? "User" : "Organization");
                         },
                         child: const Text(
@@ -96,7 +97,8 @@ class _UserOrganizationState extends State<UserOrganization> {
                           setState(() {
                             isUser = true;
                           });
-                          Navigator.of(context).pushNamed(AppRouter.login,
+                          Navigator.of(context).pushReplacementNamed(
+                              AppRouter.login,
                               arguments: isUser ? "User" : "Organization");
                         },
                         child: const Text(

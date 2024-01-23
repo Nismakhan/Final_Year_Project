@@ -102,42 +102,40 @@ class Comments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppColors.blueColor,
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              const AboutUser(),
-              const SizedBox(
-                height: 10,
-              ),
-              if (post.about != null)
-                SizedBox(
-                  width: screenWidth(context) * 0.8,
-                  child: Text(
-                    post.about!,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Divider(
-                  thickness: 1,
+    return Scaffold(
+      appBar: AppBar(
+        foregroundColor: Colors.white,
+        backgroundColor: AppColors.blueColor,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            AboutUser(posts: post),
+            const SizedBox(
+              height: 10,
+            ),
+            if (post.about != null)
+              SizedBox(
+                width: screenWidth(context) * 0.8,
+                child: Text(
+                  post.about!,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                 ),
               ),
-              const SizedBox(
-                height: 10,
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Divider(
+                thickness: 1,
               ),
-              CommentsListView(
-                post: post,
-                
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            CommentsListView(
+              post: post,
+            ),
+          ],
         ),
       ),
     );

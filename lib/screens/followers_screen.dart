@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:final_year_project/auth/controller/auth_controller.dart';
 import 'package:final_year_project/models/follow_model.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +39,7 @@ class FollowersScreen extends StatelessWidget {
                       radius: 30,
                     ),
               title: Text(followModel.userName),
-              trailing: FollowersTileTrailing(
+              subtitle: FollowersTileTrailing(
                 followModel: followModel,
               ),
             ),
@@ -80,7 +79,7 @@ class _FollowersTileTrailingState extends State<FollowersTileTrailing> {
   @override
   Widget build(BuildContext context) {
     return isLoading
-        ? const CircularProgressIndicator()
+        ? const Center(child: CircularProgressIndicator())
         : Wrap(
             children: [
               !isFollowed

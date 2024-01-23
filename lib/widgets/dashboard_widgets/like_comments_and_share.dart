@@ -1,14 +1,11 @@
-import 'package:final_year_project/app/router/router.dart';
-import 'package:final_year_project/models/like_model.dart';
 import 'package:final_year_project/models/user_post.dart';
-import 'package:final_year_project/screens/comments.dart';
 import 'package:final_year_project/utils/media_query.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/colors.dart';
 
 class LikeCommentsAndShare extends StatefulWidget {
-  LikeCommentsAndShare({
+  const LikeCommentsAndShare({
     required this.posts,
     Key? key,
   }) : super(key: key);
@@ -25,11 +22,11 @@ class _LikeCommentsAndShareState extends State<LikeCommentsAndShare> {
   Widget build(BuildContext context) {
     print('i am rebuilding');
     return screenWidth(context) > 50 && screenWidth(context) < 300
-        ? Column(
+        ? const Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
-                children: const [
+                children: [
                   Text(
                     "Like",
                     style: TextStyle(

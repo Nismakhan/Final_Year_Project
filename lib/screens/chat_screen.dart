@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:final_year_project/utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
@@ -24,54 +25,54 @@ class ChatScreen extends StatelessWidget {
           toFirestore: (value, options) => value.toJson(),
         );
 
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.blueColor,
+        foregroundColor: Colors.white,
+        title: const Text('Chats'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 0),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 3,
               child: Container(
                 width: screenWidth(context),
                 color: Colors.white,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
+                  padding: const EdgeInsets.only(left: 5.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Icon(
-                              Icons.arrow_back,
-                              size: 30,
-                              color: Colors.red,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 80,
-                          ),
-                          const Text(
-                            "Chats",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Divider(
-                        thickness: 1,
-                      ),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     GestureDetector(
+                      //       onTap: () {
+                      //         Navigator.pop(context);
+                      //       },
+                      //       child: const Icon(
+                      //         Icons.arrow_back,
+                      //         size: 30,
+                      //         color: Colors.red,
+                      //       ),
+                      //     ),
+                      //     const SizedBox(
+                      //       width: 80,
+                      //     ),
+                      //     const Text(
+                      //       "Chats",
+                      //       style: TextStyle(
+                      //         fontWeight: FontWeight.bold,
+                      //         fontSize: 30,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+
                       Expanded(
                         child: FirestoreListView<ChatModel>(
                           query: chatQuery,
@@ -83,33 +84,50 @@ class ChatScreen extends StatelessWidget {
                                     element.uid !=
                                     FirebaseAuth.instance.currentUser!.uid);
 
-                            return Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, AppRouter.messagesScreen,
-                                      arguments:
-                                          MessageScreenArgs(chatModel: chat));
-                                },
-                                child: ListTile(
-                                  leading: otherUser.profilePic != null
-                                      ? CircleAvatar(
-                                          radius: 40,
-                                          backgroundImage: NetworkImage(
-                                              otherUser.profilePic!),
-                                        )
-                                      : CircleAvatar(
-                                          radius: 40,
+                            return Column(
+                              children: [
+                                Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, AppRouter.messagesScreen,
+                                          arguments: MessageScreenArgs(
+                                              chatModel: chat));
+                                    },
+                                    child: ListTile(
+                                      leading: otherUser.profilePic != null
+                                          ? CircleAvatar(
+                                              radius: 30,
+                                              backgroundImage: NetworkImage(
+                                                  otherUser.profilePic!),
+                                            )
+                                          : const CircleAvatar(
+                                              backgroundImage: AssetImage(
+                                                  'assets/images/user.png'),
+                                              radius: 30,
+                                            ),
+                                      title: Text(otherUser.name),
+                                      subtitle: Text(
+                                        chat.lastMessage.text,
+                                      ),
+                                      trailing: Text(
+                                        Helper.getFormattedTime(
+                                          chat.lastMessage.dateAdded.toDate(),
                                         ),
-                                  title: Text(otherUser.name),
-                                  subtitle: Text(
-                                    chat.lastMessage.text,
+                                        style: const TextStyle(
+                                            color: AppColors.lightGreyColor),
+                                      ),
+                                    ),
                                   ),
-                                  trailing: Text(Helper.getFormattedTime(
-                                      chat.lastMessage.dateAdded.toDate())),
                                 ),
-                              ),
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  child: Divider(
+                                    thickness: 0.7,
+                                  ),
+                                ),
+                              ],
                             );
                           },
                         ),

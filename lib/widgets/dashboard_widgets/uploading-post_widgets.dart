@@ -7,7 +7,6 @@ import 'package:final_year_project/common/controller/post_controller.dart';
 import 'package:final_year_project/models/user_post.dart';
 import 'package:final_year_project/utils/image_dailogue.dart';
 import 'package:final_year_project/utils/media_query.dart';
-import 'package:final_year_project/widgets/common/my_circle_avatars.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +42,7 @@ class _UploadingPostWidgetState extends State<UploadingPostWidget> {
           Container(
             width: screenWidth(context) * 0.89,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.blue.shade50,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Padding(
@@ -157,7 +156,7 @@ class _UploadingPostWidgetState extends State<UploadingPostWidget> {
                                     ),
                                   ),
                                 )
-                              : Container(
+                              : SizedBox(
                                   width: 100,
                                   height: 30,
 
@@ -189,7 +188,7 @@ class _UploadingPostWidgetState extends State<UploadingPostWidget> {
                                             name: currentUser.name,
                                             about: _postText.text,
                                             profilePicture:
-                                                currentUser.profileUrl,
+                                                currentUser.profileUrl ?? '',
                                             dateAdded: Timestamp.now(),
                                             likesCount: 0,
                                             commentsCount: 0,
@@ -212,6 +211,8 @@ class _UploadingPostWidgetState extends State<UploadingPostWidget> {
                                           });
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(const SnackBar(
+                                                  backgroundColor:
+                                                      AppColors.blueColor,
                                                   content:
                                                       Text("Post Uploaded")));
                                         } catch (e) {
