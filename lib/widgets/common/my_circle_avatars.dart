@@ -28,36 +28,20 @@ class MyCircleAvatars extends StatelessWidget {
           child: CircleAvatar(
             // backgroundColor: Colors.transparent,
             radius: raduis,
-            // backgroundImage: img != null
-            //     ? Image.network(
-            //         img!,
-            //         loadingBuilder: (context, child, loadingProgress) {
-            //           if (loadingProgress == null) {
-            //             return child;
-            //           }
-            //           return const Center(
-            //             child: CircularProgressIndicator(
-            //               color: Colors.black,
-            //             ),
-            //           );
-            //         },
-            //       ).image
-            //     : const AssetImage("assets/images/user.png"),
-            child: img != null && img!.isNotEmpty
-                ? Image.network(
-                    img!,
+            backgroundImage: img != null && img!.isNotEmpty
+                ? Image.network(img!,
                     loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.black,
-                        ),
-                      );
-                    },
-                  )
-                : Image.asset("assets/images/user.png"),
+                    print('object');
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.black,
+                      ),
+                    );
+                  }).image
+                : const AssetImage("assets/images/user.png"),
           ),
         );
       },

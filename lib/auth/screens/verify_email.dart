@@ -79,12 +79,6 @@ class _VerifiEmailState extends State<VerifiEmail> {
                 style: const TextStyle(fontSize: 16),
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                // Handle button press if needed
-              },
-              child: const Text('Button Text'),
-            )
           ],
         ),
       ),

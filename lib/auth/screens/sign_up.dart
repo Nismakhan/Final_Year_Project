@@ -250,7 +250,7 @@ class _SignUpState extends State<SignUp> {
                               Column(
                                 children: [
                                   ElevatedButtons(
-                                    text: 'SignUp',
+                                    text: 'Verify',
                                     isloading: isloading,
                                     onPres: () async {
                                       try {

@@ -99,7 +99,7 @@ class _IndividualPostSectionState extends State<IndividualPostSection> {
                       screenWidth(context) < 500 ? screenWidth(context) : 450,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.green,
+                    color: Colors.blue.shade200,
                     image: DecorationImage(
                       image:
                           NetworkImage(widget.post.userPostsAsset.toString()),
